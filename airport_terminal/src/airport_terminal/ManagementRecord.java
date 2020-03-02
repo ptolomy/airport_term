@@ -63,7 +63,7 @@ public class ManagementRecord {
 /** Status code
  *
  * See MRState diagram.*/
-  public static int READY_CLEAN_AND_MAINT = 8;
+  public static int READY_CLEAN_MAINT = 8;
 
 /** Status code
  *
