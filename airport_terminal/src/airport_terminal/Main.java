@@ -1,4 +1,4 @@
-
+package airport_terminal;
 
 /**
  * The Main class.
