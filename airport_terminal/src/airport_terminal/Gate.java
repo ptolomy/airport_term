@@ -7,10 +7,7 @@ package airport_terminal;
  * individual status codes.
  * An instance of GateInfoDatabase holds a collection of Gates, and sends the Gates messages to control/fetch their status.
  * @stereotype entity
- * @url element://model:project::SAAMS/design:view:::id1un8dcko4qme4cko4sw27
- * @url element://model:project::SAAMS/design:node:::id1un8dcko4qme4cko4sw27.node61
- * @url element://model:project::SAAMS/design:view:::id2wdkkcko4qme4cko4svm2
- * @url element://model:project::SAAMS/design:view:::id1jkohcko4qme4cko4svww
+
  */
 public class Gate {
 
