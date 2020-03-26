@@ -7,27 +7,11 @@ package airport_terminal;
  * Maintains an array of ManagementRecords (MRs), one per potential visiting aircraft. Some MRs hold information about aircraft currently being managed by SAAMS, and some may have the status "Free".
  * The index of each ManagementRecord in the array is its "management code" ("mCode"), and the mCode of any particular visiting aircraft's ManagementRecord must remain fixed once it is allocated.
  * Many classes register as observers of this class, and are notified whenever any aircraft's (MR's) state changes.
- * @stereotype model
- * @url element://model:project::SAAMS/design:view:::id4tg7xcko4qme4cko4swuu
- * @url element://model:project::SAAMS/design:node:::id4tg7xcko4qme4cko4swuu.node149
- * @url element://model:project::SAAMS/design:view:::id1bl79cko4qme4cko4sw5j
- * @url element://model:project::SAAMS/design:view:::idwwyucko4qme4cko4sgxi
- * @url element://model:project::SAAMS/design:node:::id2wdkkcko4qme4cko4svm2.node39
- * @url element://model:project::SAAMS/design:view:::id2wdkkcko4qme4cko4svm2
- * @url element://model:project::SAAMS/design:node:::id3oolzcko4qme4cko4sx40.node169
- * @url element://model:project::SAAMS/design:view:::id2fh3ncko4qme4cko4swe5
- * @url element://model:project::SAAMS/design:view:::id28ykdcko4qme4cko4sx0e
- * @url element://model:project::SAAMS/design:node:::id15rnfcko4qme4cko4swib.node107
- * @url element://model:project::SAAMS/design:view:::id15rnfcko4qme4cko4swib
- * @url element://model:project::SAAMS/design:view:::id3oolzcko4qme4cko4sx40
+
  */
 public class AircraftManagementDatabase {
 
-/**
- * Return the status of the MR with the given mCode supplied as a parameter.
- */
-  public int getStatus(int mCode){
-  }
+
 
   /**
  * The array of ManagementRecords. Attribute maxMRs specifies how large this array should be.
@@ -47,7 +31,15 @@ public class AircraftManagementDatabase {
  */
   public int maxMRs = 10;
 
-
+  /**
+   * Return the status of the MR with the given mCode supplied as a parameter.
+   */
+    public int getStatus(int mCode){
+  	  for (int i =0; i < MRs.length; i++) {
+  		  
+  	  }
+  	return 0;
+    }
 
 /**
  * Forward a status change request to the MR given by the mCode supplied as a parameter. Parameter newStatus is the requested new status. No effect is expected if the current status is not a valid preceding status. This operation is appropriate when the status change does not need any additional information to be noted. It is present instead of a large collection of public operations for requesting specific status changes.
