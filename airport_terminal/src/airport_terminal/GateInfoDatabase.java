@@ -56,8 +56,11 @@ public class GateInfoDatabase {
 	 * identified by mCode.
 	 */
 	public void allocate(int gateNumber, int mCode) {
+		
 		for (int i = 0; i < gates.length; i++) {
 			if(gate.getStatus() == 0) {
+				
+				
 				
 			}
 			
