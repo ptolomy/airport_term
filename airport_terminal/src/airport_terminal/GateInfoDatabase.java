@@ -59,9 +59,7 @@ public class GateInfoDatabase {
 		
 		for (int i = 0; i < gates.length; i++) {
 			if(gate.getStatus() == 0) {
-				
-				
-				
+				gate.allocate(mCode);
 			}
 			
 		}
