@@ -42,7 +42,10 @@ public class AircraftManagementDatabase {
     }
 
 /**
- * Forward a status change request to the MR given by the mCode supplied as a parameter. Parameter newStatus is the requested new status. No effect is expected if the current status is not a valid preceding status. This operation is appropriate when the status change does not need any additional information to be noted. It is present instead of a large collection of public operations for requesting specific status changes.
+ * Forward a status change request to the MR given by the mCode supplied as a parameter. 
+ * Parameter newStatus is the requested new status. No effect is expected if the current status is not a valid preceding status.
+ *  This operation is appropriate when the status change does not need any additional information to be noted. 
+ *  It is present instead of a large collection of public operations for requesting specific status changes.
  */
   public void setStatus(int mCode, int newStatus){
   }
@@ -70,19 +73,23 @@ public class AircraftManagementDatabase {
   }
 
 /**
- * The aircraft in the MR given by mCode supplied as a parameter has departed from the local airspace. The message is forwarded to the MR, which can then delete/archive its contents and become FREE.
+ * The aircraft in the MR given by mCode supplied as a parameter has departed from the local airspace.
+ *  The message is forwarded to the MR, which can then delete/archive its contents and become FREE.
  */
   public void radarLostContact(int mCode){
   }
 
 /**
- * A GOC has allocated the given gate to the aircraft with the given mCode supplied as a parameter for unloading passengers. The message is forwarded to the given MR for status update.
+ * A GOC has allocated the given gate to the aircraft with the given mCode supplied as a parameter for unloading passengers. 
+ * The message is forwarded to the given MR for status update.
  */
   public void taxiTo(int mCode, int gateNumber){
   }
 
 /**
- *  The Maintenance Supervisor has reported faults with the given description in the aircraft with the given mCode. The message is forwarded to the given MR for status update.*/
+ *  The Maintenance Supervisor has reported faults with the given description in the aircraft with the given mCode.
+ *   The message is forwarded to the given MR for status update.
+ */
   public void faultsFound(int mCode, String description){
   }
 
