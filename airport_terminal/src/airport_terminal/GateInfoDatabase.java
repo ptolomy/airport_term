@@ -75,6 +75,11 @@ public class GateInfoDatabase {
 	 * arrived at the gate.
 	 */
 	public void docked(int gateNumber) {
+		for (int i = 0; i < gates.length; i++) {
+			if (gate.getStatus() == 1) {
+				gate.docked();
+			}
+		}
 	}
 
 	/**
@@ -83,6 +88,11 @@ public class GateInfoDatabase {
 	 * that the gate is now free.
 	 */
 	public void departed(int gateNumber) {
+		for (int i = 0; i < gates.length; i++) {
+			if (gate.getStatus() == 2) {
+				gate.departed();
+			}
+		}
 	}
 
 }

@@ -15,6 +15,7 @@ public class Gate {
    *  Return the status code for this gate.
    */
   public int getStatus(){
+	return 0;
   }
 
 /**
