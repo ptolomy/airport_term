@@ -35,8 +35,9 @@ public class AircraftManagementDatabase {
    * Return the status of the MR with the given mCode supplied as a parameter.
    */
     public int getStatus(int mCode){
+    	//int status = 0;
   	  for (int i =0; i < MRs.length; i++) {
-  		  
+  		  	//tai can't read
   	  }
   	return 0;
     }
