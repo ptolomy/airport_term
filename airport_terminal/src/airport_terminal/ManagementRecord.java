@@ -165,6 +165,7 @@ public class ManagementRecord {
    * Return the status code of this MR.
    */
   public int getStatus(){
+	  return status; // Test change
   }
 
   /**
