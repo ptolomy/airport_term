@@ -28,11 +28,7 @@ public class PublicInfo extends JFrame {
 	  setLocationRelativeTo(null);
 	  setSize(400,200); // change to suit preffered size
 	  setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-	  
-	  Container window = getContentPane();
-	  
-	  //window.add();
-	  
+
 	  setVisible(true);
   }
 }

@@ -17,9 +17,8 @@ import javax.swing.JFrame;
  * It also registers as an observer of the AircraftManagementDatabase, and is notified whenever any change occurs in that <<model>> element.
  * See written documentation.
  * 
- * Add implements ActionListener if using buttons and include buttons
  */
-public class RadarTransceiver extends JFrame implements ActionListener{
+public class RadarTransceiver extends JFrame{
 /**
   * The Radar Transceiver interface has access to the AircraftManagementDatabase.
   * @clientCardinality 1
@@ -30,28 +29,15 @@ public class RadarTransceiver extends JFrame implements ActionListener{
   private String title = "Radar Transceiver";
   //private JButton example;
   
-  /**
-   * Constructor 
-   * Default UI layout
-   * Add to window
-   */
+
   public RadarTransceiver() {
 	  setTitle(title);
 	  setLocationRelativeTo(null);
 	  setSize(400,200); // change to suit preffered size
 	  setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-	  
-	  Container window = getContentPane();
-	  
-	  //window.add();
-	  
+
 	  setVisible(true);
   }
 
-@Override
-public void actionPerformed(ActionEvent e) {
-	// TODO Auto-generated method stub
-	
-}
 
 }

@@ -14,7 +14,7 @@ import javax.swing.JFrame;
  * This class also registers as an observer of the AircraftManagementDatabase, and is notified whenever any change occurs in that <<model>> element.
  * See written documentation.
  */
-public class LATC extends JFrame implements ActionListener {
+public class LATC extends JFrame{
 /**
   *  The Local Air Traffic Controller Screen interface has access to the AircraftManagementDatabase.
   * @supplierCardinality 1
@@ -24,29 +24,16 @@ public class LATC extends JFrame implements ActionListener {
   private AircraftManagementDatabase lnkUnnamed;
   private String title = "LATC";
   
-  /**
-   * Constructor
-   * Default UI layout
-   * add components to window
-   */
+
   public LATC() {
 	  
 	  setTitle(title);
 	  setLocationRelativeTo(null);
 	  setSize(400,200); // change to suit preffered size
 	  setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-	  
-	  Container window = getContentPane();
-	  
-	  //window.add();
-	  
+
 	  setVisible(true);
   }
 
-@Override
-public void actionPerformed(ActionEvent e) {
-	// TODO Auto-generated method stub
-	
-}
 
 }

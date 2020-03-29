@@ -15,7 +15,7 @@ import javax.swing.JFrame;
  * See written documentation.
  */
 @SuppressWarnings("serial")
-public class MaintenanceInspector extends JFrame implements ActionListener {
+public class MaintenanceInspector extends JFrame {
 /**  The Maintenance Inspector Screen interface has access to the AircraftManagementDatabase.
   * @clientCardinality 1
   * @supplierCardinality 1
@@ -24,31 +24,17 @@ public class MaintenanceInspector extends JFrame implements ActionListener {
   private AircraftManagementDatabase lnkUnnamed;
   private String title = "Maintenance Inspector";
   
-  /**
-   * Constructor
-   * create UI element
-   * Default template
-   * add components needed to window
-   */
+
   public MaintenanceInspector() {
 	  
 	  setTitle(title);
 	  setLocationRelativeTo(null);
 	  setSize(400,200); // change to suit preffered size
 	  setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-	  
-	  Container window = getContentPane();
-	  
-	  //window.add();
-	  
+
 	  setVisible(true);
   }
 
-@Override
-public void actionPerformed(ActionEvent e) {
-	// TODO Auto-generated method stub
-	
-}
   
   
 

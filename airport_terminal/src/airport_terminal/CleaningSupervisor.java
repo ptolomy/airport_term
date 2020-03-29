@@ -16,7 +16,7 @@ import javax.swing.JFrame;
  * See written documentation.
  * 
  */
-public class CleaningSupervisor extends JFrame implements ActionListener{
+public class CleaningSupervisor extends JFrame{
 /**
   * The Cleaning Supervisor Screen interface has access to the AircraftManagementDatabase.
   * @clientCardinality 1
@@ -27,30 +27,16 @@ public class CleaningSupervisor extends JFrame implements ActionListener{
   private String title = "Cleaning Supervisor";
   //private JButton clean;
   
-  /**
-   * Constructor
-   * Default UI layout
-   * add components to window
-   */
+
   public CleaningSupervisor() {
 	  
 	  setTitle(title);
 	  setLocationRelativeTo(null);
 	  setSize(400,200); // change to suit preffered size
 	  setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-	  
-	  Container window = getContentPane();
-	  
-	  //window.add(clean);
-	  
+
 	  setVisible(true);
   }
-  
 
-@Override
-public void actionPerformed(ActionEvent e) {
-	// TODO Auto-generated method stub
-	
-}
 
 }
