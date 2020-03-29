@@ -10,12 +10,6 @@ package airport_terminal;
  * (message contains a FlightDescriptor), and when radar contact with an aircraft is lost.
  * It also registers as an observer of the AircraftManagementDatabase, and is notified whenever any change occurs in that <<model>> element.
  * See written documentation.
- * @stereotype boundary/view/controller
- * @url element://model:project::SAAMS/design:view:::idwwyucko4qme4cko4sgxi
- * @url element://model:project::SAAMS/design:node:::id15rnfcko4qme4cko4swib.node107
- * @url element://model:project::SAAMS/design:node:::id3oolzcko4qme4cko4sx40.node167
- * @url element://model:project::SAAMS/design:view:::id3oolzcko4qme4cko4sx40
- * @url element://model:project::SAAMS/design:view:::id15rnfcko4qme4cko4swib
  */
 public class RadarTransceiver {
 /**

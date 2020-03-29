@@ -7,7 +7,6 @@ package airport_terminal;
  * Maintains an array of ManagementRecords (MRs), one per potential visiting aircraft. Some MRs hold information about aircraft currently being managed by SAAMS, and some may have the status "Free".
  * The index of each ManagementRecord in the array is its "management code" ("mCode"), and the mCode of any particular visiting aircraft's ManagementRecord must remain fixed once it is allocated.
  * Many classes register as observers of this class, and are notified whenever any aircraft's (MR's) state changes.
-
  */
 public class AircraftManagementDatabase {
 

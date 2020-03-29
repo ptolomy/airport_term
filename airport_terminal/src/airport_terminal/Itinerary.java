@@ -7,10 +7,6 @@ package airport_terminal;
  * So, an aircraft whose flight descriptor contains an itinerary with "Stirling" as the "to" attribute wishes to land at Stirling now, otherwise it is just passing through local airspace on its way to its destination.
  * Incoming flights supply their Itinerary in their flight descriptor, and the ManagementRecord for the flight extracts the Itinerary and holds it separately.
  * Outbound flights have their Itineraries uploaded to the aircraft as it departs in a newly built FlightDescriptor.
- * @stereotype entity
- * @url element://model:project::SAAMS/design:view:::id3oolzcko4qme4cko4sx40
- * @url element://model:project::SAAMS/design:view:::idwwyucko4qme4cko4sgxi
- * @url element://model:project::SAAMS/design:view:::id2fh3ncko4qme4cko4swe5
  */
 public class Itinerary {
   /**

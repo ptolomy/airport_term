@@ -7,15 +7,6 @@ package airport_terminal;
  * This class has public static int identifiers for the individual status codes.
  * An MR may be "FREE", or may contain a record of the status of an individual aircraft under the management of SAAMS.
  * An instance of AircraftManagementDatabase holds a collection of ManagementRecords, and sends the ManagementRecords messages to control/fetch their status.
- * @stereotype entity
- * @url element://model:project::SAAMS/design:node:::id15rnfcko4qme4cko4swib.node107
- * @url element://model:project::SAAMS/design:view:::id3oolzcko4qme4cko4sx40
- * @url element://model:project::SAAMS/design:view:::id4tg7xcko4qme4cko4swuu
- * @url element://model:project::SAAMS/design:node:::id4tg7xcko4qme4cko4swuu.node152
- * @url element://model:project::SAAMS/design:node:::id3oolzcko4qme4cko4sx40.node171
- * @url element://model:project::SAAMS/design:view:::id2wdkkcko4qme4cko4svm2
- * @url element://model:project::SAAMS/design:view:::id15rnfcko4qme4cko4swib
- * @url element://model:project::SAAMS/design:node:::id2wdkkcko4qme4cko4svm2.node41
  */
 public class ManagementRecord {
 
