@@ -89,16 +89,7 @@ public class AircraftManagementDatabase {
 		return code;
 	}
 
-<<<<<<< HEAD
-/**
- * Forward a status change request to the MR given by the mCode supplied as a parameter. 
- * Parameter newStatus is the requested new status. No effect is expected if the current status is not a valid preceding status.
- *  This operation is appropriate when the status change does not need any additional information to be noted. 
- *  It is present instead of a large collection of public operations for requesting specific status changes.
- */
-  public void setStatus(int mCode, int newStatus){
-  }
-=======
+
 	/**
 	 * Returns an array of mCodes: Just the mCodes of those MRs with the given
 	 * status supplied as a parameter. Principally for call by the various interface
@@ -114,7 +105,7 @@ public class AircraftManagementDatabase {
 		}
 		return code;
 	}
->>>>>>> branch 'master' of https://github.com/ptolomy/airport_terminal.git
+
 
 	/**
 	 * The radar has detected a new aircraft, and has obtained flight descriptor fd
@@ -152,14 +143,6 @@ public class AircraftManagementDatabase {
 
 	}
 
-<<<<<<< HEAD
-/**
- * The aircraft in the MR given by mCode supplied as a parameter has departed from the local airspace.
- *  The message is forwarded to the MR, which can then delete/archive its contents and become FREE.
- */
-  public void radarLostContact(int mCode){
-  }
-=======
 	/**
 	 * A GOC has allocated the given gate to the aircraft with the given mCode
 	 * supplied as a parameter for unloading passengers. The message is forwarded to
@@ -178,16 +161,7 @@ public class AircraftManagementDatabase {
 			ex.printStackTrace();
 		}
 	}
->>>>>>> branch 'master' of https://github.com/ptolomy/airport_terminal.git
 
-<<<<<<< HEAD
-/**
- * A GOC has allocated the given gate to the aircraft with the given mCode supplied as a parameter for unloading passengers. 
- * The message is forwarded to the given MR for status update.
- */
-  public void taxiTo(int mCode, int gateNumber){
-  }
-=======
 	/**
 	 * The Maintenance Supervisor has reported faults with the given description in
 	 * the aircraft with the given mCode. The message is forwarded to the given MR
@@ -195,23 +169,21 @@ public class AircraftManagementDatabase {
 	 */
 	public void faultsFound(int mCode, String description) {
 	}
->>>>>>> branch 'master' of https://github.com/ptolomy/airport_terminal.git
 
-<<<<<<< HEAD
 /**
  *  The Maintenance Supervisor has reported faults with the given description in the aircraft with the given mCode.
  *   The message is forwarded to the given MR for status update.
  */
   public void faultsFound(int mCode, String description){
   }
-=======
+  
 	/**
 	 * The given passenger is boarding the aircraft with the given mCode. Forward
 	 * the message to the given MR for recording in the passenger list.
 	 */
 	public void addPassenger(int mCode, PassengerDetails details) {
 	}
->>>>>>> branch 'master' of https://github.com/ptolomy/airport_terminal.git
+
 
 	/**
 	 * Return the PassengerList of the aircraft with the given mCode.
