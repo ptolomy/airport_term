@@ -4,11 +4,9 @@ package airport_terminal;
 /**
  * Contains all details of a flight: the flight code, itinerary and passenger list.
  * This is the package of information downloaded from an aircraft by the RadarTransceiver as the aircraft enters Stirling Airport's airspace.
- * Not obvious from the class diagram is that the RadarTransceiver boundary class should construct a FlightDescriptor when it "detects" an aircraft, and passes that object to the AircraftManagementDatabase as the parameter of a radarDetect message. (Since this will probably/possibly be local to an event handler method in RadarTransceiver, there is no attribute association from RadarTransceiver to FlightDescriptor.)
- * @stereotype entity
- * @url element://model:project::SAAMS/design:node:::id3oolzcko4qme4cko4sx40.node173
- * @url element://model:project::SAAMS/design:view:::id3oolzcko4qme4cko4sx40
- * @url element://model:project::SAAMS/design:view:::id15rnfcko4qme4cko4swib
+ * Not obvious from the class diagram is that the RadarTransceiver boundary class should construct a FlightDescriptor when it "detects" an aircraft,
+ *  and passes that object to the AircraftManagementDatabase as the parameter of a radarDetect message. 
+ *  (Since this will probably/possibly be local to an event handler method in RadarTransceiver, there is no attribute association from RadarTransceiver to FlightDescriptor.)
  */
 public class FlightDescriptor {
   /**

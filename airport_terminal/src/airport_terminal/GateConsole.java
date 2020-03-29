@@ -9,10 +9,6 @@ package airport_terminal;
  * This class also registers as an observer of the GateInfoDatabase and the
  * AircraftManagementDatabase, and is notified whenever any change occurs in those <<model>> elements.
  * See written documentation.
- * @stereotype boundary/view/controller
- * @url element://model:project::SAAMS/design:view:::id1un8dcko4qme4cko4sw27
- * @url element://model:project::SAAMS/design:view:::id1jkohcko4qme4cko4svww
- * @url element://model:project::SAAMS/design:node:::id1un8dcko4qme4cko4sw27.node61
  */
 public class GateConsole {
 /**

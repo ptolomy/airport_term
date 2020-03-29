@@ -8,11 +8,6 @@ package airport_terminal;
  * This class is a controller for the AircraftManagementDatabase: sending it messages to change the aircraft status information.
  * This class also registers as an observer of the AircraftManagementDatabase, and is notified whenever any change occurs in that <<model>> element.
  * See written documentation.
- * @stereotype boundary/view/controller
- * @url element://model:project::SAAMS/design:view:::id15rnfcko4qme4cko4swib
- * @url element://model:project::SAAMS/design:view:::id2fh3ncko4qme4cko4swe5
- * @url element://model:project::SAAMS/design:node:::id15rnfcko4qme4cko4swib.node107
- * @url element://model:project::SAAMS/design:view:::idwwyucko4qme4cko4sgxi
  */
 public class LATC {
 /**
