@@ -11,7 +11,7 @@ package airport_terminal;
  */
 public class AircraftManagementDatabase {
 
-
+	int status;
 
   /**
  * The array of ManagementRecords. Attribute maxMRs specifies how large this array should be.
@@ -35,11 +35,11 @@ public class AircraftManagementDatabase {
    * Return the status of the MR with the given mCode supplied as a parameter.
    */
     public int getStatus(int mCode){
-    	//int status = 0;
+    	
   	  for (int i =0; i < MRs.length; i++) {
-  		  	//tai can't read
+  		status = MRs[i].getStatus();
   	  }
-  	return 0;
+  	  return status;
     }
 
 /**
