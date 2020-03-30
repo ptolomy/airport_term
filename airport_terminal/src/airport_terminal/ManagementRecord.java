@@ -185,7 +185,7 @@ public class ManagementRecord {
   public void radarDetect(FlightDescriptor fd){
 	  if (status == FREE) {	// If flight status is FREE <PRECONDITION>
 		  itinerary = fd.getItinerary();			// Itinerary becomes passed flightDescriptor itinerary
-		  if (itinerary.getTo() == "Stirling") {	// If passed itinerary 'to' is equal to 'Stirling'
+		  if (itinerary.getTo().equalsIgnoreCase("Stirling")) {	// If passed itinerary 'to' is equal to 'Stirling'
 			  status = WANTING_TO_LAND;				// Status becomes WANTING_TO_LAND
 		  } else {	
 			  status = IN_TRANSIT;					// Status becomes IN_TRANSIT
@@ -202,7 +202,7 @@ public class ManagementRecord {
 	  if (status == IN_TRANSIT || status == DEPARTING_THROUGH_LOCAL_AIRSPACE) {	// If status is IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE <PRECONDITION>
 		  status = FREE;	// Status becomes 'FREE'
 		  flightCode = ""; //Set the flight code to an empty string i.e. have no flight code
-		  faultDescription = ""; //Set the fault desctiprion to an empty string i.e. there are no faults
+		  faultDescription = ""; //Set the fault description to an empty string i.e. there are no faults
 		  gateNumber = 0; //Reset the gate number to 0
 		  passengerList = null; //Empty the current passenger list
 		  itinerary = null; //Empty the current itinerary		  
