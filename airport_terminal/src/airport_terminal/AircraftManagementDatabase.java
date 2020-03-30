@@ -42,9 +42,8 @@ public class AircraftManagementDatabase {
 	public int getStatus(int mCode) {
 		int status = 0;
 
-				status = MRs[mCode].getStatus();
+			return status = MRs[mCode].getStatus();
 
-		return status;
 	}
 
 	/**
@@ -66,9 +65,8 @@ public class AircraftManagementDatabase {
 	public String getFlightCode(int mCode) {
 		String code = "";
 
-				code = MRs[mCode].getFlightCode();
+			return code = MRs[mCode].getFlightCode();
 
-		return code;
 	}
 
 
