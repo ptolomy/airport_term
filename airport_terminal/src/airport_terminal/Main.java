@@ -27,8 +27,10 @@ public static void main(String[] args) {
 	//PublicInfo pi = new PublicInfo();
 	//RefuellingSupervisor rs = new RefuellingSupervisor();
 	//RadarTransceiver rt = new RadarTransceiver();
-	//CleaningSupervisor cs = new CleaningSupervisor();
-	//LATC la = new LATC();
+	
+	CleaningSupervisor cs = new CleaningSupervisor();
+	
+	//LATC la = new LATC(amd);
 	
   }
 
