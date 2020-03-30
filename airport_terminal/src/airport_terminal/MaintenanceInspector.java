@@ -21,12 +21,13 @@ public class MaintenanceInspector extends JFrame {
   * @supplierCardinality 1
   * @label accesses/observes
   * @directed*/
-  private AircraftManagementDatabase lnkUnnamed;
+  private AircraftManagementDatabase aircraftManagementDatabase;
   private String title = "Maintenance Inspector";
   
 
-  public MaintenanceInspector() {
-	  
+  public MaintenanceInspector(AircraftManagementDatabase amd) {
+	  this.aircraftManagementDatabase = amd;
+
 	  setTitle(title);
 	  setLocationRelativeTo(null);
 	  setSize(400,200); // change to suit preffered size

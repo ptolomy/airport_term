@@ -19,11 +19,12 @@ public class PublicInfo extends JFrame {
   * @clientCardinality 0..*
   * @label accesses/observes
   * @directed*/
-  private AircraftManagementDatabase lnkUnnamed;
+  private AircraftManagementDatabase aircraftManagementDatabase;
   private String title = "Public Info";
   
-  public PublicInfo() {
-	  
+  public PublicInfo(AircraftManagementDatabase amd) {
+	  this.aircraftManagementDatabase = amd;
+
 	  setTitle(title);
 	  setLocationRelativeTo(null);
 	  setSize(400,200); // change to suit preffered size

@@ -23,14 +23,12 @@ public static void main(String[] args) {
 	
 	// Add databases to Frames as required..
     // Instantiate and show all interfaces as Frames
-	//MaintenanceInspector m1 = new MaintenanceInspector();
-	//PublicInfo pi = new PublicInfo();
-	//RefuellingSupervisor rs = new RefuellingSupervisor();
-	//RadarTransceiver rt = new RadarTransceiver();
-	
+	MaintenanceInspector m1 = new MaintenanceInspector(amd);
+	PublicInfo pi = new PublicInfo(amd);
+	RefuellingSupervisor rs = new RefuellingSupervisor(amd);
+	RadarTransceiver rt = new RadarTransceiver(amd);
 	CleaningSupervisor cs = new CleaningSupervisor(amd);
-	
-	//LATC la = new LATC(amd);
+	LATC la = new LATC(amd);
 	
   }
 
