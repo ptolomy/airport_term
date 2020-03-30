@@ -110,7 +110,6 @@ public class AircraftManagementDatabase {
 	 */
 	public void radarLostContact(int mCode) {
 		MRs[mCode].radarLostContact();
-		MRs[mCode].setStatus(0); // needed? can remove if not
 	}
 
 	/**
