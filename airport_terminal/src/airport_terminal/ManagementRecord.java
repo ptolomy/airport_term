@@ -53,7 +53,7 @@ public class ManagementRecord {
 /** Status code
  *
  * See MRState diagram.*/
-  public static int READY_CLEAN_MAINT = 8;
+  public static int READY_FOR_CLEAN_MAINT = 8;	// Changed from READY_CLEAN_MAINT to READY_FOR_CLEAN_MAINT
 
 /** Status code
  *
@@ -214,8 +214,17 @@ public class ManagementRecord {
   * The problem description is recorded.
   *
   * The status must have been READY_FOR_CLEAN_MAINT or CLEAN_AWAIT_MAINT and becomes FAULTY_AWAIT_CLEAN or AWAIT_REPAIR respectively.
-  * @preconditions Status is READY_FOR_CLEAN_MAINT or CLEAN_AWAIT_MAINT*/
-  public void faultsFound(String description){
+  * @preconditions Status is READY_FOR_CLEAN_MAINT or CLEAN_AWAIT_MAINT
+  * */
+  public void faultsFound(String description) {
+	  if (status == READY_FOR_CLEAN_MAINT) {		// If status is READY_FOR_CLEAN_MAINT <PRECONDITION>
+		  this.faultDescription = description;		// Fault description becomes description passed in
+		  status = FAULTY_AWAIT_CLEAN;				// Status become FAULTY_AWAIT_CLEAN
+		  
+	  } else if (status == CLEAN_AWAIT_MAINT) {		// If status is CLEAN_AWAIT_MAINT <PRECONDITION>
+		  this.faultDescription = description;		// Fault description becomes description passed in
+		  status = AWAIT_REPAIR;					// Status becomes AWAIT_REPAIR
+	  }
   }
 
 /** The given passenger is boarding this aircraft.
@@ -223,8 +232,12 @@ public class ManagementRecord {
   * Their details are recorded in the passengerList.
   *
   * For this operation to be applicable, the status must be READY_PASSENGERS, and it doesn't change.
-  * @preconditions Status is READY_PASSENGERS*/
+  * @preconditions Status is READY_PASSENGERS
+  * */
   public void addPassenger(PassengerDetails details){
+	  if (status == READY_PASSENGERS) {		// If status is READY_PASSENGERS <PRECONDITION>
+		  passengerList.addPassenger(details);		// Add details to passenger list
+	  }
   }
 
 /** Return the entire current PassengerList.*/
