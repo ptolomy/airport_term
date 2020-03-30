@@ -15,13 +15,24 @@ public class FlightDescriptor {
    */
   public FlightDescriptor(String flightCode, Itinerary itinerary, PassengerList list){
 	  
-	 //Added the following code on Monday morning :)
 	 this.flightCode = flightCode; //Sets the flight code of the current instance of the class to become equal to the one being passed into the constructor
 	 this.itinerary = itinerary;//Sets the itinerary in the current instance of the class to become equal to the one being passed into the constructor
 	 this.passengerList = list;//Sets the passenger in the current instance of the class to become equal to the one being passed into the constructor
   
   }
-
+  
+  public PassengerList getPassengerList() {
+	  return passengerList;
+  }
+  
+  public Itinerary getItinerary() {
+	  return itinerary;
+  }
+  
+  public String getFlightCode() {
+	  return flightCode;
+  }
+  
   /**
    * Each Flight Descriptor contains a list of passengers on the flight.
    * @link aggregation
