@@ -41,9 +41,7 @@ public class AircraftManagementDatabase {
 	 */
 	public int getStatus(int mCode) {
 		int status = 0;
-
 			return status = MRs[mCode].getStatus();
-
 	}
 
 	/**
@@ -65,7 +63,6 @@ public class AircraftManagementDatabase {
 	public String getFlightCode(int mCode) {
 		String code = "";
 			return code = MRs[mCode].getFlightCode();
-
 	}
 
 	/**
@@ -110,7 +107,6 @@ public class AircraftManagementDatabase {
 	 */
 	public void radarLostContact(int mCode) {
 		MRs[mCode].radarLostContact();
-		MRs[mCode].setStatus(0); // needed? can remove if not
 	}
 
 	/**
