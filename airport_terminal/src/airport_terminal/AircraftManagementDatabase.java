@@ -196,6 +196,10 @@ public class AircraftManagementDatabase {
 	 * Return the Itinerary of the aircraft with the given mCode.
 	 */
 	public Itinerary getItinerary(int mCode) {
+		for (int i = 0; i < MRs.length; i++) {
+			return MRs[i].getItinerary();
+		}
+		return null;
 	}
 
 }
