@@ -60,14 +60,11 @@ public class AircraftManagementDatabase {
 	 * public operations for requesting specific status changes.
 	 */
 	public void setStatus(int mCode, int newStatus) {
+		
 		try {
-			for (int i = 0; i < MRs.length; i++) {
-				if (MRs[i].getStatus() == newStatus) {
-					break;
-				} else {
-					MRs[i].setStatus(newStatus); // hrmm feels wrong
-				}
-			}
+			MRs[mCode].setStatus(newStatus);
+			
+			
 		} catch (IndexOutOfBoundsException ex) {
 			ex.printStackTrace();
 		}
@@ -175,31 +172,23 @@ public class AircraftManagementDatabase {
 	 * the message to the given MR for recording in the passenger list.
 	 */
 	public void addPassenger(int mCode, PassengerDetails details) {
-		if (mCode > 0) {
-			for (int i = 0; i < MRs.length; i++) {
-				MRs[i].addPassenger(details);
-			}
-		}
+	
+				MRs[mCode].addPassenger(details);
 	}
 
 	/**
 	 * Return the PassengerList of the aircraft with the given mCode.
 	 */
 	public PassengerList getPassengerList(int mCode) {
-		for (int i = 0; i < MRs.length; i++) {
-			return MRs[i].getPassengerList();
-		}
-		return null;
+			return MRs[mCode].getPassengerList();
 	}
 
 	/**
 	 * Return the Itinerary of the aircraft with the given mCode.
 	 */
 	public Itinerary getItinerary(int mCode) {
-		for (int i = 0; i < MRs.length; i++) {
-			return MRs[i].getItinerary();
-		}
-		return null;
+			return MRs[mCode].getItinerary();
+		
 	}
 
 }
