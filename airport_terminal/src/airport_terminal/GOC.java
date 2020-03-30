@@ -68,7 +68,7 @@ public class GOC extends JFrame implements ActionListener {
 	  int[] code = airDB.getWithStatus(2);
 	
 	 for (int i = 0; i < code.length; i++) {
-		  airList.addItem(airDB.getFlightCode(i));
+		  airList.addItem(airDB.getFlightCode(code[i]));
 	}
   }
 
