@@ -14,6 +14,10 @@ public class FlightDescriptor {
    * and the current PassengerList.
    */
   public FlightDescriptor(String flightCode, Itinerary itinerary, PassengerList list){
+	  
+	 this.flightCode = flightCode; //Sets the flight code of the current instance of the class to become equal to the one being passed into the constructor
+	 this.itinerary = itinerary;
+	 this.passengerList = PassengerList;
   }
 
   /**
@@ -23,7 +27,7 @@ public class FlightDescriptor {
    * @supplierCardinality 1
    * @label contains
    * @directed*/
-  private PassengerList lnkUnnamed1;
+  private PassengerList passengerList;
 
   /**
    * Each Flight Descriptor contains a flight Itinerary..
@@ -32,7 +36,7 @@ public class FlightDescriptor {
    * @supplierCardinality 1
    * @label contains
    * @directed*/
-  private Itinerary lnkUnnamed;
+  private Itinerary itinerary;
 
 /**
  * A short string identifying the flight:
