@@ -108,25 +108,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		window.add(flightInfo);
 		flightInfo.addActionListener(this);
 
-		listPanel = new JPanel();
 
-		listModelOfManagement = new DefaultListModel<ManagementRecord>();
-
-		aircraftList = new JList<>(listModelOfManagement);
-
-
-		JScrollPane scroll = new JScrollPane(aircraftList);
-
-		scroll.setPreferredSize(new Dimension(400, 300));
-		scroll.setMinimumSize(new Dimension(400, 300));
-
-		listPanel.add(scroll);
-
-		listModelOfManagement.setSize(aircraftManagementDatabase.maxMRs);
-
-		
-
-		window.add(listPanel);
 
 		
 
