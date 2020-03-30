@@ -84,7 +84,6 @@ public class RefuellingSupervisor extends JFrame implements Observer, ActionList
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
