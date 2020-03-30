@@ -25,7 +25,7 @@ public class LATC extends JFrame{
   private String title = "LATC";
   
 
-  public LATC() {
+  public LATC(AircraftManagementDatabase amd) {
 	  
 	  setTitle(title);
 	  setLocationRelativeTo(null);
@@ -33,6 +33,11 @@ public class LATC extends JFrame{
 	  setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
 	  setVisible(true);
+	  
+	  
+	  lnkUnnamed = amd;
+	  
+	  
   }
 
 
