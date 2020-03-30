@@ -1,5 +1,5 @@
 package airport_terminal;
-
+// Another test change
 /**
  * An individual aircraft management record:
  * Either FREE or models an aircraft currently known to SAAMS.
@@ -53,7 +53,7 @@ public class ManagementRecord {
 /** Status code
  *
  * See MRState diagram.*/
-  public static int READY_CLEAN_MAINT = 8;
+  public static int READY_FOR_CLEAN_MAINT = 8;	// Changed from READY_CLEAN_MAINT to READY_FOR_CLEAN_MAINT
 
 /** Status code
  *
@@ -157,42 +157,68 @@ public class ManagementRecord {
   *
   * This is a general purpose state change request where no special details accompany the state change.
   * [Special status changers are, for example, "taxiTo", where a gate number is supplied.]
-  * @preconditions Valid transition requested*/
+  * @preconditions Valid transition requested
+  * */
   public void setStatus(int newStatus){
+	  status = newStatus; 
   }
 
   /**
    * Return the status code of this MR.
    */
   public int getStatus(){
-	  return status; // Test change
+	  return status; 
   }
 
   /**
    * Return the flight code of this MR.
    */
   public String getFlightCode(){
+	  return flightCode;
   }
 
 /** Sets up the MR with details of newly detected flight
   *
   * Status must be FREE now, and becomes either IN_TRANSIT or WANTING_TO_LAND depending on the details in the flight descriptor.
-  * @preconditions Status is FREE*/
+  * @preconditions Status is FREE
+  * */
   public void radarDetect(FlightDescriptor fd){
+	  if (status == FREE) {	// If flight status is FREE <PRECONDITION>
+		  itinerary = fd.getItinerary();			// Itinerary becomes passed flightDescriptor itinerary
+		  if (itinerary.getTo().equalsIgnoreCase("Stirling")) {	// If passed itinerary 'to' is equal to 'Stirling'
+			  status = WANTING_TO_LAND;				// Status becomes WANTING_TO_LAND
+		  } else {	
+			  status = IN_TRANSIT;					// Status becomes IN_TRANSIT
+		  }
+	  }
   }
 
 /** This aircraft has departed from local airspace.
   *
   * Status must have been either IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE, and becomes FREE (and the flight details are cleared).
-  * @preconditions Status is IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE*/
+  * @preconditions Status is IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE
+  * */
   public void radarLostContact(){
+	  if (status == IN_TRANSIT || status == DEPARTING_THROUGH_LOCAL_AIRSPACE) {	// If status is IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE <PRECONDITION>
+		  status = FREE;	// Status becomes 'FREE'
+		  flightCode = ""; //Set the flight code to an empty string i.e. have no flight code
+		  faultDescription = ""; //Set the fault description to an empty string i.e. there are no faults
+		  gateNumber = 0; //Reset the gate number to 0
+		  passengerList = null; //Empty the current passenger list
+		  itinerary = null; //Empty the current itinerary		  
+	  }
   }
 
 /** GOC has allocated the given gate for unloading passengers.
   *
-  * The gate number is recorded.The status must have been LANDED and becomes TAXIING.
-  * @preconditions Status is LANDED*/
+  * The gate number is recorded. The status must have been LANDED and becomes TAXIING.
+  * @preconditions Status is LANDED
+  * */
   public void taxiTo(int gateNumber){
+	  if (status == LANDED) {	// If status is LANDED <PRECONDITION>
+		  this.gateNumber = gateNumber; 	
+		  status = TAXIING;		// Status becomes TAXIING
+	  }
   }
 
 /** The Maintenance Supervisor has reported faults.
@@ -200,8 +226,17 @@ public class ManagementRecord {
   * The problem description is recorded.
   *
   * The status must have been READY_FOR_CLEAN_MAINT or CLEAN_AWAIT_MAINT and becomes FAULTY_AWAIT_CLEAN or AWAIT_REPAIR respectively.
-  * @preconditions Status is READY_FOR_CLEAN_MAINT or CLEAN_AWAIT_MAINT*/
-  public void faultsFound(String description){
+  * @preconditions Status is READY_FOR_CLEAN_MAINT or CLEAN_AWAIT_MAINT
+  * */
+  public void faultsFound(String description) {
+	  if (status == READY_FOR_CLEAN_MAINT) {		// If status is READY_FOR_CLEAN_MAINT <PRECONDITION>
+		  this.faultDescription = description;		// Fault description becomes description passed in
+		  status = FAULTY_AWAIT_CLEAN;				// Status become FAULTY_AWAIT_CLEAN
+		  
+	  } else if (status == CLEAN_AWAIT_MAINT) {		// If status is CLEAN_AWAIT_MAINT <PRECONDITION>
+		  this.faultDescription = description;		// Fault description becomes description passed in
+		  status = AWAIT_REPAIR;					// Status becomes AWAIT_REPAIR
+	  }
   }
 
 /** The given passenger is boarding this aircraft.
@@ -209,16 +244,22 @@ public class ManagementRecord {
   * Their details are recorded in the passengerList.
   *
   * For this operation to be applicable, the status must be READY_PASSENGERS, and it doesn't change.
-  * @preconditions Status is READY_PASSENGERS*/
+  * @preconditions Status is READY_PASSENGERS
+  * */
   public void addPassenger(PassengerDetails details){
+	  if (status == READY_PASSENGERS) {		// If status is READY_PASSENGERS <PRECONDITION>
+		  passengerList.addPassenger(details);		// Add details to passenger list
+	  }
   }
 
 /** Return the entire current PassengerList.*/
   public PassengerList getPassengerList(){
+	  return passengerList;
   }
 
 /** Return the aircraft's Itinerary.*/
   public Itinerary getItinerary(){
+	  return itinerary;
   }
 
 }

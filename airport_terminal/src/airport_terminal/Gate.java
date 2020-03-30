@@ -11,49 +11,56 @@ package airport_terminal;
  */
 public class Gate {
 
+	/**
+	 *  Status code representing the situation when the gate is currently allocated to no aircraft.*/
+	  public static int FREE = 0;
+
+	/**
+	 *  Status code representing the situation when the gate has been allocated to an aircraft that has just landed, but the aircraft has not yet docked at the gate.*/
+	  public static int RESERVED = 1;
+
+	/**
+	 *  Status code representing the situation when an aircraft is currently at the gate - either unloading passengers, being cleaned and maintained, loading new passengers or finished loading but no permission to taxi to the runway has yet been granted.*/
+	  public static int OCCUPIED = 2;
+
+	/**
+	 *  Holds the code indicating the current status of this gate.*/
+	  private int status = FREE;
+
+	/**
+	 *  If the gate is reserved or occupied, the mCode of the MR of the aircraft which is expected/present.*/
+	  private int mCode;
+	
+	
   /**
    *  Return the status code for this gate.
    */
   public int getStatus(){
-	return 0;
+	return status;
   }
 
 /**
  *  The gate has been allocated to the given aircraft, identified by mCode: Change status from FREE to RESERVED and note the mCode.
   * @preconditions Status must be Free*/
   public void allocate(int mCode){
-	  
+	  if(mCode > 0 && status == FREE) {
+		  status = RESERVED;
+	  }
   }
 
 /**
  *  Change gate status from RESERVED to OCCUPIED to indicate that aircraft has now docked.
   * @preconditions Status must be Reserved*/
   public void docked(){
+	  status = OCCUPIED;
   }
 
-/**
- *  Status code representing the situation when the gate is currently allocated to no aircraft.*/
-  public static int FREE = 0;
 
-/**
- *  Status code representing the situation when the gate has been allocated to an aircraft that has just landed, but the aircraft has not yet docked at the gate.*/
-  public static int RESERVED = 1;
-
-/**
- *  Status code representing the situation when an aircraft is currently at the gate - either unloading passengers, being cleaned and maintained, loading new passengers or finished loading but no permission to taxi to the runway has yet been granted.*/
-  public static int OCCUPIED = 2;
-
-/**
- *  Holds the code indicating the current status of this gate.*/
-  private int status = FREE;
-
-/**
- *  If the gate is reserved or occupied, the mCode of the MR of the aircraft which is expected/present.*/
-  private int mCode;
 
 /**
  *  Change status from OCCUPIED to FREE as the docked aircraft has now departed.
   * @preconditions Status must be Occupied*/
   public void departed(){
+	  status = FREE;
   }
 }

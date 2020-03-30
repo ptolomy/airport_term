@@ -23,13 +23,14 @@ public class RefuellingSupervisor extends JFrame {
   * @clientCardinality 1
   * @label accesses/observes
   * @directed*/
-  private AircraftManagementDatabase lnkUnnamed;
+  private AircraftManagementDatabase aircraftManagementDatabase;
   private String title = "Refuelling Supervisor";
   //private JButton refueled;
   
 
-  public RefuellingSupervisor() {
-	  
+  public RefuellingSupervisor(AircraftManagementDatabase amd) {
+	  this.aircraftManagementDatabase = amd;
+
 	  setTitle(title);
 	  setLocationRelativeTo(null);
 	  setSize(400,200); // change to suit preffered size

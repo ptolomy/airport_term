@@ -10,12 +10,14 @@ public class PassengerDetails {
    * Constructor: Just a name required.
    */
   public PassengerDetails(String name){
+	  this.name = name; //Sets the name of the current instance of the passenger name to the name being passed in to the constructor
   }
 
   /**
    * Return the name of this passenger.
    */
   public String getName(){
+	  return name;
   }
 
   /**

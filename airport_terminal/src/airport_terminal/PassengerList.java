@@ -1,4 +1,5 @@
 package airport_terminal;
+import java.util.ArrayList;
 
 /**
  * Contains an array of PassengerDetails objects - one per passenger on a flight.
@@ -15,7 +16,8 @@ public class PassengerList {
  * @shapeType AggregationLink
  * @supplierCardinality 0..*
  */
-  private PassengerDetails[] details;
+	//Changed from private PassengerDetails[] details to allow for easier processing using .add etc.
+  private ArrayList<PassengerDetails> details;
 
 /**
  * The given passenger is boarding.
@@ -23,5 +25,7 @@ public class PassengerList {
  * @preconditions Status is READY_PASSENGERS
  */
   public void addPassenger(PassengerDetails details){
+	  //!!Still need to check the pre-condition before the passengers are added!
+	 this.details.add(details);//Add the details that have been passed into the method to the details array list that exists in this method. 
   }
 }
