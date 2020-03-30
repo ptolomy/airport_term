@@ -41,7 +41,7 @@ public class GOC extends JFrame implements ActionListener {
   * @directed*/
   private AircraftManagementDatabase airDB;
   private String title = "GOC";
-  private JButton permToLand;
+  private JButton permToLand,update;
   private JComboBox<String> airList;
   private TextField field;
   
@@ -49,23 +49,38 @@ public class GOC extends JFrame implements ActionListener {
 	  
 	  setTitle(title);
 	  setLocationRelativeTo(null);
-	  setSize(400,200);
+	  setSize(400,400);
 	  setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+	  
+	  update.addActionListener(this);
+	  permToLand.addActionListener(this);
 	  
 	  Container window = getContentPane();
 	  
 	  window.setLayout(new FlowLayout());
-	  
+	  window.add(update);
+	  window.add(permToLand);
+	  window.add(airList);
 	  
   }
   
   public void updateList() {
-	  airList.addItem(airDB.getWithStatus(2).toString() );
+	  int[] code = airDB.getWithStatus(2);
+	  for (int i:  code) {
+		  airList.addItem(airDB.getFlightCode(i));
+	  }
+	 
   }
 
 @Override
 public void actionPerformed(ActionEvent e) {
-	// TODO Auto-generated method stub
+	if (e.getSource() == update) {
+		updateList();
+	}
+	
+	if (e.getSource() == permToLand) {
+		int mCode = (int) airList.getSelectedItem();
+	}
 	
 }
 
