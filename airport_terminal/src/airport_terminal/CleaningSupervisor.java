@@ -32,6 +32,8 @@ public class CleaningSupervisor extends JFrame implements ActionListener, Observ
 	 */
 	private AircraftManagementDatabase aircraftManagementDatabase;
 	private String title = "Cleaning Supervisor";
+	
+	int amdIndex;
 
 	
 	private JLabel labelFlightCode;
