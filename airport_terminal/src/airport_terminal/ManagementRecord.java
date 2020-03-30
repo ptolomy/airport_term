@@ -194,6 +194,7 @@ public class ManagementRecord {
 	  if (status == 1 || status == 18) {	// If status is IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE
 		  status = 0;						// Status becomes 'FREE'
 		  
+		  
 	  }
   }
 
@@ -224,10 +225,12 @@ public class ManagementRecord {
 
 /** Return the entire current PassengerList.*/
   public PassengerList getPassengerList(){
+	  return passengerList;
   }
 
 /** Return the aircraft's Itinerary.*/
   public Itinerary getItinerary(){
+	  return itinerary;
   }
 
 }
