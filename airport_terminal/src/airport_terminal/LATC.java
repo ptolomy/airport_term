@@ -12,10 +12,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+
 
 /**
  * An interface to SAAMS: Local Air Traffic Controller Screen: Inputs events
@@ -40,7 +38,6 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	private AircraftManagementDatabase aircraftManagementDatabase;
 
 	private int MRIndex; // Used to index database
-	private boolean isButtonAvailable; // Used to indicate if button can be clicked
 
 	// Labels
 	private JLabel labelFlightCode;
@@ -55,10 +52,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	private JButton waitingForTaxi;
 	private JButton flightInfo;
 
-	// Lists
-	private JList<ManagementRecord> aircraftList;
-	private DefaultListModel<ManagementRecord> listModelOfManagement;
-	private JPanel listPanel;
+
 
 	public LATC(AircraftManagementDatabase amd) {
 
@@ -145,11 +139,11 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		}
 	}
 
-	
+
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }
