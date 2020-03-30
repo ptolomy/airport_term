@@ -3,10 +3,14 @@ package airport_terminal;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JList;
 
 /**
  * An interface to SAAMS:
@@ -37,7 +41,10 @@ public class GOC extends JFrame implements ActionListener {
   * @directed*/
   private AircraftManagementDatabase airDB;
   private String title = "GOC";
- 
+  private JButton permToLand;
+  private JComboBox<String> airList;
+  private TextField field;
+  
   public GOC() {
 	  
 	  setTitle(title);
@@ -48,6 +55,7 @@ public class GOC extends JFrame implements ActionListener {
 	  Container window = getContentPane();
 	  
 	  window.setLayout(new FlowLayout());
+	  
 	  
   }
   
