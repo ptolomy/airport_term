@@ -1,6 +1,5 @@
 package airport_terminal;
 // Another test change
-
 /**
  * An individual aircraft management record:
  * Either FREE or models an aircraft currently known to SAAMS.
@@ -160,19 +159,21 @@ public class ManagementRecord {
   * [Special status changers are, for example, "taxiTo", where a gate number is supplied.]
   * @preconditions Valid transition requested*/
   public void setStatus(int newStatus){
+	  status = newStatus; 
   }
 
   /**
    * Return the status code of this MR.
    */
   public int getStatus(){
-	  return status; // Test change
+	  return status; 
   }
 
   /**
    * Return the flight code of this MR.
    */
   public String getFlightCode(){
+	  return flightCode;
   }
 
 /** Sets up the MR with details of newly detected flight
