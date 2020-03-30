@@ -201,8 +201,11 @@ public class ManagementRecord {
   public void radarLostContact(){
 	  if (status == IN_TRANSIT || status == DEPARTING_THROUGH_LOCAL_AIRSPACE) {	// If status is IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE <PRECONDITION>
 		  status = FREE;	// Status becomes 'FREE'
-		  
-		  
+		  flightCode = ""; //Set the flight code to an empty string i.e. have no flight code
+		  faultDescription = ""; //Set the fault desctiprion to an empty string i.e. there are no faults
+		  gateNumber = 0; //Reset the gate number to 0
+		  passengerList = null; //Empty the current passenger list
+		  itinerary = null; //Empty the current itinerary		  
 	  }
   }
 
