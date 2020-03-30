@@ -182,6 +182,7 @@ public class ManagementRecord {
   * @preconditions Status is FREE*/
   public void radarDetect(FlightDescriptor fd){
 	  if (status == FREE) {	// If flight status is 'FREE'
+		  this.itinerary = getItinerary();
 		  if (itinerary.getTo() == "Stirling") {
 			  status = WANTING_TO_LAND;
 		  } else {
