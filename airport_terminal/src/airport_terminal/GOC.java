@@ -66,10 +66,10 @@ public class GOC extends JFrame implements ActionListener {
   
   public void updateList() {
 	  int[] code = airDB.getWithStatus(2);
-	  for (int i:  code) {
+	
+	 for (int i = 0; i < code.length; i++) {
 		  airList.addItem(airDB.getFlightCode(i));
-	  }
-	 
+	}
   }
 
 @Override
