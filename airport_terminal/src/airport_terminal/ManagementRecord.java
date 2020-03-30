@@ -157,7 +157,8 @@ public class ManagementRecord {
   *
   * This is a general purpose state change request where no special details accompany the state change.
   * [Special status changers are, for example, "taxiTo", where a gate number is supplied.]
-  * @preconditions Valid transition requested*/
+  * @preconditions Valid transition requested
+  * */
   public void setStatus(int newStatus){
 	  status = newStatus; 
   }
@@ -179,7 +180,8 @@ public class ManagementRecord {
 /** Sets up the MR with details of newly detected flight
   *
   * Status must be FREE now, and becomes either IN_TRANSIT or WANTING_TO_LAND depending on the details in the flight descriptor.
-  * @preconditions Status is FREE*/
+  * @preconditions Status is FREE
+  * */
   public void radarDetect(FlightDescriptor fd){
 	  if (status == FREE) {	// If flight status is 'FREE'
 		  this.itinerary = getItinerary();
@@ -194,7 +196,8 @@ public class ManagementRecord {
 /** This aircraft has departed from local airspace.
   *
   * Status must have been either IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE, and becomes FREE (and the flight details are cleared).
-  * @preconditions Status is IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE*/
+  * @preconditions Status is IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE
+  * */
   public void radarLostContact(){
 	  if (status == IN_TRANSIT || status == DEPARTING_THROUGH_LOCAL_AIRSPACE) {	// If status is IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE <PRECONDITION>
 		  status = FREE;	// Status becomes 'FREE'
