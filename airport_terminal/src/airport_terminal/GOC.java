@@ -39,6 +39,7 @@ public class GOC extends JFrame implements ActionListener {
   private String title = "GOC";
  
   public GOC() {
+	  
 	  setTitle(title);
 	  setLocationRelativeTo(null);
 	  setSize(400,200);
