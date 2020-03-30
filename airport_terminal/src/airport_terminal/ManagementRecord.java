@@ -191,8 +191,8 @@ public class ManagementRecord {
   * Status must have been either IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE, and becomes FREE (and the flight details are cleared).
   * @preconditions Status is IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE*/
   public void radarLostContact(){
-	  if (status == IN_TRANSIT || status == DEPARTING_THROUGH_LOCAL_AIRSPACE) {	// If status is IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE
-		  status = FREE;						// Status becomes 'FREE'
+	  if (status == IN_TRANSIT || status == DEPARTING_THROUGH_LOCAL_AIRSPACE) {	// If status is IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE <PRECONDITION>
+		  status = FREE;	// Status becomes 'FREE'
 		  
 		  
 	  }
@@ -200,9 +200,13 @@ public class ManagementRecord {
 
 /** GOC has allocated the given gate for unloading passengers.
   *
-  * The gate number is recorded.The status must have been LANDED and becomes TAXIING.
+  * The gate number is recorded. The status must have been LANDED and becomes TAXIING.
   * @preconditions Status is LANDED*/
   public void taxiTo(int gateNumber){
+	  if (status == LANDED) {	// If status is LANDED <PRECONDITION>
+		  this.gateNumber = gateNumber; 	
+		  status = TAXIING;		// Status becomes TAXIING
+	  }
   }
 
 /** The Maintenance Supervisor has reported faults.

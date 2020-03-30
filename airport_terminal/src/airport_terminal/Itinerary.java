@@ -14,23 +14,23 @@ public class Itinerary {
    * where it is going to now, and where next after that.
    */
   public Itinerary(String from, String to, String next){
-	  this.from = from;
-	  this.to = to;
-	  this.next = next;
+	  this.from = from; 	// Variable passed in becomes new from
+	  this.to = to;			// Variable passed in becomes new to
+	  this.next = next;		// Variable passed in becomes new next
   }
 
   /**
    * Return the from attribute.
    * @tgGet*/
   public String getFrom(){
-	  return from;
+	  return from;	// Returns from attribute 
   }
 
   /**
    *  Return the to attribute.
    * @tgGet*/
   public String getTo(){
-	  return to;
+	  return to;	// Returns to attribute
   }
 
   /**
@@ -42,7 +42,7 @@ public class Itinerary {
    * Return the next attribute.
    * @tgGet*/
   public String getNext(){
-	  return next;
+	  return next;	// Returns next attribute
   }
 
   /**
