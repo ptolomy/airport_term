@@ -16,8 +16,8 @@ public class FlightDescriptor {
   public FlightDescriptor(String flightCode, Itinerary itinerary, PassengerList list){
 	  
 	 this.flightCode = flightCode; //Sets the flight code of the current instance of the class to become equal to the one being passed into the constructor
-	 this.itinerary = itinerary;
-	 this.passengerList = PassengerList;
+	 this.itinerary = itinerary;//Sets the itinerary in the current instance of the class to become equal to the one being passed into the constructor
+	 this.passengerList = list;//Sets the passenger in the current instance of the class to become equal to the one being passed into the constructor
   }
 
   /**
