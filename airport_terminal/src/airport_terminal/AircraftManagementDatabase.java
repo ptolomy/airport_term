@@ -167,22 +167,29 @@ public class AircraftManagementDatabase {
 	 * for status update.
 	 */
 	public void faultsFound(int mCode, String description) {
-		
+
 	}
 
-  
 	/**
 	 * The given passenger is boarding the aircraft with the given mCode. Forward
 	 * the message to the given MR for recording in the passenger list.
 	 */
 	public void addPassenger(int mCode, PassengerDetails details) {
+		if (mCode > 0) {
+			for (int i = 0; i < MRs.length; i++) {
+				MRs[i].addPassenger(details);
+			}
+		}
 	}
-
 
 	/**
 	 * Return the PassengerList of the aircraft with the given mCode.
 	 */
 	public PassengerList getPassengerList(int mCode) {
+		for (int i = 0; i < MRs.length; i++) {
+			return MRs[i].getPassengerList();
+		}
+		return null;
 	}
 
 	/**
