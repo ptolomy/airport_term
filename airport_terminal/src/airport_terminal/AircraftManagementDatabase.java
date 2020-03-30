@@ -140,7 +140,6 @@ public class AircraftManagementDatabase {
 		} catch (IndexOutOfBoundsException ex) {
 			ex.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -168,6 +167,7 @@ public class AircraftManagementDatabase {
 	 * for status update.
 	 */
 	public void faultsFound(int mCode, String description) {
+		
 	}
 
   
