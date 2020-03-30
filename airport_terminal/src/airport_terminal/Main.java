@@ -28,7 +28,7 @@ public static void main(String[] args) {
 	//RefuellingSupervisor rs = new RefuellingSupervisor();
 	//RadarTransceiver rt = new RadarTransceiver();
 	
-	CleaningSupervisor cs = new CleaningSupervisor();
+	CleaningSupervisor cs = new CleaningSupervisor(amd);
 	
 	//LATC la = new LATC(amd);
 	
