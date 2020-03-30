@@ -41,13 +41,9 @@ public class AircraftManagementDatabase {
 	 */
 	public int getStatus(int mCode) {
 		int status = 0;
-		try {
-			for (int i = 0; i < MRs.length; i++) {
+
 				status = MRs[mCode].getStatus();
-			}
-		} catch (IndexOutOfBoundsException ex) {
-			ex.printStackTrace();
-		}
+
 		return status;
 	}
 
@@ -60,14 +56,7 @@ public class AircraftManagementDatabase {
 	 * public operations for requesting specific status changes.
 	 */
 	public void setStatus(int mCode, int newStatus) {
-		
-		try {
 			MRs[mCode].setStatus(newStatus);
-			
-			
-		} catch (IndexOutOfBoundsException ex) {
-			ex.printStackTrace();
-		}
 	}
 
 	/**
@@ -76,11 +65,9 @@ public class AircraftManagementDatabase {
 	 */
 	public String getFlightCode(int mCode) {
 		String code = "";
-		try {
+
 				code = MRs[mCode].getFlightCode();
-		} catch (IndexOutOfBoundsException ex) {
-			ex.printStackTrace();
-		}
+
 		return code;
 	}
 
@@ -139,11 +126,8 @@ public class AircraftManagementDatabase {
 	 * Note isn't it possible for more than one aircraft to have the same mCode?
 	 */
 	public void taxiTo(int mCode, int gateNumber) {
-		try {
 			MRs[mCode].taxiTo(gateNumber);
-		} catch (IndexOutOfBoundsException ex) {
-			ex.printStackTrace();
-		}
+
 	}
 
 	/**

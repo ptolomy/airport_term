@@ -1,6 +1,13 @@
 package airport_terminal;
 
 
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+
 /**
  * An interface to SAAMS:
  * A Ground Operations Controller Screen:
@@ -8,21 +15,49 @@ package airport_terminal;
  * This class is a controller for the GateInfoDatabase and the AircraftManagementDatabase: sending them messages to change the gate or aircraft status information.
  * This class also registers as an observer of the GateInfoDatabase and the AircraftManagementDatabase, and is notified whenever any change occurs in those <<model>> elements.
  * See written documentation.
-
  */
-public class GOC {
+/**
+ * Create a Screen which sends updates to the Gate and Aircraft
+ * 
+ * @author gareth
+ *
+ */
+public class GOC extends JFrame implements ActionListener {
 /** The Ground Operations Controller Screen interface has access to the GateInfoDatabase.
   * @clientCardinality 1
   * @supplierCardinality 1
   * @label accesses/observes
   * @directed*/
-  private GateInfoDatabase lnkUnnamed;
+  private GateInfoDatabase gateDB;
 /**
   * The Ground Operations Controller Screen interface has access to the AircraftManagementDatabase.
   * @clientCardinality 1
   * @supplierCardinality 1
   * @label accesses/observes
   * @directed*/
-  private AircraftManagementDatabase lnkUnnamed1;
+  private AircraftManagementDatabase airDB;
+  private String title = "GOC";
+ 
+  public GOC() {
+	  setTitle(title);
+	  setLocationRelativeTo(null);
+	  setSize(400,200);
+	  setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+	  
+	  Container window = getContentPane();
+	  
+	  window.setLayout(new FlowLayout());
+	  
+  }
+  
+  public void updateGDB() {
+	  
+  }
+
+@Override
+public void actionPerformed(ActionEvent e) {
+	// TODO Auto-generated method stub
+	
+}
 
 }
