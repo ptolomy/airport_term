@@ -181,6 +181,9 @@ public class ManagementRecord {
   * Status must be FREE now, and becomes either IN_TRANSIT or WANTING_TO_LAND depending on the details in the flight descriptor.
   * @preconditions Status is FREE*/
   public void radarDetect(FlightDescriptor fd){
+	  if (status == 0) {	// If flight status is 'FREE'
+		  
+	  }
   }
 
 /** This aircraft has departed from local airspace.
@@ -188,6 +191,10 @@ public class ManagementRecord {
   * Status must have been either IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE, and becomes FREE (and the flight details are cleared).
   * @preconditions Status is IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE*/
   public void radarLostContact(){
+	  if (status == 1 || status == 18) {	// If status is IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE
+		  status = 0;						// Status becomes 'FREE'
+		  
+	  }
   }
 
 /** GOC has allocated the given gate for unloading passengers.
