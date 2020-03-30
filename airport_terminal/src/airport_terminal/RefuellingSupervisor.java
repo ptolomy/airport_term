@@ -77,7 +77,6 @@ public class RefuellingSupervisor extends JFrame implements Observer, ActionList
 	
 	private void updateList() {
 		aircraftAwaitingRefuel.clear();
-		//Having issues getting the addAll method to work below....
         aircraftAwaitingRefuel.addAll(Arrays.asList(aircraftManagementDB.getWithStatus(ManagementRecord.READY_REFUEL)));
         
 
