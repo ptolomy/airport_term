@@ -9,6 +9,7 @@ import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  * An interface to SAAMS: Cleaning Supervisor Screen: Inputs events from the
@@ -32,6 +33,12 @@ public class CleaningSupervisor extends JFrame implements ActionListener, Observ
 	private AircraftManagementDatabase aircraftManagementDatabase;
 	private String title = "Cleaning Supervisor";
 
+	
+	private JLabel labelFlightCode;
+	private JLabel flightCode;
+	private JLabel labelFlightStatus;
+	private JLabel flightStatus;
+	
 	private JButton cleaningComplete;
 	private JButton quit;
 
@@ -41,12 +48,25 @@ public class CleaningSupervisor extends JFrame implements ActionListener, Observ
 
 		this.aircraftManagementDatabase = amd;
 		
+		
+		
 		setTitle(title);
 		setLocationRelativeTo(null);
 		setSize(400, 200); // change to suit preffered size
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		Container window = getContentPane();
         window.setLayout(new FlowLayout());
+        
+        
+        labelFlightCode = new JLabel("Flight Code: ");
+        window.add(labelFlightCode);
+        flightCode = new JLabel("");
+        window.add(flightCode);
+        
+        labelFlightStatus = new JLabel("Flight Status: ");
+        window.add(labelFlightStatus);
+        flightStatus = new JLabel("");
+        window.add(flightStatus);
         
         // Cleaning complete button
         cleaningComplete = new JButton("Cleaning Complete");
