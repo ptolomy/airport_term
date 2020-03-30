@@ -183,12 +183,12 @@ public class ManagementRecord {
   * @preconditions Status is FREE
   * */
   public void radarDetect(FlightDescriptor fd){
-	  if (status == FREE) {	// If flight status is 'FREE'
-		  this.itinerary = getItinerary();
-		  if (itinerary.getTo() == "Stirling") {
-			  status = WANTING_TO_LAND;
-		  } else {
-			  status = IN_TRANSIT;
+	  if (status == FREE) {	// If flight status is FREE <PRECONDITION>
+		  itinerary = fd.getItinerary();			// Itinerary becomes passed flightDescriptor itinerary
+		  if (itinerary.getTo() == "Stirling") {	// If passed itinerary 'to' is equal to 'Stirling'
+			  status = WANTING_TO_LAND;				// Status becomes WANTING_TO_LAND
+		  } else {	
+			  status = IN_TRANSIT;					// Status becomes IN_TRANSIT
 		  }
 	  }
   }
@@ -200,7 +200,7 @@ public class ManagementRecord {
   * */
   public void radarLostContact(){
 	  if (status == IN_TRANSIT || status == DEPARTING_THROUGH_LOCAL_AIRSPACE) {	// If status is IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE <PRECONDITION>
-		  status = FREE;	// Status becomes 'FREE'
+		  status = FREE;	// Status becomes FREE
 		  
 		  
 	  }
@@ -209,7 +209,8 @@ public class ManagementRecord {
 /** GOC has allocated the given gate for unloading passengers.
   *
   * The gate number is recorded. The status must have been LANDED and becomes TAXIING.
-  * @preconditions Status is LANDED*/
+  * @preconditions Status is LANDED
+  * */
   public void taxiTo(int gateNumber){
 	  if (status == LANDED) {	// If status is LANDED <PRECONDITION>
 		  this.gateNumber = gateNumber; 	
