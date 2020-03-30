@@ -59,8 +59,8 @@ public class GOC extends JFrame implements ActionListener {
 	  
   }
   
-  public void updateGDB() {
-	  
+  public void updateList() {
+	  airList.addItem(airDB.getWithStatus(2).toString() );
   }
 
 @Override
