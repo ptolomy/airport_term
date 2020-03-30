@@ -19,7 +19,7 @@ public class Main {
 public static void main(String[] args) {
     // Instantiate databases
 	//ManagementRecord mrd = new ManagementRecord();
-	AircraftManagementDatabase amd = new AircraftManagementDatabase();
+	//AircraftManagementDatabase amd = new AircraftManagementDatabase();
 	
 	// Add databases to Frames as required..
     // Instantiate and show all interfaces as Frames
