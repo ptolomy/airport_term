@@ -60,11 +60,9 @@ public class AircraftManagementDatabase {
 	 * public operations for requesting specific status changes.
 	 */
 	public void setStatus(int mCode, int newStatus) {
-		
+
 		try {
 			MRs[mCode].setStatus(newStatus);
-			
-			
 		} catch (IndexOutOfBoundsException ex) {
 			ex.printStackTrace();
 		}
@@ -77,13 +75,12 @@ public class AircraftManagementDatabase {
 	public String getFlightCode(int mCode) {
 		String code = "";
 		try {
-				code = MRs[mCode].getFlightCode();
+			code = MRs[mCode].getFlightCode();
 		} catch (IndexOutOfBoundsException ex) {
 			ex.printStackTrace();
 		}
 		return code;
 	}
-
 
 	/**
 	 * Returns an array of mCodes: Just the mCodes of those MRs with the given
@@ -100,7 +97,6 @@ public class AircraftManagementDatabase {
 		}
 		return code;
 	}
-
 
 	/**
 	 * The radar has detected a new aircraft, and has obtained flight descriptor fd
@@ -127,8 +123,8 @@ public class AircraftManagementDatabase {
 	 * delete/archive its contents and become FREE.
 	 */
 	public void radarLostContact(int mCode) {
-				MRs[mCode].radarLostContact();
-				MRs[mCode].setStatus(0); // needed? can remove if not
+		MRs[mCode].radarLostContact();
+		MRs[mCode].setStatus(0); // needed? can remove if not
 	}
 
 	/**
@@ -160,23 +156,23 @@ public class AircraftManagementDatabase {
 	 * the message to the given MR for recording in the passenger list.
 	 */
 	public void addPassenger(int mCode, PassengerDetails details) {
-	
-				MRs[mCode].addPassenger(details);
+
+		MRs[mCode].addPassenger(details);
 	}
 
 	/**
 	 * Return the PassengerList of the aircraft with the given mCode.
 	 */
 	public PassengerList getPassengerList(int mCode) {
-			return MRs[mCode].getPassengerList();
+		return MRs[mCode].getPassengerList();
 	}
 
 	/**
 	 * Return the Itinerary of the aircraft with the given mCode.
 	 */
 	public Itinerary getItinerary(int mCode) {
-			return MRs[mCode].getItinerary();
-		
+		return MRs[mCode].getItinerary();
+
 	}
 
 }
