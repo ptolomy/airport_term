@@ -39,7 +39,7 @@ public class Main {
 		//PublicInfo pi = new PublicInfo(amd);
 		RefuellingSupervisor rs = new RefuellingSupervisor(amd);
 		RadarTransceiver rt = new RadarTransceiver(amd);
-		//CleaningSupervisor cs = new CleaningSupervisor(amd);
+		CleaningSupervisor cs = new CleaningSupervisor(amd);
 		LATC la = new LATC(amd);
 	}
 

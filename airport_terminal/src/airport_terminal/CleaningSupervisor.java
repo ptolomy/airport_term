@@ -7,9 +7,13 @@ import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 /**
  * An interface to SAAMS: Cleaning Supervisor Screen: Inputs events from the
@@ -43,8 +47,9 @@ public class CleaningSupervisor extends JFrame implements ActionListener, Observ
 	
 	private JButton cleaningComplete;
 	private JButton quit;
+	
+	private JList<String> outputList;
 
-	// private JButton clean;
 
 	public CleaningSupervisor(AircraftManagementDatabase amd) {
 
@@ -70,16 +75,23 @@ public class CleaningSupervisor extends JFrame implements ActionListener, Observ
         flightStatus = new JLabel("");
         window.add(flightStatus);
         
-        // Cleaning complete button
+       
+        
+        JPanel cleaning = new JPanel(); //Create a new JPanel for the refuelling information to appear on
+
+		outputList = new JList<String>(new DefaultListModel<String>()); //Initilise the output list to be a Jlist of strings
+		JScrollPane scrollList = new JScrollPane(outputList); //Create a scroll list for the JList
+
+		cleaning.add(scrollList);//Add the scroll list to the JPanel
+
+		 // Cleaning complete button
         cleaningComplete = new JButton("Cleaning Complete");
         window.add(cleaningComplete);
         cleaningComplete.addActionListener(this);
-        
-        
-        // Quit Button
-		quit = new JButton("Quit");
-		window.add(quit);
-		quit.addActionListener(this);
+		
+		getContentPane().add(cleaning);//Add the JPanel to the window
+		setVisible(true);
+		
 		
 		setVisible(true);
 	}

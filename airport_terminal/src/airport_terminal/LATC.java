@@ -66,7 +66,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	
 		setTitle(title);
 		setLocationRelativeTo(null);
-		setSize(600, 400);
+		setSize(600, 500);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		Container window = getContentPane();
 		window.setLayout(new FlowLayout());
@@ -118,26 +118,17 @@ public class LATC extends JFrame implements ActionListener, Observer {
 
 		
 		panel = new JPanel();
-
         list = new DefaultListModel<ManagementRecord>();
-
         outputList = new JList<>(list);
-
         outputList.addListSelectionListener(e -> aircraftSelected());
 
         JScrollPane scroll = new JScrollPane(outputList);
-
         scroll.setPreferredSize(new Dimension(500, 300));
-        scroll.setMinimumSize(new Dimension(500, 300));
-
         panel.add(scroll);
-
         list.setSize(aircraftManagementDatabase.maxMRs);
 
         aircraftListUpdate();
-
         window.add(panel);
-        
         aircraftSelected();
         
 		setVisible(true);
@@ -151,11 +142,11 @@ public class LATC extends JFrame implements ActionListener, Observer {
 			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i); // Create local instance of that MR
 
 			if (managementRecord == null) {
-				list.set(i, null);
+				list.set(i, null); 
 
 			} else if (managementRecord.getStatus() == 3 || managementRecord.getStatus() == 4
 					|| managementRecord.getStatus() == 5 || managementRecord.getStatus() == 16
-					|| managementRecord.getStatus() == 18) {
+					|| managementRecord.getStatus() == 18) { // If status equals one of the five here
 
 				list.set(i, managementRecord);
 
@@ -221,7 +212,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 			} else {
 				takeOffAllowed.setEnabled(false);
 			}
-			// If status is READY_DEPART, waiting for taxi button is makde available
+			// If status is READY_DEPART, waiting for taxi button is made available
 			if (status.equalsIgnoreCase("READY_DEPART")) {
 				waitingForTaxi.setEnabled(true);
 			} else {
@@ -236,19 +227,19 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	public void actionPerformed(ActionEvent e) {
 		// If landing allowed button is clicked
 		if (e.getSource() == landingAllowed) {
-			aircraftManagementDatabase.setStatus(MRIndex, 4);
+			aircraftManagementDatabase.setStatus(MRIndex, 4); // Change status
 		}
-		// If
+		// If confirmLanding button is clicked
 		if (e.getSource() == confirmLanding) {
-			aircraftManagementDatabase.setStatus(MRIndex, 5);
+			aircraftManagementDatabase.setStatus(MRIndex, 5); // Change status
 		}
-
+		// If takeOffAllowed button is clicked
 		if (e.getSource() == takeOffAllowed) {
-			aircraftManagementDatabase.setStatus(MRIndex, 18);
+			aircraftManagementDatabase.setStatus(MRIndex, 18); // Change status
 		}
-
+		// If waitingForTaxi button is clicked
 		if (e.getSource() == waitingForTaxi) {
-			aircraftManagementDatabase.setStatus(MRIndex, 16);
+			aircraftManagementDatabase.setStatus(MRIndex, 16); // Change status
 		}
 
 		if (e.getSource() == flightInfo) {
