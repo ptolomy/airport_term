@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -53,6 +54,7 @@ public class GOC extends JFrame implements ActionListener {
 	private JPanel arrivalPane,departPane;
 	private JComboBox<String> airList;
 	private JComboBox<String> departing;
+	Pattern p;
 	//private TextField gateList; May use instead of combo boxes..but selection of elements may be a problem.
 	//private TextField airStatus;
 	//private TextField field;
@@ -111,10 +113,10 @@ public class GOC extends JFrame implements ActionListener {
 	public void updateList() {
 		code = airDB.getWithStatus(2);
 		for (int i = 0; i < code.length; i++) {
-			airList.addItem(airDB.getFlightCode(code[i])+ " -- Status : " + airDB.getStatus(code[i]));
+			airList.addItem(code[i] + " " + airDB.getFlightCode(code[i])+ " -- Status : " + airDB.getStatus(code[i]));
 			
 		}
-		dep = airDB.getWithStatus(15);
+		dep = airDB.getWithStatus(16);
 		for(int i = 0; i < dep.length; i++) {
 			departing.addItem(dep.toString());
 		}
@@ -128,7 +130,19 @@ public class GOC extends JFrame implements ActionListener {
 		if (airList.getSelectedItem().equals(null)) {
 			JOptionPane.showMessageDialog(dialog, "No Flight Selected"); // message displayed if no flight selected.
 		} else {
-			int m = (int) airList.getSelectedIndex();
+			//breaks down the string in airlist pulls mCode value from start of String and asigns it to str2
+			//mCode then used to set the status of of the flight.
+			String str1 = "";
+			String str2 = "";
+			str1 = (String) airList.getSelectedItem();
+			str2 = str1.substring(0,str1.indexOf(' '));
+			int m = 0;
+			try {
+			m = Integer.parseInt(str2);
+			}
+			catch(NumberFormatException nm) {
+				System.out.println("number format Exception in Permit to Land");
+			}
 			this.mCode = code[m];
 			airDB.setStatus(mCode, 3);
 		}
@@ -159,9 +173,13 @@ public class GOC extends JFrame implements ActionListener {
 	 * 
 	 */
 	public void departing() {
+		if (airList.getSelectedItem().equals(null)) {
+			JOptionPane.showMessageDialog(dialog, "No Flight Selected"); // message displayed if no flight selected.
+			return;
+		}
 		int m = (int) departing.getSelectedItem();// requires a slight rethink of how all the information is displayed and selected 
 		this.mCode = dep[m]; 
-		airDB.setStatus(mCode, 16); //sets the status of mCode value to Awaiting Taxi? variables don't match document
+		airDB.setStatus(mCode, 17); //sets the status of mCode value to Awaiting TakeOff?
 	}
 
 	@Override
