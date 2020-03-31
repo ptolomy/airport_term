@@ -1,10 +1,11 @@
 package airport_terminal;
 
-import java.awt.Container;
+//import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
+//import java.util.Arrays;
+//import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -12,6 +13,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -40,7 +42,7 @@ public class RefuellingSupervisor extends JFrame implements Observer, ActionList
 
 	private ArrayList<Integer> aircraftAwaitingRefuel;
 	
-	private JList<String> managementRecords;
+	private JList<String> outputList;
 
 	private JButton refuelled;
 
@@ -48,7 +50,7 @@ public class RefuellingSupervisor extends JFrame implements Observer, ActionList
 
 	public RefuellingSupervisor(AircraftManagementDatabase amd) {
 		this.aircraftManagementDB = amd;
-		//amd.addObserver(this);
+		//amdb.addObserver(this);
 		aircraftAwaitingRefuel = new ArrayList<Integer>();
 		//refuelCodes = new ArrayList<Integer>();
 
@@ -61,8 +63,8 @@ public class RefuellingSupervisor extends JFrame implements Observer, ActionList
 
 		JPanel refuelling = new JPanel();
 
-		managementRecords = new JList<String>(new DefaultListModel<String>());
-		JScrollPane scrollList = new JScrollPane(managementRecords);
+		outputList = new JList<String>(new DefaultListModel<String>());
+		JScrollPane scrollList = new JScrollPane(outputList);
 
 		refuelling.add(scrollList);
 
@@ -75,24 +77,43 @@ public class RefuellingSupervisor extends JFrame implements Observer, ActionList
 
 	}
 	
-	private void updateList() {
-		aircraftAwaitingRefuel.clear();
-        aircraftAwaitingRefuel.addAll(Arrays.asList(aircraftManagementDB.getWithStatus(ManagementRecord.READY_REFUEL)));
-        
-
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		int selectedFlight = outputList.getSelectedIndex();
+		if (e.getSource() == refuelled) {
+			int mCode = aircraftAwaitingRefuel.get(selectedFlight);
+			int status = aircraftManagementDB.getStatus(aircraftAwaitingRefuel.get(selectedFlight));
+			
+			if (status == ManagementRecord.READY_REFUEL) {
+				aircraftManagementDB.setStatus(mCode, ManagementRecord.READY_PASSENGERS);
+			}
+		}
+		else
+			JOptionPane.showMessageDialog(this, "The selected aircraft is not ready for refuelling." );
 	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		
-		
-		
-
+		aircraftAwaitingRefuel.clear();
+        //aircraftAwaitingRefuel.addAll(Arrays.asList(aircraftManagementDB.getWithStatus(ManagementRecord.READY_REFUEL)));
+        int[] newAircraftAwaitingRefuel = aircraftManagementDB.getWithStatus(ManagementRecord.READY_REFUEL);
+        
+        for (int mCode: newAircraftAwaitingRefuel) {
+        	aircraftAwaitingRefuel.add(mCode);
+        }
+        
+        String[] refuelFlightCodes = new String[aircraftAwaitingRefuel.size()];
+        
+        for (int i = 0; i < aircraftAwaitingRefuel.size(); i++) {
+        	refuelFlightCodes[i] = aircraftManagementDB.getFlightCode(aircraftAwaitingRefuel.get(i));
+        }
+        
+        outputList.setListData(refuelFlightCodes);
+        outputList.updateUI();
+        
+        
+        
 	}
 
 }
