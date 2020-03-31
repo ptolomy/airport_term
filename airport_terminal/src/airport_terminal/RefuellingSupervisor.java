@@ -47,7 +47,7 @@ public class RefuellingSupervisor extends JFrame implements Observer, ActionList
 
 	public RefuellingSupervisor(AircraftManagementDatabase amd) {
 		this.aircraftManagementDB = amd; //Set the instance of the aircraft management database in the current object to be the one that is passed into the above parameters
-		//amdb.addObserver(this);
+		amd.addObserver(this);
 		aircraftAwaitingRefuel = new ArrayList<Integer>(); //Create an array list to store the mCode of all of the aircraft that need to be refuelled. 
 
 		// Code to initialise the GUI
@@ -55,7 +55,7 @@ public class RefuellingSupervisor extends JFrame implements Observer, ActionList
 		setLocationRelativeTo(null);//Set location
 		setSize(400, 200); // Set the size of the window
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); //Set nothing to happen when the closed option is selected
-		setVisible(true);//Set the window to visible
+		//setVisible(true);//Set the window to visible
 
 		JPanel refuelling = new JPanel(); //Create a new JPanel for the refuelling information to appear on
 
@@ -68,7 +68,7 @@ public class RefuellingSupervisor extends JFrame implements Observer, ActionList
 		refuelling.add(refuelled);//Add the new button created above to the JPanel
 		
 		getContentPane().add(refuelling);//Add the JPanel to the window
-		//setVisible(true);
+		setVisible(true);
 
 	}
 	/**
