@@ -31,7 +31,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 	 */
 	private AircraftManagementDatabase aircraftManagementDatabase;	
 
-	private JTextField flightCodeText;
+	private JTextField flightCodeText; //Create a textfield for the flight code to be typed in to
 	private JTextField fromText;
 	
 	private JTextField toText;
