@@ -94,22 +94,21 @@ public class RefuellingSupervisor extends JFrame implements Observer, ActionList
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		aircraftAwaitingRefuel.clear();
-        //aircraftAwaitingRefuel.addAll(Arrays.asList(aircraftManagementDB.getWithStatus(ManagementRecord.READY_REFUEL)));
+		aircraftAwaitingRefuel.clear();//Clear the current contents of the aircraftAwaitingRefuel list - to stop duplicates from being added below
         int[] newAircraftAwaitingRefuel = aircraftManagementDB.getWithStatus(ManagementRecord.READY_REFUEL);
         
-        for (int mCode: newAircraftAwaitingRefuel) {
-        	aircraftAwaitingRefuel.add(mCode);
+        for (int mCode: newAircraftAwaitingRefuel) { //For every mCode that has been returned from the the getWithStatus method...
+        	aircraftAwaitingRefuel.add(mCode);//Add it to the aircraftAwaitingRefuel method so that it can be displayed
         }
         
-        String[] refuelFlightCodes = new String[aircraftAwaitingRefuel.size()];
+        String[] refuelFlightCodes = new String[aircraftAwaitingRefuel.size()]; //Create an array of strings the same size as the array list
         
-        for (int i = 0; i < aircraftAwaitingRefuel.size(); i++) {
-        	refuelFlightCodes[i] = aircraftManagementDB.getFlightCode(aircraftAwaitingRefuel.get(i));
+        for (int i = 0; i < aircraftAwaitingRefuel.size(); i++) {//For every position in the array list 
+        	refuelFlightCodes[i] = aircraftManagementDB.getFlightCode(aircraftAwaitingRefuel.get(i)); //Add the flight code to the array of strings using the mCode supplied from getWithStatus method
         }
         
-        outputList.setListData(refuelFlightCodes);
-        outputList.updateUI();
+        outputList.setListData(refuelFlightCodes);//Set the output to be the refuel string array so that the flight code appears in the refuel window.
+        outputList.updateUI();//Update the UI with the information in the output list
         
         
         
