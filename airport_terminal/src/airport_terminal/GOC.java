@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -53,9 +54,7 @@ public class GOC extends JFrame implements ActionListener {
 	private JPanel arrivalPane,departPane;
 	private JComboBox<String> airList;
 	private JComboBox<String> departing;
-	//private TextField gateList; May use instead of combo boxes..but selection of elements may be a problem.
-	//private TextField airStatus;
-	//private TextField field;
+
 	private int[] code;
 	private int[] dep;
 	private int[] gates;
@@ -106,29 +105,45 @@ public class GOC extends JFrame implements ActionListener {
 	 * Updates all fields required for the GOC to operate Updates Flight codes
 	 * Updates Aircraft ready for departure Updates gate status
 	 * 
-	 * should display as "FR1234 -- Status : 12"
+	 * should display as arrivals "mCode  :FR1234 -- Status : 12"
+	 * departing display as "mCode  :FR1234"
+	 * 
 	 */
 	public void updateList() {
 		code = airDB.getWithStatus(2);
 		for (int i = 0; i < code.length; i++) {
-			airList.addItem(airDB.getFlightCode(code[i])+ " -- Status : " + airDB.getStatus(code[i]));
+			airList.addItem(code[i] + " " +  " :"+ airDB.getFlightCode(code[i])+ " -- Status : " + airDB.getStatus(code[i]));
 			
 		}
-		dep = airDB.getWithStatus(15);
+		dep = airDB.getWithStatus(16);
 		for(int i = 0; i < dep.length; i++) {
-			departing.addItem(dep.toString());
+			departing.addItem(dep[i] + " " + " :" + airDB.getFlightCode(dep[i]));
 		}
 		gates = gateDB.getStatuses();
 	}
 
 	/**
 	 * permission to land method
+	 * String split used because displaying the value doesn't include the mCode so mCode added to combobox so it can be pulled again from the string
+	 * and used for the setStatus.
 	 */
 	public void permitToLand() {
 		if (airList.getSelectedItem().equals(null)) {
 			JOptionPane.showMessageDialog(dialog, "No Flight Selected"); // message displayed if no flight selected.
 		} else {
-			int m = (int) airList.getSelectedIndex();
+			//breaks down the string in airlist pulls mCode value from start of String and asigns it to str2
+			//mCode then used to set the status of of the flight.
+			String str1 = "";
+			String str2 = "";
+			str1 = (String) airList.getSelectedItem();
+			str2 = str1.substring(0,str1.indexOf(' '));
+			int m = 0;
+			try {
+			m = Integer.parseInt(str2);
+			}
+			catch(NumberFormatException nm) {
+				System.out.println("number format Exception in Permit to Land");
+			}
 			this.mCode = code[m];
 			airDB.setStatus(mCode, 3);
 		}
@@ -146,8 +161,19 @@ public class GOC extends JFrame implements ActionListener {
 		}
 		for (int i = 0; i < gates.length; i++) {
 			//checks the list to find a free gate status 0
+			//splits the string to get the mCode value
 			if (gates[i] == 0) {
-				int m = (int) airList.getSelectedIndex();
+				String str1 = "";
+				String str2 = "";
+				str1 = (String) airList.getSelectedItem();
+				str2 = str1.substring(0,str1.indexOf(' '));
+				int m = 0;
+				try {
+					m = Integer.parseInt(str2);
+				}
+				catch(NumberFormatException e) {
+					System.out.println("Number format exception in taxi To Gate");
+				}
 				this.mCode = code[m];
 				gateDB.allocate(gates[i], mCode);
 			}
@@ -156,12 +182,28 @@ public class GOC extends JFrame implements ActionListener {
 
 	/**
 	 * Grants permission for a flight waiting to depart to depart
-	 * 
+	 * String split used because displaying the value doesn't include the mCode so mCode added to combobox so it can be pulled again from the string
+	 * and used for the setStatus.
 	 */
 	public void departing() {
-		int m = (int) departing.getSelectedItem();// requires a slight rethink of how all the information is displayed and selected 
+		if (airList.getSelectedItem().equals(null)) {
+			JOptionPane.showMessageDialog(dialog, "No Flight Selected"); // message displayed if no flight selected.
+			return;
+		}
+		// split dep string down to mCode value and add to int m
+		String str1 = "";
+		String str2 = "";
+		str1 = (String) departing.getSelectedItem();
+		str2 = str1.substring(0,str1.indexOf(' '));
+		int m = 0;
+		try {
+			m = Integer.parseInt(str2);
+		}
+		catch(NumberFormatException n) {
+			System.out.println("Number format exception in Departing");
+		}
 		this.mCode = dep[m]; 
-		airDB.setStatus(mCode, 16); //sets the status of mCode value to Awaiting Taxi? variables don't match document
+		airDB.setStatus(mCode, 17); //sets the status of mCode value to Awaiting TakeOff?
 	}
 
 	@Override
