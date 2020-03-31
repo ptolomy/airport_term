@@ -11,7 +11,7 @@ package airport_terminal;
  * register as observers of this class, and are notified whenever any aircraft's
  * (MR's) state changes.
  */
-public class AircraftManagementDatabase {
+public class AircraftManagementDatabase extends Observable {
 
 	public AircraftManagementDatabase() {
         MRs = new ManagementRecord[maxMRs];
