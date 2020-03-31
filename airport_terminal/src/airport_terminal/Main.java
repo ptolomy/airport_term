@@ -19,7 +19,7 @@ public class Main {
 public static void main(String[] args) {
     // Instantiate databases
 	//ManagementRecord mrd = new ManagementRecord();
-	//AircraftManagementDatabase amd = new AircraftManagementDatabase();
+	AircraftManagementDatabase amd = new AircraftManagementDatabase();
 	
 	// Add databases to Frames as required..
     // Instantiate and show all interfaces as Frames
@@ -29,7 +29,6 @@ public static void main(String[] args) {
 	RadarTransceiver rt = new RadarTransceiver(amd);
 	CleaningSupervisor cs = new CleaningSupervisor(amd);
 	LATC la = new LATC(amd);
-	
   }
 
 }

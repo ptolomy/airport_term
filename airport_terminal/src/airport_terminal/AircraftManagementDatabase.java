@@ -42,9 +42,10 @@ public class AircraftManagementDatabase {
 	public int getStatus(int mCode) {
 		return MRs[mCode].getStatus();
 	}
-	
+
 	/*
-	 * Return the status of the MR (as a String) with the given mCode supplied as a parameter
+	 * Return the status of the MR (as a String) with the given mCode supplied as a
+	 * parameter
 	 */
 	public String getStatusString(int mCode) {
 		return MRs[mCode].getStatusString();
@@ -163,6 +164,6 @@ public class AircraftManagementDatabase {
 	 * Return the ManagementRecord at the given position mCode.
 	 */
 	public ManagementRecord getManagementRecord(int mCode) {
-        return MRs[mCode];
-    }
+		return MRs[mCode];
+	}
 }

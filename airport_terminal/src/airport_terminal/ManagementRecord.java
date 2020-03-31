@@ -326,7 +326,7 @@ public class ManagementRecord {
 				status = WANTING_TO_LAND; // Status becomes WANTING_TO_LAND
 			} else {
 				status = IN_TRANSIT; // Status becomes IN_TRANSIT
-			}
+			} 
 		}
 	}
 
