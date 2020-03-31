@@ -76,7 +76,7 @@ public class CleaningSupervisor extends JFrame implements ActionListener, Observ
 		cleaning.add(scrollList); //Add the scroll list to the JPanel
 		getContentPane().add(cleaning); //Add the JPanel to the window
 		
-		// Cleaning complete button
+		// Cleaning complete button 
         cleaningComplete = new JButton("Cleaning Complete");
         window.add(cleaningComplete);
         cleaningComplete.addActionListener(this);
