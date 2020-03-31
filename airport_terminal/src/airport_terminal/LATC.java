@@ -63,7 +63,8 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	public LATC(AircraftManagementDatabase amd) {
 
 		this.aircraftManagementDatabase = amd;
-	
+		amd.addObserver(this);
+		
 		setTitle(title);
 		setLocationRelativeTo(null);
 		setSize(600, 500);
