@@ -54,10 +54,7 @@ public class GOC extends JFrame implements ActionListener {
 	private JPanel arrivalPane,departPane;
 	private JComboBox<String> airList;
 	private JComboBox<String> departing;
-	Pattern p;
-	//private TextField gateList; May use instead of combo boxes..but selection of elements may be a problem.
-	//private TextField airStatus;
-	//private TextField field;
+
 	private int[] code;
 	private int[] dep;
 	private int[] gates;
