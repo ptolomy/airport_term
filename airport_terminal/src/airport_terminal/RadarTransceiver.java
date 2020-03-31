@@ -33,6 +33,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 
 	private JTextField flightCodeText;
 	private JTextField fromText;
+	
 	private JTextField toText;
 	
 	
