@@ -303,7 +303,7 @@ public class ManagementRecord {
 			return "UNKNOWN"; // Return UNKNOWN
 		}
 	}
-
+ 
 	/**
 	 * Return the flight code of this MR.
 	 */
