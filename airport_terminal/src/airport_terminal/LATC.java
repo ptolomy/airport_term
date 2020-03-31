@@ -56,7 +56,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	private JButton waitingForTaxi;
 	private JButton flightInfo;
 
-	private JPanel LATC;
+	private JPanel panel;
 	private JList<ManagementRecord> outputList;
 	private DefaultListModel<ManagementRecord> list;
 
@@ -117,30 +117,29 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		flightInfo.addActionListener(this);
 
 		
+		panel = new JPanel();
 
-		LATC = new JPanel(); //Create a new JPanel for the information to appear on
-		
-		//outputList = new JList<String>(new DefaultListModel<String>()); //Initilise the output list to be a Jlist of strings
-		JScrollPane scrollList = new JScrollPane(outputList); //Create a scroll list for the JList
-		
-		outputList = new JList<>(list);
-		outputList.addListSelectionListener(e -> aircraftSelected());
+        list = new DefaultListModel<ManagementRecord>();
 
-		JScrollPane scrollPane = new JScrollPane(outputList);
+        outputList = new JList<>(list);
 
-		scrollPane.setPreferredSize(new Dimension(500, 300));
-		scrollPane.setMinimumSize(new Dimension(500, 300));
+        outputList.addListSelectionListener(e -> aircraftSelected());
 
-		LATC.add(scrollPane);
-		list.setSize(aircraftManagementDatabase.maxMRs);
+        JScrollPane scroll = new JScrollPane(outputList);
 
-		aircraftListUpdate();
+        scroll.setPreferredSize(new Dimension(500, 300));
+        scroll.setMinimumSize(new Dimension(500, 300));
 
-		window.add(LATC);
+        panel.add(scroll);
 
-		aircraftSelected();
+        list.setSize(aircraftManagementDatabase.maxMRs);
 
-		
+        aircraftListUpdate();
+
+        window.add(panel);
+        
+        aircraftSelected();
+        
 		setVisible(true);
 
 	}
