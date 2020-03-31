@@ -36,7 +36,6 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	 * @directed
 	 */
 
-	private String title = "LATC";
 	private AircraftManagementDatabase aircraftManagementDatabase;
 
 	private int MRIndex; // Used to index database
@@ -63,10 +62,10 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	public LATC(AircraftManagementDatabase amd) {
 
 		this.aircraftManagementDatabase = amd;
-	
-		setTitle(title);
+
+		setTitle("LATC");
 		setLocationRelativeTo(null);
-		setSize(600, 400);
+		setSize(600, 500);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		Container window = getContentPane();
 		window.setLayout(new FlowLayout());
@@ -116,46 +115,39 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		window.add(flightInfo);
 		flightInfo.addActionListener(this);
 
-		
-		panel = new JPanel();
+		panel = new JPanel(); // Create a new JPanel for information to appear on
+		list = new DefaultListModel<ManagementRecord>(); // Initilise the output list to be a Jlist of managementRecords
 
-        list = new DefaultListModel<ManagementRecord>();
+		outputList = new JList<>(list);
+		outputList.addListSelectionListener(e -> aircraftSelected());
 
-        outputList = new JList<>(list);
+		JScrollPane scrollList = new JScrollPane(outputList); // Create a scroll list for the JList
+		scrollList.setPreferredSize(new Dimension(500, 300)); // Sets size for scroll list
 
-        outputList.addListSelectionListener(e -> aircraftSelected());
+		panel.add(scrollList); // Adds scroll list to JPanel
+		list.setSize(aircraftManagementDatabase.maxMRs); // Sets the size of the list to the max number of records
+															// allowed in database
+		aircraftListUpdate(); // Calls aircraftListUpdate method
+		window.add(panel); // Adds the panel to the window
+		aircraftSelected(); // Calls aircraftSelected method
 
-        JScrollPane scroll = new JScrollPane(outputList);
-
-        scroll.setPreferredSize(new Dimension(500, 300));
-        scroll.setMinimumSize(new Dimension(500, 300));
-
-        panel.add(scroll);
-
-        list.setSize(aircraftManagementDatabase.maxMRs);
-
-        aircraftListUpdate();
-
-        window.add(panel);
-        
-        aircraftSelected();
-        
 		setVisible(true);
 
 	}
-/* 
- * Method to update the list of aircrafts
- */
+
+	/*
+	 * Method to update the list of aircrafts
+	 */
 	private void aircraftListUpdate() {
 		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) { // For each record in database
 			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i); // Create local instance of that MR
 
-			if (managementRecord == null) {
-				list.set(i, null);
+			if (managementRecord == null) { // If management record is empty
+				list.set(i, null); 
 
 			} else if (managementRecord.getStatus() == 3 || managementRecord.getStatus() == 4
 					|| managementRecord.getStatus() == 5 || managementRecord.getStatus() == 16
-					|| managementRecord.getStatus() == 18) {
+					|| managementRecord.getStatus() == 18) { 
 
 				list.set(i, managementRecord);
 
@@ -169,9 +161,9 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	 */
 	private void aircraftSelected() {
 		if (!outputList.getValueIsAdjusting()) {
-			if (outputList.getSelectedValue() == null) { // If no aircraft is selected from list 
+			if (outputList.getSelectedValue() == null) { // If no aircraft is selected from list
 				MRIndex = -1;
-				flightCode.setText("               ");	// Set flight code to be blank
+				flightCode.setText("               "); // Set flight code to be blank
 				flightStatus.setText("               "); // Set flight status to be blank
 				if (isButtonAvailable) { // If buttons are available, set them to not be
 					isButtonAvailable = false;
@@ -263,7 +255,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		
+
 		aircraftSelected();
 		aircraftListUpdate();
 	}
