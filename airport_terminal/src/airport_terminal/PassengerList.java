@@ -18,7 +18,10 @@ public class PassengerList {
  */
 	//Changed from private PassengerDetails[] details to allow for easier processing using .add etc.
   private ArrayList<PassengerDetails> details;
-
+  
+  public PassengerList() {
+	    details = new ArrayList<>();
+	  }
 /**
  * The given passenger is boarding.
  * Their details are recorded, in the passenger list.

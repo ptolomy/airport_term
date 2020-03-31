@@ -99,15 +99,29 @@ public class AircraftManagementDatabase {
 	 * to it for recording.
 	 */
 	public void radarDetect(FlightDescriptor fd) {
-		try {
-			for (int i = 0; i < MRs.length; i++) {
-				if (MRs[i].getStatus() == 0) {
-					MRs[i].radarDetect(fd); // Check
-				}
-			}
-		} catch (IndexOutOfBoundsException ex) {
-			ex.printStackTrace();
-		}
+		
+		int nextAvailableMR = 0;
+		
+		for (int i = 0; i < MRs.length; i++) {
+            if (MRs[i] == null) {
+            	nextAvailableMR = i;
+                break;
+            }
+        }
+		MRs[nextAvailableMR] = new ManagementRecord();
+		MRs[nextAvailableMR].setStatus(0);
+		MRs[nextAvailableMR].radarDetect(fd);
+		
+		
+//		try {
+//			for (int i = 0; i < MRs.length; i++) {
+//				if (MRs[i].getStatus() == 0) {
+//					MRs[i].radarDetect(fd); // Check
+//				}
+//			}
+//		} catch (IndexOutOfBoundsException ex) {
+//			ex.printStackTrace();
+//		}
 	}
 
 	/**

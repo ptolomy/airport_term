@@ -321,7 +321,9 @@ public class ManagementRecord {
 	 */
 	public void radarDetect(FlightDescriptor fd) {
 		if (status == FREE) { // If flight status is FREE <PRECONDITION>
+			passengerList = fd.getPassengerList();
 			itinerary = fd.getItinerary(); // Itinerary becomes passed flightDescriptor itinerary
+			flightCode = fd.getFlightCode();
 			if (itinerary.getTo().equalsIgnoreCase("Stirling")) { // If passed itinerary 'to' is equal to 'Stirling'
 				status = WANTING_TO_LAND; // Status becomes WANTING_TO_LAND
 			} else {
