@@ -35,6 +35,11 @@ public class AircraftManagementDatabase {
 	 * In this simple system 10 will do!
 	 */
 	public int maxMRs = 10;
+	
+	public AircraftManagementDatabase() {
+        MRs = new ManagementRecord[maxMRs];
+    }
+
 
 	/**
 	 * Return the status of the MR with the given mCode supplied as a parameter.
@@ -78,8 +83,8 @@ public class AircraftManagementDatabase {
 	 */
 	public int[] getWithStatus(int statusCode) {
 		try {
-			int nextFreePosition =0;
-			for (int i = 0; i < MRs.length; i ++) {
+			int nextFreePosition = 0;
+			for (int i = 0; i < MRs.length; i++) {
 				if (MRs[i].getStatus() == statusCode) {
 					code[nextFreePosition] = i;
 					nextFreePosition++;
@@ -99,20 +104,26 @@ public class AircraftManagementDatabase {
 	 * to it for recording.
 	 */
 	public void radarDetect(FlightDescriptor fd) {
-		
+
 		int nextAvailableMR = 0;
-		
-		for (int i = 0; i < MRs.length; i++) {
-            if (MRs[i] == null) {
-            	nextAvailableMR = i;
-                break;
-            }
-        }
-		MRs[nextAvailableMR] = new ManagementRecord();
-		MRs[nextAvailableMR].setStatus(0);
-		MRs[nextAvailableMR].radarDetect(fd);
-		
-		
+
+		if (MRs.length == 0) {
+			MRs[nextAvailableMR] = new ManagementRecord();
+			MRs[nextAvailableMR].setStatus(0);
+			MRs[nextAvailableMR].radarDetect(fd);
+		} else {
+
+			for (int i = 0; i <= MRs.length; i++) {
+				if (MRs[i].getStatus() == 0) {
+					nextAvailableMR = i;
+					break;
+				}
+			}
+			MRs[nextAvailableMR] = new ManagementRecord();
+			MRs[nextAvailableMR].setStatus(0);
+			MRs[nextAvailableMR].radarDetect(fd);
+		}
+
 //		try {
 //			for (int i = 0; i < MRs.length; i++) {
 //				if (MRs[i].getStatus() == 0) {

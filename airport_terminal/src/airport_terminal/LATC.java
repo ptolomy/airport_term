@@ -12,7 +12,10 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 /**
  * An interface to SAAMS: Local Air Traffic Controller Screen: Inputs events
@@ -37,6 +40,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	private AircraftManagementDatabase aircraftManagementDatabase;
 
 	private int MRIndex; // Used to index database
+	private boolean isButtonAvailable;
 
 	// Labels
 	private JLabel labelBuffer;
@@ -52,10 +56,14 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	private JButton waitingForTaxi;
 	private JButton flightInfo;
 
+	private JPanel panel;
+	private JList<ManagementRecord> aircrafts;
+	private DefaultListModel<ManagementRecord> list;
+
 	public LATC(AircraftManagementDatabase amd) {
 
 		this.aircraftManagementDatabase = amd;
-
+	
 		setTitle(title);
 		setLocationRelativeTo(null);
 		setSize(600, 400);
@@ -79,7 +87,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		flightStatus = new JLabel("               ");
 		window.add(flightStatus);
 
-		// Buffer 
+		// Buffer
 		labelBuffer = new JLabel("                          ");
 		window.add(labelBuffer);
 
@@ -108,8 +116,108 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		window.add(flightInfo);
 		flightInfo.addActionListener(this);
 
+		
+
+		panel = new JPanel();
+		list = new DefaultListModel<ManagementRecord>();
+
+		aircrafts = new JList<>(list);
+		aircrafts.addListSelectionListener(e -> aircraftSelected());
+
+		JScrollPane scrollPane = new JScrollPane(aircrafts);
+
+		scrollPane.setPreferredSize(new Dimension(500, 300));
+		scrollPane.setMinimumSize(new Dimension(500, 300));
+
+		panel.add(scrollPane);
+		list.setSize(aircraftManagementDatabase.maxMRs);
+
+		aircraftListUpdate();
+
+		window.add(panel);
+
+		aircraftSelected();
+
+		
 		setVisible(true);
 
+	}
+
+	private void aircraftListUpdate() {
+		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) {
+			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i);
+
+			if (managementRecord == null) {
+				list.set(i, null);
+
+			} else if (managementRecord.getStatus() == 3 || managementRecord.getStatus() == 4
+					|| managementRecord.getStatus() == 5 || managementRecord.getStatus() == 16
+					|| managementRecord.getStatus() == 18) {
+
+				list.set(i, managementRecord);
+
+			}
+
+		}
+	}
+
+	private void aircraftSelected() {
+		if (!aircrafts.getValueIsAdjusting()) {
+			if (aircrafts.getSelectedValue() == null) {
+				MRIndex = -1;
+				flightCode.setText("               ");
+				flightStatus.setText("               ");
+				if (isButtonAvailable) {
+					isButtonAvailable = false;
+				}
+				buttonUpdates();
+			} else {
+				MRIndex = aircrafts.getSelectedIndex();
+				flightCode.setText(aircraftManagementDatabase.getFlightCode(MRIndex));
+				flightStatus.setText(aircraftManagementDatabase.getStatusString(MRIndex));
+				if (!isButtonAvailable) {
+					isButtonAvailable = true;
+				}
+				buttonUpdates();
+			}
+		}
+	}
+
+	private void buttonUpdates() {
+		if (!isButtonAvailable) {
+			landingAllowed.setEnabled(false);
+			takeOffAllowed.setEnabled(false);
+			confirmLanding.setEnabled(false);
+			flightInfo.setEnabled(false);
+			waitingForTaxi.setEnabled(false);
+		} else {
+			String status = aircraftManagementDatabase.getStatusString(MRIndex);
+
+			if (status == 3) {
+				landingAllowed.setEnabled(true);
+			} else {
+				landingAllowed.setEnabled(false);
+			}
+			
+			if (status == 17) {
+				takeOffAllowed.setEnabled(true);
+			} else {
+				takeOffAllowed.setEnabled(false);
+			}
+			
+			if (status == 4) {
+				confirmLanding.setEnabled(true);
+			} else {
+				confirmLanding.setEnabled(false);
+			}
+			 
+			if (status == 15) {
+				waitingForTaxi.setEnabled(true);
+			} else {
+				waitingForTaxi.setEnabled(false);
+			}
+			flightInfo.setEnabled(true);
+		}
 	}
 
 	@Override
