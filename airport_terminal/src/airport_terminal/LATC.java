@@ -56,8 +56,8 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	private JButton waitingForTaxi;
 	private JButton flightInfo;
 
-	private JPanel panel;
-	private JList<ManagementRecord> aircrafts;
+	private JPanel LATC;
+	private JList<ManagementRecord> outputList;
 	private DefaultListModel<ManagementRecord> list;
 
 	public LATC(AircraftManagementDatabase amd) {
@@ -118,23 +118,25 @@ public class LATC extends JFrame implements ActionListener, Observer {
 
 		
 
-		panel = new JPanel();
-		list = new DefaultListModel<ManagementRecord>();
+		LATC = new JPanel(); //Create a new JPanel for the information to appear on
+		
+		//outputList = new JList<String>(new DefaultListModel<String>()); //Initilise the output list to be a Jlist of strings
+		JScrollPane scrollList = new JScrollPane(outputList); //Create a scroll list for the JList
+		
+		outputList = new JList<>(list);
+		outputList.addListSelectionListener(e -> aircraftSelected());
 
-		aircrafts = new JList<>(list);
-		aircrafts.addListSelectionListener(e -> aircraftSelected());
-
-		JScrollPane scrollPane = new JScrollPane(aircrafts);
+		JScrollPane scrollPane = new JScrollPane(outputList);
 
 		scrollPane.setPreferredSize(new Dimension(500, 300));
 		scrollPane.setMinimumSize(new Dimension(500, 300));
 
-		panel.add(scrollPane);
+		LATC.add(scrollPane);
 		list.setSize(aircraftManagementDatabase.maxMRs);
 
 		aircraftListUpdate();
 
-		window.add(panel);
+		window.add(LATC);
 
 		aircraftSelected();
 
@@ -167,8 +169,8 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	 * Method to change view depending if an aircraft has been selected
 	 */
 	private void aircraftSelected() {
-		if (!aircrafts.getValueIsAdjusting()) {
-			if (aircrafts.getSelectedValue() == null) { // If no aircraft is selected from list 
+		if (!outputList.getValueIsAdjusting()) {
+			if (outputList.getSelectedValue() == null) { // If no aircraft is selected from list 
 				MRIndex = -1;
 				flightCode.setText("               ");	// Set flight code to be blank
 				flightStatus.setText("               "); // Set flight status to be blank
@@ -177,7 +179,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 				}
 				buttonUpdates();
 			} else {
-				MRIndex = aircrafts.getSelectedIndex();
+				MRIndex = outputList.getSelectedIndex();
 				flightCode.setText(aircraftManagementDatabase.getFlightCode(MRIndex));
 				flightStatus.setText(aircraftManagementDatabase.getStatusString(MRIndex));
 				if (!isButtonAvailable) {

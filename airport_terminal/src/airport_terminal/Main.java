@@ -37,8 +37,8 @@ public class Main {
 		// Instantiate and show all interfaces as Frames
 		//MaintenanceInspector m1 = new MaintenanceInspector(amd);
 		//PublicInfo pi = new PublicInfo(amd);
-		//RefuellingSupervisor rs = new RefuellingSupervisor(amd);
-		//RadarTransceiver rt = new RadarTransceiver(amd);
+		RefuellingSupervisor rs = new RefuellingSupervisor(amd);
+		RadarTransceiver rt = new RadarTransceiver(amd);
 		//CleaningSupervisor cs = new CleaningSupervisor(amd);
 		LATC la = new LATC(amd);
 	}

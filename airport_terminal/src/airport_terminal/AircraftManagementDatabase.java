@@ -13,6 +13,10 @@ package airport_terminal;
  */
 public class AircraftManagementDatabase {
 
+	public AircraftManagementDatabase() {
+        MRs = new ManagementRecord[maxMRs];
+    }
+	
 	/**
 	 * The array of ManagementRecords. Attribute maxMRs specifies how large this
 	 * array should be. Initialize to a collection of MRs each in the FREE state.
@@ -36,9 +40,7 @@ public class AircraftManagementDatabase {
 	 */
 	public int maxMRs = 10;
 	
-	public AircraftManagementDatabase() {
-        MRs = new ManagementRecord[maxMRs];
-    }
+	
 
 
 	/**
@@ -113,7 +115,7 @@ public class AircraftManagementDatabase {
 			MRs[nextAvailableMR].radarDetect(fd);
 		} else if (MRs.length >= 1) {
 			for (int i = 0; i < MRs.length; i++) {
-				if (MRs[i].getStatus() == 0) {
+				if (MRs[i] == null) {
 					nextAvailableMR = i;
 					break;
 				}
