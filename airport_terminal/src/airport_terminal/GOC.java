@@ -1,7 +1,7 @@
 package airport_terminal;
 
-
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
@@ -10,7 +10,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  * An interface to SAAMS:
@@ -27,61 +28,158 @@ import javax.swing.JList;
  *
  */
 public class GOC extends JFrame implements ActionListener {
-/** The Ground Operations Controller Screen interface has access to the GateInfoDatabase.
-  * @clientCardinality 1
-  * @supplierCardinality 1
-  * @label accesses/observes
-  * @directed*/
-  private GateInfoDatabase gateDB;
-/**
-  * The Ground Operations Controller Screen interface has access to the AircraftManagementDatabase.
-  * @clientCardinality 1
-  * @supplierCardinality 1
-  * @label accesses/observes
-  * @directed*/
-  private AircraftManagementDatabase airDB;
-  private String title = "GOC";
-  private JButton permToLand,update;
-  private JComboBox<String> airList;
-  private TextField field;
-  
-  public GOC() {
-	  
-	  setTitle(title);
-	  setLocationRelativeTo(null);
-	  setSize(400,400);
-	  setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-	  
-	  update.addActionListener(this);
-	  permToLand.addActionListener(this);
-	  
-	  Container window = getContentPane();
-	  
-	  window.setLayout(new FlowLayout());
-	  window.add(update);
-	  window.add(permToLand);
-	  window.add(airList);
-	  
-  }
-  
-  public void updateList() {
-	  int[] code = airDB.getWithStatus(2);
-	
-	 for (int i = 0; i < code.length; i++) {
-		  airList.addItem(airDB.getFlightCode(code[i]));
-	}
-  }
+	/**
+	 * The Ground Operations Controller Screen interface has access to the
+	 * GateInfoDatabase.
+	 * 
+	 * @clientCardinality 1
+	 * @supplierCardinality 1
+	 * @label accesses/observes
+	 * @directed
+	 */
+	private GateInfoDatabase gateDB;
+	/**
+	 * The Ground Operations Controller Screen interface has access to the
+	 * AircraftManagementDatabase.
+	 * 
+	 * @clientCardinality 1
+	 * @supplierCardinality 1
+	 * @label accesses/observes
+	 * @directed
+	 */
+	private AircraftManagementDatabase airDB;
+	private String title = "GOC";
+	private JButton permToLand, update, gate, depart;
+	private JPanel pane;
+	private JComboBox<String> airList;
+	private JComboBox<String> departing;
+	//private TextField gateList; May use instead of combo boxes..but selection of elements may be a problem.
+	//private TextField airStatus;
+	//private TextField field;
+	private int[] code;
+	private int[] dep;
+	private int[] gates;
+	int mCode;
+	private GOC dialog = null;
 
-@Override
-public void actionPerformed(ActionEvent e) {
-	if (e.getSource() == update) {
-		updateList();
+	public GOC() {
+
+		setTitle(title);
+		setLocationRelativeTo(null);
+		setSize(400, 400);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		
+		pane = new JPanel();
+		pane.setPreferredSize(new Dimension(50,100));
+		pane.setVisible(true);
+		update = new JButton("Update GOC");
+		update.addActionListener(this);
+		permToLand = new JButton("Permission to Land");
+		permToLand.addActionListener(this);
+		gate = new JButton("Taxi to Gate");
+		gate.addActionListener(this);
+		depart = new JButton("Ready to depart");
+		depart.addActionListener(this);
+
+		Container window = getContentPane();
+
+		window.setLayout(new FlowLayout());
+		window.add(update);
+		window.add(permToLand);
+		window.add(gate);
+		window.add(depart);
+		window.add(pane);
+		pane.add(airList);
+		pane.add(departing);
+		
+
+		window.setVisible(true);
+
 	}
-	
-	if (e.getSource() == permToLand) {
-		int mCode = (int) airList.getSelectedItem();
+
+	/**
+	 * Updates all fields required for the GOC to operate Updates Flight codes
+	 * Updates Aircraft ready for departure Updates gate status
+	 * 
+	 * should display as "FR1234 -- Status : 12"
+	 */
+	public void updateList() {
+		code = airDB.getWithStatus(2);
+		for (int i = 0; i < code.length; i++) {
+			airList.addItem(airDB.getFlightCode(code[i])+ " -- Status : " + airDB.getStatus(code[i]));
+			
+		}
+		dep = airDB.getWithStatus(15);
+		for(int i = 0; i < dep.length; i++) {
+			departing.addItem(dep.toString());
+		}
+		gates = gateDB.getStatuses();
 	}
-	
-}
+
+	/**
+	 * permission to land method
+	 */
+	public void permitToLand() {
+		if (airList.getSelectedItem().equals(null)) {
+			JOptionPane.showMessageDialog(dialog, "No Flight Selected"); // message displayed if no flight selected.
+		} else {
+			int m = (int) airList.getSelectedIndex();
+			this.mCode = code[m];
+			airDB.setStatus(mCode, 3);
+		}
+	}
+
+	/**
+	 * checks for a free gate and assigns the gate and mCode of the selected
+	 * aircraft from the list gate will set status of gate number to reserved for
+	 * mCode
+	 */
+	public void taxiToGate() {
+		for (int i = 0; i < gates.length; i++) {
+			//checks the list to find a free gate status 0
+			if (gates[i] == 0) {
+				if (airList.getSelectedItem().equals(null)) {
+					JOptionPane.showMessageDialog(dialog, "No Flight Selected"); // message displayed if no flight selected.																			
+				}
+			else {
+				int m = (int) airList.getSelectedIndex();
+				this.mCode = code[m];
+				gateDB.allocate(gates[i], mCode);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Grants permission for a flight waiting to depart to depart
+	 * 
+	 */
+	public void departing() {
+		int m = (int) departing.getSelectedItem();// requires a slight rethink of how all the information is displayed and selected 
+		this.mCode = dep[m]; 
+		airDB.setStatus(mCode, 16); //sets the status of mCode value to Awaiting Taxi? variables don't match document
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// update GOC
+		if (e.getSource() == update) {
+			updateList();
+		}
+		// permit to land
+		if (e.getSource() == permToLand) {
+			permitToLand();
+		}
+
+		// Taxi to gate
+		if (e.getSource() == gate) {
+			taxiToGate();
+		}
+
+		if (e.getSource() == depart) {
+			departing();
+		}
+
+	}
 
 }

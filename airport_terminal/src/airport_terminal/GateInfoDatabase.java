@@ -32,7 +32,6 @@ public class GateInfoDatabase {
 		for (int i = 0; i < gates.length; i++) {
 			if (i == gateNumber) {
 				sCode = gates[i].getStatus();	
-				//code.add(sCode);
 			}
 		}
 		return sCode;
