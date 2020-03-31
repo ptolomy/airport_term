@@ -1,5 +1,7 @@
 package airport_terminal;
 
+import java.util.*;
+
 /**
  * A central database ("model" class): It is intended that there will be only
  * one instance of this class. Maintains an array of ManagementRecords (MRs),
