@@ -54,7 +54,7 @@ public class PublicInfo extends JFrame implements Observer {
 		window.add(labelFlightsLanding);
 
 		JPanel landing = new JPanel(); // Create a new JPanel for the information to appear on
-		list = new DefaultListModel<ManagementRecord>();
+		list = new DefaultListModel<ManagementRecord>(); 
         outputList = new JList<>(list);
 		JScrollPane scrollList = new JScrollPane(outputList); // Create a scroll list for the JList
  
