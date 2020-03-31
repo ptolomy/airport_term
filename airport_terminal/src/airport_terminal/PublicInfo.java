@@ -57,7 +57,7 @@ public class PublicInfo extends JFrame implements Observer {
 		list = new DefaultListModel<ManagementRecord>();
         outputList = new JList<>(list);
 		JScrollPane scrollList = new JScrollPane(outputList); // Create a scroll list for the JList
-
+ 
 		landing.add(scrollList);// Add the scroll list to the JPanel
 
 		getContentPane().add(landing);// Add the JPanel to the window
