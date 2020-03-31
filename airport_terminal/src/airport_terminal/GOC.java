@@ -50,7 +50,7 @@ public class GOC extends JFrame implements ActionListener {
 	private AircraftManagementDatabase airDB;
 	private String title = "GOC";
 	private JButton permToLand, update, gate, depart;
-	private JPanel pane;
+	private JPanel arrivalPane,departPane;
 	private JComboBox<String> airList;
 	private JComboBox<String> departing;
 	//private TextField gateList; May use instead of combo boxes..but selection of elements may be a problem.
@@ -69,9 +69,13 @@ public class GOC extends JFrame implements ActionListener {
 		setSize(400, 400);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		
-		pane = new JPanel();
-		pane.setPreferredSize(new Dimension(50,100));
-		pane.setVisible(true);
+		arrivalPane = new JPanel();
+		arrivalPane.setPreferredSize(new Dimension(50,100));
+		arrivalPane.setVisible(true);
+		departPane = new JPanel();
+		departPane.setPreferredSize(new Dimension(50,100));
+		departPane.setVisible(true);
+		
 		update = new JButton("Update GOC");
 		update.addActionListener(this);
 		permToLand = new JButton("Permission to Land");
@@ -85,16 +89,17 @@ public class GOC extends JFrame implements ActionListener {
 
 		window.setLayout(new FlowLayout());
 		window.add(update);
+		//arrivals
 		window.add(permToLand);
-		window.add(gate);
+		window.add(gate);		
+		window.add(arrivalPane);
+		//departures
+		window.add(departPane);
+		arrivalPane.add(airList);
+		departPane.add(departing);
 		window.add(depart);
-		window.add(pane);
-		pane.add(airList);
-		pane.add(departing);
 		
-
 		window.setVisible(true);
-
 	}
 
 	/**
