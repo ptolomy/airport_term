@@ -14,7 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-
 /**
  * An interface to SAAMS: Local Air Traffic Controller Screen: Inputs events
  * from LATC (a person), and displays aircraft information. This class is a
@@ -40,6 +39,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	private int MRIndex; // Used to index database
 
 	// Labels
+	private JLabel labelBuffer;
 	private JLabel labelFlightCode;
 	private JLabel flightCode;
 	private JLabel labelFlightStatus;
@@ -52,8 +52,6 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	private JButton waitingForTaxi;
 	private JButton flightInfo;
 
-
-
 	public LATC(AircraftManagementDatabase amd) {
 
 		this.aircraftManagementDatabase = amd;
@@ -64,6 +62,10 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		Container window = getContentPane();
 		window.setLayout(new FlowLayout());
+
+		// Buffer
+		labelBuffer = new JLabel("                          ");
+		window.add(labelBuffer);
 
 		// Labels for flight code
 		labelFlightCode = new JLabel("Flight Code: ");
@@ -76,6 +78,10 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		window.add(labelFlightStatus);
 		flightStatus = new JLabel("               ");
 		window.add(flightStatus);
+
+		// Buffer 
+		labelBuffer = new JLabel("                          ");
+		window.add(labelBuffer);
 
 		// Button to allow landing
 		landingAllowed = new JButton("Allow Landing");
@@ -102,10 +108,6 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		window.add(flightInfo);
 		flightInfo.addActionListener(this);
 
-
-
-		
-
 		setVisible(true);
 
 	}
@@ -116,7 +118,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		if (e.getSource() == landingAllowed) {
 			aircraftManagementDatabase.setStatus(MRIndex, 4);
 		}
-		// If 
+		// If
 		if (e.getSource() == confirmLanding) {
 			aircraftManagementDatabase.setStatus(MRIndex, 5);
 		}
@@ -131,19 +133,18 @@ public class LATC extends JFrame implements ActionListener, Observer {
 
 		if (e.getSource() == flightInfo) {
 			JOptionPane.showMessageDialog(null,
-					"Flight Code of Flight: " + aircraftManagementDatabase.getFlightCode(MRIndex)
-							+ "\nFlight Status: " + aircraftManagementDatabase.getStatus(MRIndex)
-							+ "\nComing From: " + aircraftManagementDatabase.getItinerary(MRIndex).getFrom()
-							+ "\nGoing To: " + aircraftManagementDatabase.getItinerary(MRIndex).getTo()
-							+ "\nNext Destination: " + aircraftManagementDatabase.getItinerary(MRIndex).getNext());
+					"Flight Code of Flight: " + aircraftManagementDatabase.getFlightCode(MRIndex) + "\nFlight Status: "
+							+ aircraftManagementDatabase.getStatus(MRIndex) + "\nComing From: "
+							+ aircraftManagementDatabase.getItinerary(MRIndex).getFrom() + "\nGoing To: "
+							+ aircraftManagementDatabase.getItinerary(MRIndex).getTo() + "\nNext Destination: "
+							+ aircraftManagementDatabase.getItinerary(MRIndex).getNext());
 		}
 	}
-
 
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
