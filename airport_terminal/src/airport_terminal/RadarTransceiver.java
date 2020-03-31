@@ -6,8 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 /**
  * An interface to SAAMS: Radar tracking of arriving and departing aircraft, and
@@ -30,21 +29,29 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 	 * @label accesses/observes
 	 * @directed
 	 */
-	private AircraftManagementDatabase aircraftManagementDatabase;
+	private AircraftManagementDatabase aircraftManagementDatabase;	
 
-	private String title = "Radar Transceiver";
+	private JTextField flightCodeText; //Create a textfield for the flight code to be typed in to
+	private JTextField fromText;
 	
-	// private JButton example;
+	private JTextField toText;
+	
+	
+	
+	
 
 	public RadarTransceiver(AircraftManagementDatabase amd) {
 		this.aircraftManagementDatabase = amd;
 		amd.addObserver(this);
-				
+		
+		//Code to initialise the GUI
 		setTitle("Radar Transceiver");
 		setLocationRelativeTo(null);
 		setSize(400, 200); // change to suit preferred size
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
+		
+		
 		
 		
 		setVisible(true);
