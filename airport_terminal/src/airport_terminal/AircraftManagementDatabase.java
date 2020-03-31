@@ -72,8 +72,12 @@ public class AircraftManagementDatabase {
 	 */
 	public int[] getWithStatus(int statusCode) {
 		try {
-			for (int i = 0; i < MRs.length; i++) {
-				code[i] = MRs[i].getStatus();
+			int nextFreePosition =0;
+			for (int i = 0; i < MRs.length; i ++) {
+				if (MRs[i].getStatus() == statusCode) {
+					code[nextFreePosition] = i;
+					nextFreePosition++;
+				}
 			}
 		} catch (IndexOutOfBoundsException ex) {
 			ex.printStackTrace();
