@@ -31,6 +31,11 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 	 * @directed
 	 */
 	private AircraftManagementDatabase aircraftManagementDatabase;
+<<<<<<< HEAD
+=======
+	private String title = "Radar Transceiver";
+	
+>>>>>>> branch 'master' of https://github.com/ptolomy/airport_terminal
 	// private JButton example;
 
 	public RadarTransceiver(AircraftManagementDatabase amd) {
