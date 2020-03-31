@@ -117,7 +117,7 @@ public class GOC extends JFrame implements ActionListener {
 		}
 		dep = airDB.getWithStatus(16);
 		for(int i = 0; i < dep.length; i++) {
-			departing.addItem(dep.toString() + " " + " :" + airDB.getFlightCode(code[i]));
+			departing.addItem(dep[i] + " " + " :" + airDB.getFlightCode(dep[i]));
 		}
 		gates = gateDB.getStatuses();
 	}
