@@ -111,9 +111,8 @@ public class AircraftManagementDatabase {
 			MRs[nextAvailableMR] = new ManagementRecord();
 			MRs[nextAvailableMR].setStatus(0);
 			MRs[nextAvailableMR].radarDetect(fd);
-		} else {
-
-			for (int i = 0; i <= MRs.length; i++) {
+		} else if (MRs.length >= 1) {
+			for (int i = 0; i < MRs.length; i++) {
 				if (MRs[i].getStatus() == 0) {
 					nextAvailableMR = i;
 					break;
