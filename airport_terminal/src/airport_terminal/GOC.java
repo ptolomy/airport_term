@@ -140,17 +140,16 @@ public class GOC extends JFrame implements ActionListener {
 	 * mCode
 	 */
 	public void taxiToGate() {
+		if (airList.getSelectedItem().equals(null)) {
+			JOptionPane.showMessageDialog(dialog, "No Flight Selected"); // message displayed if no flight selected.
+			return;
+		}
 		for (int i = 0; i < gates.length; i++) {
 			//checks the list to find a free gate status 0
 			if (gates[i] == 0) {
-				if (airList.getSelectedItem().equals(null)) {
-					JOptionPane.showMessageDialog(dialog, "No Flight Selected"); // message displayed if no flight selected.																			
-				}
-			else {
 				int m = (int) airList.getSelectedIndex();
 				this.mCode = code[m];
 				gateDB.allocate(gates[i], mCode);
-				}
 			}
 		}
 	}
