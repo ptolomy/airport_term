@@ -36,61 +36,60 @@ public class RefuellingSupervisor extends JFrame implements Observer, ActionList
 	 * @label accesses/observes
 	 * @directed
 	 */
-	private AircraftManagementDatabase aircraftManagementDB;
 	
-	private String title = "Refuelling Supervisor";
+	private AircraftManagementDatabase aircraftManagementDB; //The instance of the aircraft management database called aircraftManagementDB
 
-	private ArrayList<Integer> aircraftAwaitingRefuel;
+	private ArrayList<Integer> aircraftAwaitingRefuel; //An array list of integers to hold the mCodes (position of the management record) of aircraft that require refuelling
 	
-	private JList<String> outputList;
+	private JList<String> outputList; //The list of items that will be displayed to the refuelling supervisors window.
 
-	private JButton refuelled;
-
-	private JList<String> awaitingRefuel;
+	private JButton refuelled; //The button that will allow the supervisor to mark an aircraft as being refuelled
 
 	public RefuellingSupervisor(AircraftManagementDatabase amd) {
-		this.aircraftManagementDB = amd;
+		this.aircraftManagementDB = amd; //Set the instance of the aircraft management database in the current object to be the one that is passed into the above parameters
 		//amdb.addObserver(this);
-		aircraftAwaitingRefuel = new ArrayList<Integer>();
-		//refuelCodes = new ArrayList<Integer>();
+		aircraftAwaitingRefuel = new ArrayList<Integer>(); //Create an array list to store the mCode of all of the aircraft that need to be refuelled. 
 
 		// Code to initialise the GUI
-		setTitle(title);
-		setLocationRelativeTo(null);
-		setSize(400, 200); // change to suit preferred size
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		setVisible(true);
+		setTitle("Refuelling Supervisor"); //Set the title text that will appear on the window
+		setLocationRelativeTo(null);//Set location
+		setSize(400, 200); // Set the size of the window
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); //Set nothing to happen when the closed option is selected
+		setVisible(true);//Set the window to visible
 
-		JPanel refuelling = new JPanel();
+		JPanel refuelling = new JPanel(); //Create a new JPanel for the refuelling information to appear on
 
-		outputList = new JList<String>(new DefaultListModel<String>());
-		JScrollPane scrollList = new JScrollPane(outputList);
+		outputList = new JList<String>(new DefaultListModel<String>()); //Initilise the output list to be a Jlist of strings
+		JScrollPane scrollList = new JScrollPane(outputList); //Create a scroll list for the JList
 
-		refuelling.add(scrollList);
+		refuelling.add(scrollList);//Add the scroll list to the JPanel
 
-		// Quit Button
-		refuelled = new JButton("Refuelling Complete");
-		refuelling.add(refuelled);
+		refuelled = new JButton("Refuelling Complete");//Create a new button with the text "Refuelling Complete"
+		refuelling.add(refuelled);//Add the new button created above to the JPanel
 		
-		getContentPane().add(refuelling);
-		setVisible(true);
+		getContentPane().add(refuelling);//Add the JPanel to the window
+		//setVisible(true);
 
 	}
-	
+	/**
+	 * This method will be called when an action is performed on the refuelling supervisors window. 
+	 * In this case the action will be a click on the 'Refuelling Complete' button
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		int selectedFlight = outputList.getSelectedIndex();
-		if (e.getSource() == refuelled) {
-			int mCode = aircraftAwaitingRefuel.get(selectedFlight);
-			int status = aircraftManagementDB.getStatus(aircraftAwaitingRefuel.get(selectedFlight));
+		int selectedFlight = outputList.getSelectedIndex();//Receive an index for the flight number that is currently selected.
+		if (e.getSource() == refuelled) {//If the 'Refuelling Complete' button was clicked THEN
+			int mCode = aircraftAwaitingRefuel.get(selectedFlight);//Declare a new integer variables called mCode and get the record at the value of the mCode at that position.
+			int status = aircraftManagementDB.getStatus(mCode);//Declare a new string variable then use the database to get the status of the flight using the mCode
 			
-			if (status == ManagementRecord.READY_REFUEL) {
-				aircraftManagementDB.setStatus(mCode, ManagementRecord.READY_PASSENGERS);
+			if (status == ManagementRecord.READY_REFUEL) {//Check that the initial condition is that the aircraft requires refuelling
+				aircraftManagementDB.setStatus(mCode, ManagementRecord.READY_PASSENGERS);//Change the status to be ready for passengers - assuming the states go in numeric order, this would be the next one.
 			}
-		}
-		else
-			JOptionPane.showMessageDialog(this, "The selected aircraft is not ready for refuelling." );
+			else {
+			JOptionPane.showMessageDialog(this, "The selected aircraft is not ready for refuelling." );//Otherwise say that the aircraft is not ready for refuelling
+			}
+	}
 	}
 
 	@Override
