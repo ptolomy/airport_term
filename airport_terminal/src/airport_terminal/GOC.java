@@ -164,8 +164,19 @@ public class GOC extends JFrame implements ActionListener {
 		}
 		for (int i = 0; i < gates.length; i++) {
 			//checks the list to find a free gate status 0
+			//splits the string to get the mCode value
 			if (gates[i] == 0) {
-				int m = (int) airList.getSelectedIndex();
+				String str1 = "";
+				String str2 = "";
+				str1 = (String) airList.getSelectedItem();
+				str2 = str1.substring(0,str1.indexOf(' '));
+				int m = 0;
+				try {
+					m = Integer.parseInt(str2);
+				}
+				catch(NumberFormatException e) {
+					System.out.println("Number format exception in taxi To Gate");
+				}
 				this.mCode = code[m];
 				gateDB.allocate(gates[i], mCode);
 			}
@@ -189,7 +200,7 @@ public class GOC extends JFrame implements ActionListener {
 		str2 = str1.substring(0,str1.indexOf(' '));
 		int m = 0;
 		try {
-			m = Integer.parseInt(str2);// requires a slight rethink of how all the information is displayed and selected 
+			m = Integer.parseInt(str2);
 		}
 		catch(NumberFormatException n) {
 			System.out.println("Number format exception in Departing");
