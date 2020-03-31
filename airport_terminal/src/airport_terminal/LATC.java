@@ -142,7 +142,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		setVisible(true);
 
 	}
-/*
+/* 
  * Method to update the list of aircrafts
  */
 	private void aircraftListUpdate() {
