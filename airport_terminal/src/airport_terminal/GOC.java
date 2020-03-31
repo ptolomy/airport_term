@@ -108,23 +108,27 @@ public class GOC extends JFrame implements ActionListener {
 	 * Updates all fields required for the GOC to operate Updates Flight codes
 	 * Updates Aircraft ready for departure Updates gate status
 	 * 
-	 * should display as "FR1234 -- Status : 12"
+	 * should display as arrivals "mCode  :FR1234 -- Status : 12"
+	 * departing display as "mCode  :FR1234"
+	 * 
 	 */
 	public void updateList() {
 		code = airDB.getWithStatus(2);
 		for (int i = 0; i < code.length; i++) {
-			airList.addItem(code[i] + " " + airDB.getFlightCode(code[i])+ " -- Status : " + airDB.getStatus(code[i]));
+			airList.addItem(code[i] + " " +  " :"+ airDB.getFlightCode(code[i])+ " -- Status : " + airDB.getStatus(code[i]));
 			
 		}
 		dep = airDB.getWithStatus(16);
 		for(int i = 0; i < dep.length; i++) {
-			departing.addItem(dep.toString());
+			departing.addItem(dep.toString() + " " + " :" + airDB.getFlightCode(code[i]));
 		}
 		gates = gateDB.getStatuses();
 	}
 
 	/**
 	 * permission to land method
+	 * String split used because displaying the value doesn't include the mCode so mCode added to combobox so it can be pulled again from the string
+	 * and used for the setStatus.
 	 */
 	public void permitToLand() {
 		if (airList.getSelectedItem().equals(null)) {
@@ -170,14 +174,26 @@ public class GOC extends JFrame implements ActionListener {
 
 	/**
 	 * Grants permission for a flight waiting to depart to depart
-	 * 
+	 * String split used because displaying the value doesn't include the mCode so mCode added to combobox so it can be pulled again from the string
+	 * and used for the setStatus.
 	 */
 	public void departing() {
 		if (airList.getSelectedItem().equals(null)) {
 			JOptionPane.showMessageDialog(dialog, "No Flight Selected"); // message displayed if no flight selected.
 			return;
 		}
-		int m = (int) departing.getSelectedItem();// requires a slight rethink of how all the information is displayed and selected 
+		// split dep string down to mCode value and add to int m
+		String str1 = "";
+		String str2 = "";
+		str1 = (String) departing.getSelectedItem();
+		str2 = str1.substring(0,str1.indexOf(' '));
+		int m = 0;
+		try {
+			m = Integer.parseInt(str2);// requires a slight rethink of how all the information is displayed and selected 
+		}
+		catch(NumberFormatException n) {
+			System.out.println("Number format exception in Departing");
+		}
 		this.mCode = dep[m]; 
 		airDB.setStatus(mCode, 17); //sets the status of mCode value to Awaiting TakeOff?
 	}
