@@ -142,10 +142,12 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		setVisible(true);
 
 	}
-
+/*
+ * Method to update the list of aircrafts
+ */
 	private void aircraftListUpdate() {
-		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) {
-			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i);
+		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) { // For each record in database
+			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i); // Create local instance of that MR
 
 			if (managementRecord == null) {
 				list.set(i, null);
@@ -161,13 +163,16 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		}
 	}
 
+	/*
+	 * Method to change view depending if an aircraft has been selected
+	 */
 	private void aircraftSelected() {
 		if (!aircrafts.getValueIsAdjusting()) {
-			if (aircrafts.getSelectedValue() == null) {
+			if (aircrafts.getSelectedValue() == null) { // If no aircraft is selected from list 
 				MRIndex = -1;
-				flightCode.setText("               ");
-				flightStatus.setText("               ");
-				if (isButtonAvailable) {
+				flightCode.setText("               ");	// Set flight code to be blank
+				flightStatus.setText("               "); // Set flight status to be blank
+				if (isButtonAvailable) { // If buttons are available, set them to not be
 					isButtonAvailable = false;
 				}
 				buttonUpdates();
@@ -183,39 +188,45 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		}
 	}
 
+	/*
+	 * Method to update the buttons availability
+	 */
 	private void buttonUpdates() {
+		// If buttons should not be available then all set to false
 		if (!isButtonAvailable) {
 			landingAllowed.setEnabled(false);
-			takeOffAllowed.setEnabled(false);
 			confirmLanding.setEnabled(false);
-			flightInfo.setEnabled(false);
+			takeOffAllowed.setEnabled(false);
 			waitingForTaxi.setEnabled(false);
+			flightInfo.setEnabled(false);
 		} else {
 			String status = aircraftManagementDatabase.getStatusString(MRIndex);
 
-			if (status == 3) {
+			// If status is GROUND_CLEARANCE_GRANTED, landing button made available
+			if (status.equalsIgnoreCase("GROUND_CLEARANCE_GRANTED")) {
 				landingAllowed.setEnabled(true);
 			} else {
 				landingAllowed.setEnabled(false);
 			}
-			
-			if (status == 17) {
-				takeOffAllowed.setEnabled(true);
-			} else {
-				takeOffAllowed.setEnabled(false);
-			}
-			
-			if (status == 4) {
+			// If status is LANDING, confirm landing button made available
+			if (status.equalsIgnoreCase("LANDING")) {
 				confirmLanding.setEnabled(true);
 			} else {
 				confirmLanding.setEnabled(false);
 			}
-			 
-			if (status == 15) {
+			// If status is AWAITING_TAKEOFF, take off allowed button made available
+			if (status.equalsIgnoreCase("AWAITING_TAKEOFF")) {
+				takeOffAllowed.setEnabled(true);
+			} else {
+				takeOffAllowed.setEnabled(false);
+			}
+			// If status is READY_DEPART, waiting for taxi button is makde available
+			if (status.equalsIgnoreCase("READY_DEPART")) {
 				waitingForTaxi.setEnabled(true);
 			} else {
 				waitingForTaxi.setEnabled(false);
 			}
+			// Flight info button is always available
 			flightInfo.setEnabled(true);
 		}
 	}
@@ -251,8 +262,9 @@ public class LATC extends JFrame implements ActionListener, Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-
+		
+		aircraftSelected();
+		aircraftListUpdate();
 	}
 
 }
