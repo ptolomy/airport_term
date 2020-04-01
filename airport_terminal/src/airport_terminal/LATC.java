@@ -57,8 +57,8 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	private JButton flightInfo;
 
 	private JPanel panel;
-	private JList<ManagementRecord> outputList;
-	private DefaultListModel<ManagementRecord> list;
+	private JList<String> outputList;
+	private DefaultListModel<String> list;
 
 	public LATC(AircraftManagementDatabase amd) {
 
@@ -119,7 +119,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 
 		
 		panel = new JPanel();
-        list = new DefaultListModel<ManagementRecord>();
+        list = new DefaultListModel<String>();
         outputList = new JList<>(list);
         outputList.addListSelectionListener(e -> aircraftSelected());
 
@@ -141,7 +141,8 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	private void aircraftListUpdate() {
 		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) { // For each record in database
 			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i); // Create local instance of that MR
-
+			
+			
 			if (managementRecord == null) {
 				list.set(i, null); 
 
@@ -149,7 +150,8 @@ public class LATC extends JFrame implements ActionListener, Observer {
 					|| managementRecord.getStatus() == 5 || managementRecord.getStatus() == 16
 					|| managementRecord.getStatus() == 18) { // If status equals one of the five here
 
-				list.set(i, managementRecord);
+				String record ="Flight Code: " + managementRecord.getFlightCode().toString() + "     " + "Flight Status: " + managementRecord.getStatusString();
+				list.set(i, record);
 
 			}
 
