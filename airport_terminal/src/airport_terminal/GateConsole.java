@@ -1,5 +1,11 @@
 package airport_terminal;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.swing.JFrame;
 
 /**
  * An interface to SAAMS:
@@ -10,14 +16,15 @@ package airport_terminal;
  * AircraftManagementDatabase, and is notified whenever any change occurs in those <<model>> elements.
  * See written documentation.
  */
-public class GateConsole {
+@SuppressWarnings("deprecation")
+public class GateConsole extends JFrame implements ActionListener, Observer {
 /**
   *  The GateConsole interface has access to the GateInfoDatabase.
   * @supplierCardinality 1
   * @clientCardinality 0..*
   * @label accesses/observes
   * @directed*/
-  GateInfoDatabase lnkUnnamed;
+  GateInfoDatabase gateDB;
 
 /**
   *  The GateConsole interface has access to the AircraftManagementDatabase.
@@ -25,12 +32,35 @@ public class GateConsole {
   * @clientCardinality 0..*
   * @directed
   * @label accesses/observes*/
-  private AircraftManagementDatabase lnkUnnamed1;
+  private AircraftManagementDatabase airDB;
+  String title = "";
 
 /**
  * This gate's gateNumber
  * - for identifying this gate's information in the GateInfoDatabase.
  */
   private int gateNumber;
+  
+  public GateConsole(String gName) {
+	  	this.title =gName;
+		setTitle(title);
+		setLocationRelativeTo(null);
+		setSize(400, 400);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		
+  }
+
+@Override
+public void update(Observable o, Object arg) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void actionPerformed(ActionEvent e) {
+	// TODO Auto-generated method stub
+	
+}
 
 }

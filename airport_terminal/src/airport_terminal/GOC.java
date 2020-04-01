@@ -1,5 +1,6 @@
 package airport_terminal;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -66,7 +67,7 @@ public class GOC extends JFrame implements ActionListener {
 		setTitle(title);
 		setLocationRelativeTo(null);
 		setSize(400, 400);
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		arrivalPane = new JPanel();
 		arrivalPane.setPreferredSize(new Dimension(50,100));
@@ -92,11 +93,11 @@ public class GOC extends JFrame implements ActionListener {
 		window.add(permToLand);
 		window.add(gate);		
 		window.add(arrivalPane);
-		//departures
-		window.add(departPane);
+		//departures		
+		window.add(departPane,BorderLayout.SOUTH);
 		arrivalPane.add(airList);
 		departPane.add(departing);
-		window.add(depart);
+		window.add(depart,BorderLayout.SOUTH);
 		
 		window.setVisible(true);
 	}

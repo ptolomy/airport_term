@@ -28,6 +28,11 @@ public class Main {
 		// Add passengers to list
 		passengerList.addPassenger(new PassengerDetails("Will O'Neill"));
 		passengerList.addPassenger(new PassengerDetails("Mikey Dempster"));
+		
+		//Gate Console
+		String gate1 = "Gate 1";
+		String gate2 = "Gate 2";
+		String gate3 = "Gate 3";
 
 		// Replicate flight being detected by radarDetect
 		amd.radarDetect(new FlightDescriptor("BAS101", new Itinerary("Gatwick", "Stirling", "Madrid"), passengerList));
@@ -42,6 +47,9 @@ public class Main {
 		CleaningSupervisor cs = new CleaningSupervisor(amd);
 		LATC la = new LATC(amd);
 		//GOC go = new GOC();
+		GateConsole g1 = new GateConsole(gate1);
+		GateConsole g2 = new GateConsole(gate2);
+		GateConsole g3 = new GateConsole(gate3);
 	}
 
 }

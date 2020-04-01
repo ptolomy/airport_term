@@ -13,6 +13,7 @@ import java.util.*;
  * register as observers of this class, and are notified whenever any aircraft's
  * (MR's) state changes.
  */
+@SuppressWarnings("deprecation")
 public class AircraftManagementDatabase extends Observable {
 
 	public AircraftManagementDatabase() {
