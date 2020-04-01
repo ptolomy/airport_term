@@ -105,8 +105,20 @@ public class CleaningSupervisor extends JFrame implements ActionListener, Observ
 	@Override
 	public void update(Observable o, Object arg) {
 		aircraftAwaitingCleaning.clear();//Clear the current contents of the aircraftAwaitingCleaning list - to stop duplicates from being added below
-        int[] newAircraftAwaitingCleaning = aircraftManagementDatabase.getWithStatus(ManagementRecord.READY_REFUEL);
+        int[] newAircraftAwaitingCleaning = aircraftManagementDatabase.getWithStatus(ManagementRecord.READY_FOR_CLEAN_MAINT);
         
+        for (int mCode: newAircraftAwaitingCleaning) { //For every mCode that has been returned from the the getWithStatus method...
+        	aircraftAwaitingCleaning.add(mCode);//Add it to the aircraftAwaitingCleaning method so that it can be displayed
+        }
+        
+        newAircraftAwaitingCleaning = aircraftManagementDatabase.getWithStatus(ManagementRecord.FAULTY_AWAIT_CLEAN);
+
+        for (int mCode: newAircraftAwaitingCleaning) { //For every mCode that has been returned from the the getWithStatus method...
+        	aircraftAwaitingCleaning.add(mCode);//Add it to the aircraftAwaitingCleaning method so that it can be displayed
+        }
+        
+        newAircraftAwaitingCleaning = aircraftManagementDatabase.getWithStatus(ManagementRecord.OK_AWAIT_CLEAN);
+
         for (int mCode: newAircraftAwaitingCleaning) { //For every mCode that has been returned from the the getWithStatus method...
         	aircraftAwaitingCleaning.add(mCode);//Add it to the aircraftAwaitingCleaning method so that it can be displayed
         }
