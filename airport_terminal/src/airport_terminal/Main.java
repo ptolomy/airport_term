@@ -37,7 +37,10 @@ public class Main {
 		// Replicate flight being detected by radarDetect
 		amd.radarDetect(new FlightDescriptor("BAS101", new Itinerary("Gatwick", "Stirling", "Madrid"), passengerList));
 		amd.radarDetect(new FlightDescriptor("ESY202", new Itinerary("Paris", "Stirling", null), passengerList));
+		//The below flight should appear in the radar transceiver 
 		amd.radarDetect(new FlightDescriptor("BA127", new Itinerary("Las Vegas", "Stirling", null), passengerList));
+		
+		
 		
 		// Set status to allow testing before GOC is working
 		amd.setStatus(0, 3);
