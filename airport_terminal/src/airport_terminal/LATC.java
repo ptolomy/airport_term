@@ -64,7 +64,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 
 		this.aircraftManagementDatabase = amd;
 		amd.addObserver(this);
-		
+
 		setTitle(title);
 		setLocationRelativeTo(null);
 		setSize(600, 500);
@@ -117,55 +117,57 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		window.add(flightInfo);
 		flightInfo.addActionListener(this);
 
-		
 		panel = new JPanel();
-        list = new DefaultListModel<String>();
-        outputList = new JList<>(list);
-        outputList.addListSelectionListener(e -> aircraftSelected());
+		list = new DefaultListModel<String>();
+		outputList = new JList<>(list);
+		outputList.addListSelectionListener(e -> aircraftSelected());
 
-        JScrollPane scroll = new JScrollPane(outputList);
-        scroll.setPreferredSize(new Dimension(500, 300));
-        panel.add(scroll);
-        list.setSize(aircraftManagementDatabase.maxMRs);
+		JScrollPane scroll = new JScrollPane(outputList);
+		scroll.setPreferredSize(new Dimension(500, 300));
+		panel.add(scroll);
+		list.setSize(aircraftManagementDatabase.maxMRs);
 
-        aircraftListUpdate();
-        window.add(panel);
-        aircraftSelected();
-        
+		aircraftListUpdate();
+		window.add(panel);
+		aircraftSelected();
+
 		setVisible(true);
 
 	}
-/* 
- * Method to update the list of aircrafts
- */
+
+	/*
+	 * Method to update the list of aircrafts
+	 */
 	private void aircraftListUpdate() {
 		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) { // For each record in database
-			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i); // Create local instance of that MR
-			
-			
+			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i); // Create local
+																									// instance of that
+																									// MR
+
 			if (managementRecord == null) {
-				list.set(i, null); 
+				list.set(i, null);
 
 			} else if (managementRecord.getStatus() == 3 || managementRecord.getStatus() == 4
 					|| managementRecord.getStatus() == 5 || managementRecord.getStatus() == 16
 					|| managementRecord.getStatus() == 18) { // If status equals one of the five here
 
-				String record ="Flight Code: " + managementRecord.getFlightCode().toString() + "     " + "Flight Status: " + managementRecord.getStatusString();
+				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " 
+						+ "Flight Status: " + managementRecord.getStatusString();
+				
 				list.set(i, record);
-
 			}
-
 		}
 	}
 
+	
 	/*
 	 * Method to change view depending if an aircraft has been selected
 	 */
 	private void aircraftSelected() {
 		if (!outputList.getValueIsAdjusting()) {
-			if (outputList.getSelectedValue() == null) { // If no aircraft is selected from list 
+			if (outputList.getSelectedValue() == null) { // If no aircraft is selected from list
 				MRIndex = -1;
-				flightCode.setText("               ");	// Set flight code to be blank
+				flightCode.setText("               "); // Set flight code to be blank
 				flightStatus.setText("               "); // Set flight status to be blank
 				if (isButtonAvailable) { // If buttons are available, set them to not be
 					isButtonAvailable = false;
@@ -231,18 +233,26 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		// If landing allowed button is clicked
 		if (e.getSource() == landingAllowed) {
 			aircraftManagementDatabase.setStatus(MRIndex, 4); // Change status
+			aircraftListUpdate();
+			aircraftSelected();
 		}
 		// If confirmLanding button is clicked
 		if (e.getSource() == confirmLanding) {
 			aircraftManagementDatabase.setStatus(MRIndex, 5); // Change status
+			aircraftListUpdate();
+			aircraftSelected();
 		}
 		// If takeOffAllowed button is clicked
 		if (e.getSource() == takeOffAllowed) {
 			aircraftManagementDatabase.setStatus(MRIndex, 18); // Change status
+			aircraftListUpdate();
+			aircraftSelected();
 		}
 		// If waitingForTaxi button is clicked
 		if (e.getSource() == waitingForTaxi) {
 			aircraftManagementDatabase.setStatus(MRIndex, 16); // Change status
+			aircraftListUpdate();
+			aircraftSelected();
 		}
 
 		if (e.getSource() == flightInfo) {
@@ -257,7 +267,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		
+
 		aircraftSelected();
 		aircraftListUpdate();
 	}
