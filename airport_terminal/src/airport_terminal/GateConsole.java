@@ -11,6 +11,7 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JPanel;
 
 /**
  * An interface to SAAMS:
@@ -42,6 +43,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
   private JList<AircraftManagementDatabase> aircraft;
   //control buttons
   private JButton docked,unloaded;
+  private JPanel p1;
 
 /**
  * This gate's gateNumber
@@ -58,16 +60,19 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		
 		Container window = getContentPane();
 		
+		p1 = new JPanel();
 		Component horizontalStrut = Box.createHorizontalStrut(20);
 		docked = new JButton("Docked");
 		docked.addActionListener(this);
 		unloaded = new JButton("Unloaded");
 		unloaded.addActionListener(this);
 		
-		window.add(docked);
-		window.add(unloaded);
-		window.add(horizontalStrut);
-		window.add(aircraft);
+		window.add(p1);
+		p1.add(docked);
+		p1.add(unloaded);
+		p1.add(horizontalStrut);
+		p1.add(aircraft);
+		p1.setVisible(true);
 		
 		
 		window.setVisible(true);

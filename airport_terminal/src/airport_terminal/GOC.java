@@ -44,7 +44,7 @@ public class GOC extends JFrame implements ActionListener {
 	/**
 	 * The Ground Operations Controller Screen interface has access to the
 	 * AircraftManagementDatabase.
-	 * 
+	 * update
 	 * @clientCardinality 1
 	 * @supplierCardinality 1
 	 * @label accesses/observes
