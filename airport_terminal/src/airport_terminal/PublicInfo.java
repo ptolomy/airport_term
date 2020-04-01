@@ -47,7 +47,8 @@ public class PublicInfo extends JFrame implements Observer {
 
 	public PublicInfo(AircraftManagementDatabase amd) {
 		this.aircraftManagementDatabase = amd;
-
+		amd.addObserver(this);
+		
 		setTitle("Public Info");
 		setLocationRelativeTo(null);
 		setSize(400, 500); // change to suit preferred size
