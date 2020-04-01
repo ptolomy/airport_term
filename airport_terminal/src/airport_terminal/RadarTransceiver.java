@@ -54,7 +54,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		amd.addObserver(this);
 		
 		//mCodes = new ArrayList<Integer>();
-		//passengers = new PassengerList();
+		passengers = new PassengerList();
 		
 		//Code to initialise the GUI
 		setTitle("Radar Transceiver");
@@ -167,10 +167,47 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 	private void updatePassengerList() {
 		
 	}
+	
+	private void detectFlight() {
+		String flightCode = flightCodeText.getText();
+		String to = toText.getText();
+		String from = fromText.getText();
+		String next = nextText.getText();
+		String passengerString = namesText.getText();
+		
+		String[] passengerArray = passengerString.split(",");
+		
+		
+		
+		for (String s: passengerArray) {
+			//System.out.println(s);
+			PassengerDetails details = new PassengerDetails(s);
+			passengers.addPassenger(details);
+		}
+			
+		Itinerary itin = new Itinerary(from, next, to);
+		FlightDescriptor fd = new FlightDescriptor(flightCode, itin, passengers);
+		
+		aircraftManagementDatabase.radarDetect(fd);
+		
+		aircraftManagementDatabase.setStatus(2, 3);
+		
+		JOptionPane.showMessageDialog(this, "Flight " + flightCode + " Detected");
+		
+		flightCodeText.setText("");
+		toText.setText("");
+		fromText.setText("");
+		nextText.setText("");
+		namesText.setText("");
+			
+		}
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getSource() == detectFlightButton) {
+			detectFlight();
+		}
 
 	}
 
