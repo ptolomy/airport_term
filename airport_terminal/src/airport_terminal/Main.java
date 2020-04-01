@@ -43,6 +43,10 @@ public class Main {
 		
 		
 		// Set status to allow testing before GOC is working
+<<<<<<< HEAD
+		amd.setStatus(0, 9);
+		amd.setStatus(1, 11);
+=======
 		amd.setStatus(0, 3);
 
 		amd.setStatus(1, 13);
@@ -50,14 +54,21 @@ public class Main {
 
 		amd.setStatus(1, 3);
 
+>>>>>>> branch 'master' of https://github.com/ptolomy/airport_terminal.git
 		
 		// Add databases to Frames as required..
 		// Instantiate and show all interfaces as Frames
 		//MaintenanceInspector m1 = new MaintenanceInspector(amd);
 		//PublicInfo pi = new PublicInfo(amd);
+<<<<<<< HEAD
+		RefuellingSupervisor rs = new RefuellingSupervisor(amd);
+		//RadarTransceiver rt = new RadarTransceiver(amd);
+		CleaningSupervisor cs = new CleaningSupervisor(amd);
+=======
 		//RefuellingSupervisor rs = new RefuellingSupervisor(amd);
 		RadarTransceiver rt = new RadarTransceiver(amd);
 		//CleaningSupervisor cs = new CleaningSupervisor(amd);
+>>>>>>> branch 'master' of https://github.com/ptolomy/airport_terminal.git
 		LATC la = new LATC(amd);
 		//GOC go = new GOC();
 		

@@ -158,7 +158,7 @@ public class RefuellingSupervisor extends JFrame implements ActionListener, Obse
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		// If landing allowed button is clicked
+		// If refuelled button is clicked
 		if (e.getSource() == refuelledButton) {
 			aircraftManagementDatabase.setStatus(MRIndex, 14); // Change status
 			aircraftListUpdate();
