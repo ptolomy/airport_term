@@ -41,7 +41,7 @@ public class PublicInfo extends JFrame implements Observer {
 	private JPanel landing;
 	private JPanel landed;
 	private JPanel departing;
-	
+
 	private JList<String> outputListLanding;
 	private JList<String> outputListLanded;
 	private JList<String> outputListDeparting;
@@ -53,7 +53,7 @@ public class PublicInfo extends JFrame implements Observer {
 	public PublicInfo(AircraftManagementDatabase amd) {
 		this.aircraftManagementDatabase = amd;
 		amd.addObserver(this);
-		
+
 		setTitle("Public Info");
 		setLocation(800, 0);
 		setSize(500, 550); // change to suit preferred size
@@ -70,7 +70,7 @@ public class PublicInfo extends JFrame implements Observer {
 		landing = new JPanel(); // Create a new JPanel for the information to appear on
 		listLanding = new DefaultListModel<String>();
 		outputListLanding = new JList<>(listLanding);
-		
+
 		JScrollPane scrollList = new JScrollPane(outputListLanding); // Create a scroll list for the JList
 		scrollList.setPreferredSize(new Dimension(450, 150));
 		landing.add(scrollList);// Add the scroll list to the JPanel
@@ -80,12 +80,12 @@ public class PublicInfo extends JFrame implements Observer {
 		// Labels for flights landed
 		labelFlightsLanded = new JLabel("Flights Landed: ");
 		window.add(labelFlightsLanded);
- 
+
 		// FLights landed information
 		landed = new JPanel(); // Create a new JPanel for the information to appear on
 		listLanded = new DefaultListModel<String>();
 		outputListLanded = new JList<>(listLanded);
-		
+
 		JScrollPane scrollListLanded = new JScrollPane(outputListLanded); // Create a scroll list for the JList
 		scrollListLanded.setPreferredSize(new Dimension(450, 150));
 		landed.add(scrollListLanded);// Add the scroll list to the JPanel
@@ -100,16 +100,15 @@ public class PublicInfo extends JFrame implements Observer {
 		departing = new JPanel(); // Create a new JPanel for the information to appear on
 		listDeparting = new DefaultListModel<String>();
 		outputListDeparting = new JList<>(listDeparting);
-		
+
 		JScrollPane scrollListDeparting = new JScrollPane(outputListDeparting); // Create a scroll list for the JList
 		scrollListDeparting.setPreferredSize(new Dimension(450, 150));
 		departing.add(scrollListDeparting);// Add the scroll list to the JPanel
 		listDeparting.setSize(aircraftManagementDatabase.maxMRs);
 		getContentPane().add(departing);// Add the JPanel to the window
-		
+
 		aircraftListUpdate();
 		setVisible(true);
-		
 
 	}
 
@@ -117,9 +116,9 @@ public class PublicInfo extends JFrame implements Observer {
 	 * Method to update the list of aircrafts
 	 */
 	private void aircraftListUpdate() {
-		
+
 		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) { // For each record in database
-			
+
 			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i);
 
 			if (managementRecord == null) {
@@ -127,39 +126,50 @@ public class PublicInfo extends JFrame implements Observer {
 				listLanded.set(i, null);
 				listDeparting.set(i, null);
 			}
-			// If the flight status is either WAITING_TO_LAND, GROUND_CLEARENCE_GRANTED or LANDING
+			// If the flight status is either WAITING_TO_LAND, GROUND_CLEARENCE_GRANTED or
+			// LANDING
 			else if (managementRecord.getStatusString().equalsIgnoreCase("WANTING_TO_LAND")
 					|| managementRecord.getStatusString().equalsIgnoreCase("GROUND_CLEARANCE_GRANTED")
 					|| managementRecord.getStatusString().equalsIgnoreCase("LANDING")) {
-				
-				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " 
-						+ "Flight Status: " + managementRecord.getStatusString();
-				
+
+				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
+						+ managementRecord.getStatusString();
+
 				listLanding.set(i, record); // Add to list of landing aircrafts
-			}	
+			}
 			// If the flight status is LANDED
 			else if (managementRecord.getStatusString().equalsIgnoreCase("LANDED")) {
-				
-				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " 
-						+ "Flight Status: " + managementRecord.getStatusString();
-				
+
+				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
+						+ managementRecord.getStatusString();
+
 				listLanded.set(i, record); // Add to list of landed aircrafts
+				
+				if (listLanding.getSize() > 0) {
+					for (int index = 0; index < listLanding.getSize(); index++) {
+
+						if (listLanding.getElementAt(index).contains(managementRecord.getFlightCode())) {
+							listLanding.remove(index);
+
+						}
+					}
+				}
 
 			}
 			// If the flight status is AWAITING_TAKEOFF
 			else if (managementRecord.getStatusString().equalsIgnoreCase("AWAITING_TAKEOFF")) {
-				
-				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " 
-						+ "Flight Status: " + managementRecord.getStatusString();
-				
-				listDeparting.set(i, record);	// Add to list of departing aircrafts
+
+				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
+						+ managementRecord.getStatusString();
+
+				listDeparting.set(i, record); // Add to list of departing aircrafts
 			}
 		}
 	}
-	
+
 	@Override
 	public void update(Observable o, Object arg) {
-		
+
 		aircraftListUpdate();
 	}
 }
