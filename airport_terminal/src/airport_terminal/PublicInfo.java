@@ -81,9 +81,9 @@ public class PublicInfo extends JFrame implements Observer {
 		landed.add(scrollListLanded);// Add the scroll list to the JPanel
 		getContentPane().add(landed);// Add the JPanel to the window
 
-		// Labels for flights landed
-		labelFlightsLanded = new JLabel("Flights Landed: ");
-		window.add(labelFlightsLanded);
+		// Labels for flights Departing
+		labelFlightsDeparting = new JLabel("Flights Departing: ");
+		window.add(labelFlightsDeparting);
 
 		// FLights departing information
 		JPanel departing = new JPanel(); // Create a new JPanel for the information to appear on
