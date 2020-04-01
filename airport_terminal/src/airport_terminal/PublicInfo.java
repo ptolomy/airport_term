@@ -37,13 +37,13 @@ public class PublicInfo extends JFrame implements Observer {
 	private JLabel labelFlightsLanded;
 	private JLabel labelFlightsDeparting;
 
-	private JList<ManagementRecord> outputListLanding;
-	private JList<ManagementRecord> outputListLanded;
-	private JList<ManagementRecord> outputListDeparting;
+	private JList<String[]> outputListLanding;
+	private JList<String[]> outputListLanded;
+	private JList<String[]> outputListDeparting;
 
-	private DefaultListModel<ManagementRecord> listLanding;
-	private DefaultListModel<ManagementRecord> listLanded;
-	private DefaultListModel<ManagementRecord> listDeparting;
+	private DefaultListModel<String[]> listLanding;
+	private DefaultListModel<String[]> listLanded;
+	private DefaultListModel<String[]> listDeparting;
 
 	public PublicInfo(AircraftManagementDatabase amd) {
 		this.aircraftManagementDatabase = amd;
@@ -63,7 +63,7 @@ public class PublicInfo extends JFrame implements Observer {
 
 		// FLights landing information
 		JPanel landing = new JPanel(); // Create a new JPanel for the information to appear on
-		listLanding = new DefaultListModel<ManagementRecord>();
+		listLanding = new DefaultListModel<String[]>();
 		outputListLanding = new JList<>(listLanding);
 		JScrollPane scrollList = new JScrollPane(outputListLanding); // Create a scroll list for the JList
 		landing.add(scrollList);// Add the scroll list to the JPanel
@@ -75,7 +75,7 @@ public class PublicInfo extends JFrame implements Observer {
  
 		// FLights landed information
 		JPanel landed = new JPanel(); // Create a new JPanel for the information to appear on
-		listLanded = new DefaultListModel<ManagementRecord>();
+		listLanded = new DefaultListModel<String[]>();
 		outputListLanded = new JList<>(listLanded);
 		JScrollPane scrollListLanded = new JScrollPane(outputListLanded); // Create a scroll list for the JList
 		landed.add(scrollListLanded);// Add the scroll list to the JPanel
@@ -87,7 +87,7 @@ public class PublicInfo extends JFrame implements Observer {
 
 		// FLights departing information
 		JPanel departing = new JPanel(); // Create a new JPanel for the information to appear on
-		listDeparting = new DefaultListModel<ManagementRecord>();
+		listDeparting = new DefaultListModel<String[]>();
 		outputListDeparting = new JList<>(listDeparting);
 		JScrollPane scrollListDeparting = new JScrollPane(outputListDeparting); // Create a scroll list for the JList
 		departing.add(scrollListDeparting);// Add the scroll list to the JPanel
@@ -104,24 +104,30 @@ public class PublicInfo extends JFrame implements Observer {
 			if (aircraftManagementDatabase.getStatusString(i) == "WANTING_TO_LAND"
 					|| aircraftManagementDatabase.getStatusString(i) == "GROUND_CLEARANCE_GRANTED"
 					|| aircraftManagementDatabase.getStatusString(i) == "LANDING") {
-				ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i); // Create local
-																										// instance of
-																										// that MR
-				listLanding.set(i, managementRecord); // Add to list of landing aircrafts
+				
+				String[] record = new String[2];
+				record[0] = aircraftManagementDatabase.getFlightCode(i);
+				record[1] = aircraftManagementDatabase.getStatusString(i);
+				
+				listLanding.set(i, record); // Add to list of landing aircrafts
 			}	
 			// If the flight status is LANDED
 			if (aircraftManagementDatabase.getStatusString(i) == "LANDED") {
-				ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i); // Create local
-																										// instance of
-																										// that MR
-				listLanded.set(i, managementRecord); // Add to list of landed aircrafts
+				
+				String[] record = new String[2];
+				record[0] = aircraftManagementDatabase.getFlightCode(i);
+				record[1] = aircraftManagementDatabase.getStatusString(i);
+				
+				listLanded.set(i, record); // Add to list of landed aircrafts
 			}
 			// If the flight status is AWAITING_TAKEOFF
 			if (aircraftManagementDatabase.getStatusString(i) == "AWAITING_TAKEOFF") {
-				ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i); // Create local
-																										// instance of
-																										// that MR
-				listDeparting.set(i, managementRecord);	// Add to list of departing aircrafts
+				
+				String[] record = new String[2];
+				record[0] = aircraftManagementDatabase.getFlightCode(i);
+				record[1] = aircraftManagementDatabase.getStatusString(i);
+				
+				listDeparting.set(i, record);	// Add to list of departing aircrafts
 			}
 		}
 	}
