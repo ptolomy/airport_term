@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -53,6 +54,8 @@ public class GOC extends JFrame implements ActionListener {
 	private String title = "GOC";
 	private JButton permToLand, update, gate, depart;
 	private JPanel arrivalPane,departPane;
+	private JLabel arrival,departure;
+	//changing to JList 
 	private JComboBox<String> airList;
 	private JComboBox<String> departing;
 
@@ -66,7 +69,7 @@ public class GOC extends JFrame implements ActionListener {
 
 		setTitle(title);
 		setLocationRelativeTo(null);
-		setSize(400, 400);
+		setSize(400, 200);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		arrivalPane = new JPanel();
@@ -76,6 +79,10 @@ public class GOC extends JFrame implements ActionListener {
 		departPane.setPreferredSize(new Dimension(50,100));
 		departPane.setVisible(true);
 		
+		
+		Container window = getContentPane();
+		arrival = new JLabel("Arrivals");
+		departure = new JLabel("Departures");
 		update = new JButton("Update GOC");
 		update.addActionListener(this);
 		permToLand = new JButton("Permission to Land");
@@ -83,22 +90,25 @@ public class GOC extends JFrame implements ActionListener {
 		gate = new JButton("Taxi to Gate");
 		gate.addActionListener(this);
 		depart = new JButton("Ready to depart");
-		depart.addActionListener(this);
-
-		Container window = getContentPane();
+		depart.addActionListener(this);	
 
 		window.setLayout(new FlowLayout());
-		window.add(update);
+		window.add(arrivalPane);//panel containing air list
+		arrivalPane.setLayout(new FlowLayout());
+		arrivalPane.add(update);
 		//arrivals
-		window.add(permToLand);
-		window.add(gate);		
-		window.add(arrivalPane);
-		//departures		
-		window.add(departPane,BorderLayout.SOUTH);
+		arrivalPane.add(arrival); //label
+		arrivalPane.add(permToLand);
+		arrivalPane.add(gate);	
 		arrivalPane.add(airList);
+		//departures	
+		window.add(departPane); //panel
+		departPane.setLayout(new FlowLayout());
+		departPane.add(departure); //label	
+		departPane.add(depart); //button		
 		departPane.add(departing);
-		window.add(depart,BorderLayout.SOUTH);
 		
+	
 		window.setVisible(true);
 	}
 
