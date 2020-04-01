@@ -71,7 +71,7 @@ public class PublicInfo extends JFrame implements Observer {
 		// Labels for flights landed
 		labelFlightsLanded = new JLabel("Flights Landed: ");
 		window.add(labelFlightsLanded);
-
+ 
 		// FLights landed information
 		JPanel landed = new JPanel(); // Create a new JPanel for the information to appear on
 		listLanded = new DefaultListModel<ManagementRecord>();
