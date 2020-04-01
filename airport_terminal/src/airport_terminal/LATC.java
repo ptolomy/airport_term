@@ -66,7 +66,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		amd.addObserver(this);
 
 		setTitle(title);
-		setLocationRelativeTo(null);
+		setLocation(100, 0);
 		setSize(600, 500);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		Container window = getContentPane();

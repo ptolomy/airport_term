@@ -55,7 +55,7 @@ public class PublicInfo extends JFrame implements Observer {
 		amd.addObserver(this);
 		
 		setTitle("Public Info");
-		setLocationRelativeTo(null);
+		setLocation(800, 0);
 		setSize(500, 550); // change to suit preferred size
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
