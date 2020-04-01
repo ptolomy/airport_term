@@ -122,10 +122,10 @@ public class PublicInfo extends JFrame implements Observer {
 			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i);
 
 			if (managementRecord == null) {
-				listLanding.set(i, null);
-				listLanded.set(i, null);
-				listDeparting.set(i, null);
+				break;
 			}
+			
+			
 			// If the flight status is either WAITING_TO_LAND, GROUND_CLEARENCE_GRANTED or
 			// LANDING
 			else if (managementRecord.getStatusString().equalsIgnoreCase("WANTING_TO_LAND")
@@ -137,6 +137,9 @@ public class PublicInfo extends JFrame implements Observer {
 
 				listLanding.set(i, record); // Add to list of landing aircrafts
 			}
+			
+			
+			
 			// If the flight status is LANDED
 			else if (managementRecord.getStatusString().equalsIgnoreCase("LANDED")) {
 
@@ -145,17 +148,19 @@ public class PublicInfo extends JFrame implements Observer {
 
 				listLanded.set(i, record); // Add to list of landed aircrafts
 				
-				if (listLanding.getSize() > 0) {
-					for (int index = 0; index < listLanding.getSize(); index++) {
-
-						if (listLanding.getElementAt(index).contains(managementRecord.getFlightCode())) {
-							listLanding.remove(index);
-
-						}
+				for (int index = 0; index < listLanding.getSize(); index++) {
+					if (listLanding.elementAt(index) == null) {
+						listLanding.set(i, null);
+					}
+					else if (listLanding.elementAt(index).contains(managementRecord.getFlightCode())){
+						listLanding.remove(index);
 					}
 				}
 
 			}
+			
+			
+			
 			// If the flight status is AWAITING_TAKEOFF
 			else if (managementRecord.getStatusString().equalsIgnoreCase("AWAITING_TAKEOFF")) {
 
