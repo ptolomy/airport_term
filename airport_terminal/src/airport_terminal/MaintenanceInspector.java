@@ -3,6 +3,8 @@ package airport_terminal;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JFrame;
 
@@ -15,7 +17,7 @@ import javax.swing.JFrame;
  * that <<model>> element. See written documentation.
  */
 @SuppressWarnings("serial")
-public class MaintenanceInspector extends JFrame {
+public class MaintenanceInspector extends JFrame implements Observer, ActionListener{
 	/**
 	 * The Maintenance Inspector Screen interface has access to the
 	 * AircraftManagementDatabase.
@@ -30,13 +32,26 @@ public class MaintenanceInspector extends JFrame {
 
 	public MaintenanceInspector(AircraftManagementDatabase amd) {
 		this.aircraftManagementDatabase = amd;
-
+		amd.addObserver(this);
+		
 		setTitle("Maintenance Inspector");
 		setLocationRelativeTo(null);
 		setSize(400, 200); // change to suit preffered size
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
 		setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
