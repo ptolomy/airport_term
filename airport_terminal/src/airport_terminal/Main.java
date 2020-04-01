@@ -38,16 +38,17 @@ public class Main {
 		amd.radarDetect(new FlightDescriptor("BAS101", new Itinerary("Gatwick", "Stirling", "Madrid"), passengerList));
 		amd.radarDetect(new FlightDescriptor("ESY202", new Itinerary("Paris", "Stirling", null), passengerList));
 		
+		// Set status to allow testing before GOC is working
 		amd.setStatus(0, 3);
 		amd.setStatus(1, 3);
 		
 		// Add databases to Frames as required..
 		// Instantiate and show all interfaces as Frames
 		MaintenanceInspector m1 = new MaintenanceInspector(amd);
-		//PublicInfo pi = new PublicInfo(amd);
-		//RefuellingSupervisor rs = new RefuellingSupervisor(amd);
-		//RadarTransceiver rt = new RadarTransceiver(amd);
-		//CleaningSupervisor cs = new CleaningSupervisor(amd);
+		PublicInfo pi = new PublicInfo(amd);
+		RefuellingSupervisor rs = new RefuellingSupervisor(amd);
+		RadarTransceiver rt = new RadarTransceiver(amd);
+		CleaningSupervisor cs = new CleaningSupervisor(amd);
 		LATC la = new LATC(amd);
 		//GOC go = new GOC();
 		
