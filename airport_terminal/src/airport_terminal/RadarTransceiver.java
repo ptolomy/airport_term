@@ -47,13 +47,13 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 	
 	private JList passengerList;
 	private PassengerList passengers;
-	//private ArrayList<Integer> mCodes;
+	private ArrayList<Integer> mCodes;
 	
 	public RadarTransceiver(AircraftManagementDatabase amd) {
 		this.aircraftManagementDatabase = amd;
 		amd.addObserver(this);
 		
-		//mCodes = new ArrayList<Integer>();
+		mCodes = new ArrayList<Integer>();
 		passengers = new PassengerList();
 		
 		//Code to initialise the GUI
@@ -127,7 +127,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		outputList = new JList<>(list);//'Create a JList based on the list to display the list of flights
 		outputList.addListSelectionListener(e -> aircraftSelected());//Add an action listener to the output list and call the aircraftSelected method
 		JScrollPane scroll = new JScrollPane(outputList);//Create a new scroll bar for the output list
-		scroll.setPreferredSize(new Dimension(495, 75));//Set the preferred size for the scroll list
+		scroll.setPreferredSize(new Dimension(450, 75));//Set the preferred size for the scroll list
 		detectedFlights.add(scroll);//Add the scroll pane to the panel
 		list.setSize(aircraftManagementDatabase.maxMRs);//Set the size of the list to the maximum number of management records, as defined in the aircraft management database
         
@@ -136,13 +136,13 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		
         passengerList = new JList<PassengerDetails>(new DefaultListModel<PassengerDetails>());//Create a JList of passenger details
         JScrollPane scroll2 = new JScrollPane(passengerList);//Add a scroll pane to the passenger list
-        scroll2.setPreferredSize(new Dimension(495, 75));//Set the size for the new list with scroll pane
+        scroll2.setPreferredSize(new Dimension(450, 75));//Set the size for the new list with scroll pane
         detectedFlights.add(scroll2);//Add the scroll pane to the JPanel
         updatePassengerList();//Call the update passengers list
         
         detectedFlights.setSize(getMinimumSize());//Set the size of the detected flights pane to be the minimum size it can be
         
-		detectedFlights.setBorder(BorderFactory.createTitledBorder("Detected Flights"));//Add a titled border/ group box to the JPanel
+		detectedFlights.setBorder(BorderFactory.createTitledBorder("Detected Flights: In Transit or Departing Local Airspace"));//Add a titled border/ group box to the JPanel
 		
 		aircraftListUpdate();//Call the update aircraftList
 		container.add(detectedFlights);//Adds the JPanel to the container
@@ -157,7 +157,19 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 	}
 	
 	private void aircraftListUpdate() {
-		
+		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) { // For each record in database
+			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i); // Create local instance of that MR
+
+			if (managementRecord == null) {
+				list.set(i, null);
+
+			} else if (managementRecord.getStatus() == ManagementRecord.IN_TRANSIT || managementRecord.getStatus() == ManagementRecord.DEPARTING_THROUGH_LOCAL_AIRSPACE) { // If status equals one of the two here
+
+				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: " + managementRecord.getStatusString();
+				
+				list.set(i, record);
+			}
+		}
 	}
 	
 	private void aircraftSelected() {
@@ -180,7 +192,6 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		
 		
 		for (String s: passengerArray) {
-			//System.out.println(s);
 			PassengerDetails details = new PassengerDetails(s);
 			passengers.addPassenger(details);
 		}
@@ -190,7 +201,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		
 		aircraftManagementDatabase.radarDetect(fd);
 		
-		aircraftManagementDatabase.setStatus(2, 3);
+		aircraftManagementDatabase.setStatus(4, 3);
 		
 		JOptionPane.showMessageDialog(this, "Flight " + flightCode + " Detected");
 		
@@ -199,14 +210,25 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		fromText.setText("");
 		nextText.setText("");
 		namesText.setText("");
+		
+		
 			
 		}
+	
+	private void clearFlightInfo() {
+		
+		//Need to sort the mCodes list first....
+		//aircraftManagementDatabase.radarLostContact(mCodes.get(outputList.getSelectedIndex()));
+	}
 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == detectFlightButton) {
 			detectFlight();
+		}
+		else if (e.getSource() == leftLocalAirspace) {
+			clearFlightInfo();
 		}
 
 	}
