@@ -51,7 +51,7 @@ public class PublicInfo extends JFrame implements Observer {
 		
 		setTitle("Public Info");
 		setLocationRelativeTo(null);
-		setSize(400, 500); // change to suit preferred size
+		setSize(300, 550); // change to suit preferred size
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
 		Container window = getContentPane();
