@@ -30,9 +30,9 @@ public class Main {
 		passengerList.addPassenger(new PassengerDetails("Mikey Dempster"));
 		
 		//Gate Console
-		String gate1 = "Gate 1";
-		String gate2 = "Gate 2";
-		String gate3 = "Gate 3";
+		//String gate1 = "Gate 1";
+		//String gate2 = "Gate 2";
+		//String gate3 = "Gate 3";
 
 		// Replicate flight being detected by radarDetect
 		amd.radarDetect(new FlightDescriptor("BAS101", new Itinerary("Gatwick", "Stirling", "Madrid"), passengerList));
@@ -40,13 +40,13 @@ public class Main {
 		
 		// Set status to allow testing before GOC is working
 		amd.setStatus(0, 3);
-		amd.setStatus(1, 3);
+		amd.setStatus(1, 13);
 		
 		// Add databases to Frames as required..
 		// Instantiate and show all interfaces as Frames
 		//MaintenanceInspector m1 = new MaintenanceInspector(amd);
-		PublicInfo pi = new PublicInfo(amd);
-		//RefuellingSupervisor rs = new RefuellingSupervisor(amd);
+		//PublicInfo pi = new PublicInfo(amd);
+		RefuellingSupervisor rs = new RefuellingSupervisor(amd);
 		//RadarTransceiver rt = new RadarTransceiver(amd);
 		//CleaningSupervisor cs = new CleaningSupervisor(amd);
 		LATC la = new LATC(amd);
