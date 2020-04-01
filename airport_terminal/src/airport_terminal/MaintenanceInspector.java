@@ -7,6 +7,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
+import javax.swing.JTabbedPane;
 
 /**
  * An interface to SAAMS: Maintenance Inspector Screen: Inputs events from the
@@ -29,16 +30,24 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 	 */
 
 	private AircraftManagementDatabase aircraftManagementDatabase;
+	
+    private JTabbedPane tabPane;
+
 
 	public MaintenanceInspector(AircraftManagementDatabase amd) {
 		this.aircraftManagementDatabase = amd;
 		amd.addObserver(this);
 		
+		tabPane = new JTabbedPane();
+        getContentPane().add(tabPane);
+		
 		setTitle("Maintenance Inspector");
-		setLocationRelativeTo(null);
-		setSize(400, 200); // change to suit preffered size
+		setLocation(800, 0);
+		setSize(400, 200); // change to suit preferred size
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-
+		
+		
+		
 		setVisible(true);
 	}
 
