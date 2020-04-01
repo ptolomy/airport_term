@@ -107,11 +107,10 @@ public class CleaningSupervisor extends JFrame implements ActionListener, Observ
 		
 		
 		aircraftAwaitingCleaning.clear();//Clear the current contents of the aircraftAwaitingCleaning list - to stop duplicates from being added below
-<<<<<<< HEAD
-		int[] newAircraftAwaitingCleaning = aircraftManagementDatabase.getWithStatus(11);
-=======
+
+		//int[] newAircraftAwaitingCleaning = aircraftManagementDatabase.getWithStatus(11);
+
         int[] newAircraftAwaitingCleaning = aircraftManagementDatabase.getWithStatus(ManagementRecord.READY_FOR_CLEAN_MAINT);
->>>>>>> branch 'master' of https://github.com/ptolomy/airport_terminal.git
         
         for (int mCode: newAircraftAwaitingCleaning) { //For every mCode that has been returned from the the getWithStatus method...
         	aircraftAwaitingCleaning.add(mCode);//Add it to the aircraftAwaitingCleaning method so that it can be displayed

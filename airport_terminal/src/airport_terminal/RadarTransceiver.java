@@ -177,8 +177,25 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 	}
 	
 	private void updatePassengerList() {
+		int MRIndex = -1;
 		
-	}
+		if (!outputList.getValueIsAdjusting()) {
+			if (outputList.getSelectedValue() == null) { // If no aircraft is selected from list
+				MRIndex = -1;
+			}
+		} 
+		else {
+			MRIndex = outputList.getSelectedIndex();
+			//flightCode.setText(aircraftManagementDatabase.getFlightCode(MRIndex));
+			//flightStatus.setText(aircraftManagementDatabase.getStatusString(MRIndex));
+			
+			passengers = aircraftManagementDatabase.getPassengerList(MRIndex);
+			
+			passengerList.		
+			
+		}
+		
+		}
 	
 	private void detectFlight() {
 		String flightCode = flightCodeText.getText();
