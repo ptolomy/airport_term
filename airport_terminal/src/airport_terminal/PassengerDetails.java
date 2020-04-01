@@ -19,6 +19,13 @@ public class PassengerDetails {
   public String getName(){
 	  return name;
   }
+  
+  /**
+   * Return the name of this passenger.
+   */
+  public String toString(){
+	  return name;
+  }
 
   /**
    * The passenger's name!

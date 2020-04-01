@@ -1,5 +1,6 @@
 package airport_terminal;
 import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * Contains an array of PassengerDetails objects - one per passenger on a flight.
@@ -17,11 +18,12 @@ public class PassengerList {
  * @supplierCardinality 0..*
  */
 	//Changed from private PassengerDetails[] details to allow for easier processing using .add etc.
-  private ArrayList<PassengerDetails> details;
+  //private ArrayList<PassengerDetails> details;
+	private Vector<PassengerDetails> details;
   
   //Added the type of the array list to be PassengerDetails on Wednesday - MIKEY
   public PassengerList() {
-	    details = new ArrayList<PassengerDetails>();
+	    details = new Vector<PassengerDetails>();
 	  }
 /**
  * The given passenger is boarding.
@@ -32,4 +34,9 @@ public class PassengerList {
 	  //!!Still need to check the pre-condition before the passengers are added!
 	 this.details.add(details);//Add the details that have been passed into the method to the details array list that exists in this method. 
   }
+
+  public Vector<PassengerDetails> getPassengerList() {
+      return this.details;
+  }
+  
 }

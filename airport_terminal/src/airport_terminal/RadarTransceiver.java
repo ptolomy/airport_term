@@ -5,8 +5,10 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Vector;
 
 import javax.swing.*;
 
@@ -45,7 +47,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 	private DefaultListModel<String> list;
 	private JButton leftLocalAirspace;
 	
-	private JList passengerList;
+	private JList<PassengerDetails> passengerList;
 	private PassengerList passengers;
 	private ArrayList<Integer> mCodes;
 	
@@ -138,7 +140,6 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
         JScrollPane scroll2 = new JScrollPane(passengerList);//Add a scroll pane to the passenger list
         scroll2.setPreferredSize(new Dimension(450, 75));//Set the size for the new list with scroll pane
         detectedFlights.add(scroll2);//Add the scroll pane to the JPanel
-        updatePassengerList();//Call the update passengers list
         
         detectedFlights.setSize(getMinimumSize());//Set the size of the detected flights pane to be the minimum size it can be
         
@@ -157,6 +158,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 	}
 	
 	private void aircraftListUpdate() {
+		mCodes.clear();
 		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) { // For each record in database
 			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i); // Create local instance of that MR
 
@@ -164,38 +166,27 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 				list.set(i, null);
 
 			} else if (managementRecord.getStatus() == ManagementRecord.IN_TRANSIT || managementRecord.getStatus() == ManagementRecord.DEPARTING_THROUGH_LOCAL_AIRSPACE) { // If status equals one of the two here
-
 				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: " + managementRecord.getStatusString();
-				
 				list.set(i, record);
+				mCodes.add(i);
 			}
 		}
 	}
 	
 	private void aircraftSelected() {
 		
-	}
-	
-	private void updatePassengerList() {
 		int MRIndex = -1;
-		
-		if (!outputList.getValueIsAdjusting()) {
 			if (outputList.getSelectedValue() == null) { // If no aircraft is selected from list
 				MRIndex = -1;
 			}
-		} 
 		else {
 			MRIndex = outputList.getSelectedIndex();
-			//flightCode.setText(aircraftManagementDatabase.getFlightCode(MRIndex));
-			//flightStatus.setText(aircraftManagementDatabase.getStatusString(MRIndex));
-			
 			passengers = aircraftManagementDatabase.getPassengerList(MRIndex);
-			
-			passengerList.		
-			
+			Vector<PassengerDetails> detailsToDisplay = passengers.getPassengerList();
+			passengerList.setListData(detailsToDisplay);
 		}
 		
-		}
+	}
 	
 	private void detectFlight() {
 		String flightCode = flightCodeText.getText();
@@ -205,7 +196,6 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		String passengerString = namesText.getText();
 		
 		String[] passengerArray = passengerString.split(",");
-		
 		
 		
 		for (String s: passengerArray) {
