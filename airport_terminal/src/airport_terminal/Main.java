@@ -39,8 +39,8 @@ public class Main {
 		amd.radarDetect(new FlightDescriptor("ESY202", new Itinerary("Paris", "Stirling", null), passengerList));
 		
 		// Set status to allow testing before GOC is working
-		amd.setStatus(0, 13);
-		amd.setStatus(1, 13);
+		amd.setStatus(0, 3);
+		amd.setStatus(1, 3);
 		
 		// Add databases to Frames as required..
 		// Instantiate and show all interfaces as Frames

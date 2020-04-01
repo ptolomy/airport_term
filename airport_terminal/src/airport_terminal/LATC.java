@@ -146,20 +146,21 @@ public class LATC extends JFrame implements ActionListener, Observer {
 
 			if (managementRecord == null) {
 				list.set(i, null);
+			} else {
+				list.set(i, null);
+				if (managementRecord.getStatus() == 3 || managementRecord.getStatus() == 4
+						|| managementRecord.getStatus() == 5 || managementRecord.getStatus() == 16
+						|| managementRecord.getStatus() == 18) { // If status equals one of the five here
 
-			} else if (managementRecord.getStatus() == 3 || managementRecord.getStatus() == 4
-					|| managementRecord.getStatus() == 5 || managementRecord.getStatus() == 16
-					|| managementRecord.getStatus() == 18) { // If status equals one of the five here
+					String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
+							+ managementRecord.getStatusString();
 
-				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " 
-						+ "Flight Status: " + managementRecord.getStatusString();
-				
-				list.set(i, record);
+					list.set(i, record);
+				}
 			}
 		}
 	}
 
-	
 	/*
 	 * Method to change view depending if an aircraft has been selected
 	 */
