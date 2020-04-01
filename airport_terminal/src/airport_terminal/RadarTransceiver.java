@@ -202,7 +202,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		}
 	
 	private void clearFlightInfo() {
-		aircraftManagementDatabase.radarLostContact(mCodes.get(outputList.getSelectedIndex()));
+		//aircraftManagementDatabase.radarLostContact(mCodes.get(outputList.getSelectedIndex()));
 	}
 
 
