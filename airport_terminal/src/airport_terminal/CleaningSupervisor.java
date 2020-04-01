@@ -48,7 +48,6 @@ public class CleaningSupervisor extends JFrame implements ActionListener, Observ
 	private JLabel flightStatus;
 	
 	private JButton cleaningComplete;
-	private JButton quit;
 	
 	private ArrayList<Integer> aircraftAwaitingCleaning; //An array list of integers to hold the mCodes (position of the management record) of aircraft that require cleaning
 	private JList<String> outputList;

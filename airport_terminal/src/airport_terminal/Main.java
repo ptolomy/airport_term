@@ -41,8 +41,12 @@ public class Main {
 		
 		// Set status to allow testing before GOC is working
 		amd.setStatus(0, 3);
+
 		amd.setStatus(1, 13);
 		amd.setStatus(2, 1);
+
+		amd.setStatus(1, 3);
+
 		
 		// Add databases to Frames as required..
 		// Instantiate and show all interfaces as Frames

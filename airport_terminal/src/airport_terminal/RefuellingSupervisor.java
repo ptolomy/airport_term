@@ -103,14 +103,15 @@ public class RefuellingSupervisor extends JFrame implements ActionListener, Obse
 			if (managementRecord == null) {
 				list.set(i, null);
 			}
+			else {
+				list.set(i, null);
+				if (managementRecord.getStatus() == 13) {
 
-			// If the flight status is
-			else if (managementRecord.getStatus() == 13) {
-
-				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
-						+ managementRecord.getStatusString();
-				
-				list.set(i, record); // Add to list of landing aircrafts
+					String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
+							+ managementRecord.getStatusString();
+					
+					list.set(i, record); // Add to list of landing aircrafts
+				}
 			}
 		}
 	}
@@ -119,7 +120,7 @@ public class RefuellingSupervisor extends JFrame implements ActionListener, Obse
 	 * Method to change view depending if an aircraft has been selected
 	 */
 	private void aircraftSelected() {
-		//if (!outputList.getValueIsAdjusting()) {
+		if (!outputList.getValueIsAdjusting()) {
 			if (outputList.getSelectedValue() == null) { // If no aircraft is selected from list
 				MRIndex = -1;
 				if (isButtonAvailable) { // If buttons are available, set them to not be
@@ -133,7 +134,7 @@ public class RefuellingSupervisor extends JFrame implements ActionListener, Obse
 				}
 				buttonUpdates();
 			}
-		//}
+		}
 	}
 
 	/*
