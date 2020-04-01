@@ -202,6 +202,8 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		}
 	
 	private void clearFlightInfo() {
+		
+		//Need to sort the mCodes list first....
 		//aircraftManagementDatabase.radarLostContact(mCodes.get(outputList.getSelectedIndex()));
 	}
 
