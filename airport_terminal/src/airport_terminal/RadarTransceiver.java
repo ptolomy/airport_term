@@ -181,7 +181,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 			}
 		else {
 			MRIndex = outputList.getSelectedIndex();
-			passengers = aircraftManagementDatabase.getPassengerList(mCodes.get(MRIndex));
+			passengers = aircraftManagementDatabase.getPassengerList(MRIndex);
 			Vector<PassengerDetails> detailsToDisplay = passengers.getPassengerList();
 			passengerList.setListData(detailsToDisplay);
 		}

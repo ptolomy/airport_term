@@ -29,6 +29,13 @@ public class Main {
 		passengerList.addPassenger(new PassengerDetails("Will O'Neill"));
 		passengerList.addPassenger(new PassengerDetails("Mikey Dempster"));
 		
+		// New passenger list
+		PassengerList passengerList2 = new PassengerList();
+
+		// Add passengers to list
+		passengerList2.addPassenger(new PassengerDetails("Dylan"));
+		passengerList2.addPassenger(new PassengerDetails("Harrison"));
+		
 		//Gate Console
 		//String gate1 = "Gate 1";
 		//String gate2 = "Gate 2";
@@ -38,7 +45,7 @@ public class Main {
 		amd.radarDetect(new FlightDescriptor("BAS101", new Itinerary("Gatwick", "Stirling", "Madrid"), passengerList));
 		amd.radarDetect(new FlightDescriptor("ESY202", new Itinerary("Paris", "Stirling", null), passengerList));
 		//The below flight should appear in the radar transceiver 
-		amd.radarDetect(new FlightDescriptor("BA127", new Itinerary("Las Vegas", "Stirling", null), passengerList));
+		amd.radarDetect(new FlightDescriptor("BA127", new Itinerary("Las Vegas", "Stirling", null), passengerList2));
 		
 		
 		
