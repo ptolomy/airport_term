@@ -88,7 +88,7 @@ public class AircraftManagementDatabase extends Observable {
 	 * status supplied as a parameter. Principally for call by the various interface
 	 * screens.
 	 */
-	public int[] getWithStatus(int statusCode) { 
+	public int[] getWithStatus(int statusCode) {
 		try {
 			int nextFreePosition = 0;
 			for (int i = 0; i < MRs.length; i++) {

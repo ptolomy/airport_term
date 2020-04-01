@@ -29,7 +29,7 @@ import javax.swing.JScrollPane;
  * that <<model>> element. See written documentation.
  * 
  */
-public class RefuellingSupervisor extends JFrame implements Observer, ActionListener {
+public class RefuellingSupervisor extends JFrame implements ActionListener, Observer {
 	/**
 	 * The Refuelling Supervisor Screen interface has access to the
 	 * AircraftManagementDatabase.
@@ -46,16 +46,13 @@ public class RefuellingSupervisor extends JFrame implements Observer, ActionList
 	private AircraftManagementDatabase aircraftManagementDatabase; // The instance of the aircraft management database
 																	// called aircraftManagementDB
 
-	private ArrayList<Integer> aircraftAwaitingRefuel; // An array list of integers to hold the mCodes (position of the
-														// management record) of aircraft that require refuelling
-
-	private DefaultListModel<String> listRefuelling; // The list of items that will be displayed to the refuelling
+	private DefaultListModel<String> list; // The list of items that will be displayed to the refuelling
 														// supervisors window.
 
-	private JButton refuelled; // The button that will allow the supervisor to mark an aircraft as being
+	private JButton refuelledButton; // The button that will allow the supervisor to mark an aircraft as being
 								// refuelled
 
-	private JPanel refuelling;
+	private JPanel panel;
 	private JList<String> outputList;
 
 	public RefuellingSupervisor(AircraftManagementDatabase amd) {
@@ -69,28 +66,27 @@ public class RefuellingSupervisor extends JFrame implements Observer, ActionList
 		setLocationRelativeTo(null);// Set location
 		setSize(500, 250); // Set the size of the window
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); // Set nothing to happen when the closed option is selected
-		// setVisible(true);//Set the window to visible
 		Container window = getContentPane();
 		window.setLayout(new FlowLayout());
 
-		refuelled = new JButton("Refuelling Complete");// Create a new button with the text "Refuelling Complete"
-		window.add(refuelled);
-		refuelled.addActionListener(this);
+		refuelledButton = new JButton("Refuelling Complete");// Create a new button with the text "Refuelling Complete"
+		window.add(refuelledButton);
+		refuelledButton.addActionListener(this);
 
 		
 		
-		refuelling = new JPanel(); // Create a new JPanel for the refuelling information to appear on
-		listRefuelling = new DefaultListModel<String>();
-		outputList = new JList<>(listRefuelling);
+		panel = new JPanel(); // Create a new JPanel for the refuelling information to appear on
+		list = new DefaultListModel<String>();
+		outputList = new JList<>(list);
 		outputList.addListSelectionListener(e -> aircraftSelected());
 
-		JScrollPane scrollList = new JScrollPane(outputList); // Create a scroll list for the JList
-		scrollList.setPreferredSize(new Dimension(450, 150));
-		refuelling.add(scrollList);// Add the scroll list to the JPanel
-		listRefuelling.setSize(aircraftManagementDatabase.maxMRs);
+		JScrollPane scroll = new JScrollPane(outputList); // Create a scroll list for the JList
+		scroll.setPreferredSize(new Dimension(450, 150));
+		panel.add(scroll);// Add the scroll list to the JPanel
+		list.setSize(aircraftManagementDatabase.maxMRs);
 
 		aircraftListUpdate();
-		window.add(refuelling);
+		window.add(panel);
 		aircraftSelected();
 
 		setVisible(true);
@@ -101,22 +97,20 @@ public class RefuellingSupervisor extends JFrame implements Observer, ActionList
 	 * Method to update the list of aircrafts
 	 */
 	private void aircraftListUpdate() {
-
 		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) { // For each record in database
-
 			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i);
 
 			if (managementRecord == null) {
-				listRefuelling.set(i, null);
+				list.set(i, null);
 			}
 
 			// If the flight status is
-			else if (managementRecord.getStatusString().equalsIgnoreCase("READY_REFUEL")) {
+			else if (managementRecord.getStatus() == 13) {
 
 				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
 						+ managementRecord.getStatusString();
-
-				listRefuelling.set(i, record); // Add to list of landing aircrafts
+				
+				list.set(i, record); // Add to list of landing aircrafts
 			}
 		}
 	}
@@ -125,7 +119,7 @@ public class RefuellingSupervisor extends JFrame implements Observer, ActionList
 	 * Method to change view depending if an aircraft has been selected
 	 */
 	private void aircraftSelected() {
-		if (!outputList.getValueIsAdjusting()) {
+		//if (!outputList.getValueIsAdjusting()) {
 			if (outputList.getSelectedValue() == null) { // If no aircraft is selected from list
 				MRIndex = -1;
 				if (isButtonAvailable) { // If buttons are available, set them to not be
@@ -139,7 +133,7 @@ public class RefuellingSupervisor extends JFrame implements Observer, ActionList
 				}
 				buttonUpdates();
 			}
-		}
+		//}
 	}
 
 	/*
@@ -148,10 +142,10 @@ public class RefuellingSupervisor extends JFrame implements Observer, ActionList
 	private void buttonUpdates() {
 		// If buttons should not be available then all set to false
 		if (!isButtonAvailable) {
-			refuelled.setEnabled(false);
+			refuelledButton.setEnabled(false);
 			
 		} else {
-			refuelled.setEnabled(true);
+			refuelledButton.setEnabled(true);
 		}
 	}
 	
@@ -164,7 +158,7 @@ public class RefuellingSupervisor extends JFrame implements Observer, ActionList
 	public void actionPerformed(ActionEvent e) {
 
 		// If landing allowed button is clicked
-		if (e.getSource() == refuelled) {
+		if (e.getSource() == refuelledButton) {
 			aircraftManagementDatabase.setStatus(MRIndex, 14); // Change status
 			aircraftListUpdate();
 			aircraftSelected();
