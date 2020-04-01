@@ -19,8 +19,9 @@ public class PassengerList {
 	//Changed from private PassengerDetails[] details to allow for easier processing using .add etc.
   private ArrayList<PassengerDetails> details;
   
+  //Added the type of the array list to be PassengerDetails on Wednesday - MIKEY
   public PassengerList() {
-	    details = new ArrayList<>();
+	    details = new ArrayList<PassengerDetails>();
 	  }
 /**
  * The given passenger is boarding.
