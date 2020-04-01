@@ -180,7 +180,6 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		
 		
 		for (String s: passengerArray) {
-			//System.out.println(s);
 			PassengerDetails details = new PassengerDetails(s);
 			passengers.addPassenger(details);
 		}
@@ -201,12 +200,19 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		namesText.setText("");
 			
 		}
+	
+	private void clearFlightInfo() {
+		aircraftManagementDatabase.radarLostContact(mCodes.get(outputList.getSelectedIndex()));
+	}
 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == detectFlightButton) {
 			detectFlight();
+		}
+		else if (e.getSource() == leftLocalAirspace) {
+			clearFlightInfo();
 		}
 
 	}
