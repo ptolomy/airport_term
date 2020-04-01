@@ -48,6 +48,7 @@ public class RefuellingSupervisor extends JFrame implements Observer, ActionList
 	public RefuellingSupervisor(AircraftManagementDatabase amd) {
 		this.aircraftManagementDB = amd; //Set the instance of the aircraft management database in the current object to be the one that is passed into the above parameters
 		amd.addObserver(this);
+		
 		aircraftAwaitingRefuel = new ArrayList<Integer>(); //Create an array list to store the mCode of all of the aircraft that need to be refuelled. 
 
 		// Code to initialise the GUI
