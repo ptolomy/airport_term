@@ -37,7 +37,10 @@ public class Main {
 		// Replicate flight being detected by radarDetect
 		amd.radarDetect(new FlightDescriptor("BAS101", new Itinerary("Gatwick", "Stirling", "Madrid"), passengerList));
 		amd.radarDetect(new FlightDescriptor("ESY202", new Itinerary("Paris", "Stirling", null), passengerList));
-
+		
+		amd.setStatus(0, 3);
+		amd.setStatus(1, 3);
+		
 		// Add databases to Frames as required..
 		// Instantiate and show all interfaces as Frames
 		MaintenanceInspector m1 = new MaintenanceInspector(amd);
@@ -45,10 +48,11 @@ public class Main {
 		//RefuellingSupervisor rs = new RefuellingSupervisor(amd);
 		//RadarTransceiver rt = new RadarTransceiver(amd);
 		//CleaningSupervisor cs = new CleaningSupervisor(amd);
-		//LATC la = new LATC(amd);
+		LATC la = new LATC(amd);
 		//GOC go = new GOC();
-		GateConsole g1 = new GateConsole(gate1);
-		GateConsole g2 = new GateConsole(gate2);
-		GateConsole g3 = new GateConsole(gate3);
+		
+		//GateConsole g1 = new GateConsole(gate1);
+		//GateConsole g2 = new GateConsole(gate2);
+		//GateConsole g3 = new GateConsole(gate3);
 	}
 }
