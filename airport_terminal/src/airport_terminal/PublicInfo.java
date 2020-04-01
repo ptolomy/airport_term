@@ -168,6 +168,15 @@ public class PublicInfo extends JFrame implements Observer {
 						+ managementRecord.getStatusString();
 
 				listDeparting.set(i, record); // Add to list of departing aircrafts
+				
+				for (int index = 0; index < listLanded.getSize(); index++) {
+					if (listLanded.elementAt(index) == null) {
+						listLanded.set(i, null);
+					}
+					else if (listLanded.elementAt(index).contains(managementRecord.getFlightCode())){
+						listLanded.remove(index);
+					}
+				}
 			}
 		}
 	}
