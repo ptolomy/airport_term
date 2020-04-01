@@ -63,7 +63,7 @@ public class CleaningSupervisor extends JFrame implements ActionListener, Observ
 		
 		setTitle(title);
 		setLocationRelativeTo(null);
-		setSize(400, 300); // change to suit preferred size
+		setSize(400, 200); // change to suit preferred size
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		Container window = getContentPane();
         window.setLayout(new FlowLayout());
