@@ -1,6 +1,7 @@
 package airport_terminal;
 
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -37,67 +38,134 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 	private JTextField toText;//Create a text field for the to option
 	private JTextField nextText;//Create a text field for the next option on the itinerary
 	private JTextField namesText;//Create a text field for the names of the passengers to be typed in to
-	
-	private JButton addPassengerButton;
-	private JList passengerList;
-	private JScrollPane scrollList;
-	
 	private JButton detectFlightButton;
-
+	
+	
+	private JList<String> outputList;
+	private DefaultListModel<String> list;
+	private JButton leftLocalAirspace;
+	
+	private JList passengerList;
 	private PassengerList passengers;
-	private ArrayList<Integer> mCodes;
+	//private ArrayList<Integer> mCodes;
 	
 	public RadarTransceiver(AircraftManagementDatabase amd) {
 		this.aircraftManagementDatabase = amd;
 		amd.addObserver(this);
 		
-		mCodes = new ArrayList<Integer>();
-		passengers = new PassengerList();
+		//mCodes = new ArrayList<Integer>();
+		//passengers = new PassengerList();
 		
 		//Code to initialise the GUI
 		setTitle("Radar Transceiver");
 		setLocationRelativeTo(null);
-		setSize(400, 200); // change to suit preferred size
+		setSize(500, 600); // change to suit preferred size
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		
+		
+		//Container to allow multiple JPanels to be added to the screen
+		JPanel container = new JPanel();
+		//Add the panels to the container one above the other
+		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
-		JPanel transceiver = new JPanel(); //Create a new JPanel for the transceiver information to appear on
+		//Create a new JPanel for entering new flight information
+		JPanel detectAflight = new JPanel(); 
 		
 		JLabel flightCodelbl = new JLabel("Flight Code:");
-		transceiver.add(flightCodelbl);
+		detectAflight.add(flightCodelbl);
 		
-		flightCodeText = new JTextField(15);
-		transceiver.add(flightCodeText);
+		flightCodeText = new JTextField(5);
+		detectAflight.add(flightCodeText);
 		
-		JLabel itineraryInfolbl = new JLabel("Itinerary:");
-		transceiver.add(itineraryInfolbl);
+		JLabel spacer1 = new JLabel("                                                                                                    ");
+		detectAflight.add(spacer1);
 		
 		JLabel fromlbl = new JLabel("From:");
-		transceiver.add(fromlbl);
+		detectAflight.add(fromlbl);
 		
-		fromText = new JTextField(20);
-		transceiver.add(fromText);
+		fromText = new JTextField(8);
+		detectAflight.add(fromText);
 		
 		JLabel tolbl = new JLabel("To:");
-		transceiver.add(tolbl);
+		detectAflight.add(tolbl);
 		
-		toText = new JTextField(20);
-		transceiver.add(toText);
+		toText = new JTextField(8);
+		detectAflight.add(toText);
 		
 		JLabel nextlbl = new JLabel("Next:");
-		transceiver.add(tolbl);
+		detectAflight.add(nextlbl);
 		
-		nextText = new JTextField(20);
-		transceiver.add(nextText);
-		
-		
+		nextText = new JTextField(8);
+		detectAflight.add(nextText);
 		
 		JLabel passengerListlbl = new JLabel("Passenger List:");
-		transceiver.add(passengerListlbl);
+		detectAflight.add(passengerListlbl);
 		
+		namesText = new JTextField(30);
+		detectAflight.add(namesText);
 		
+		detectFlightButton = new JButton("Detect this Flight");
+        detectFlightButton.addActionListener(this);
+        detectAflight.add(detectFlightButton);
+        
+        detectAflight.setPreferredSize(getMinimumSize());
+        
+		detectAflight.setBorder(BorderFactory.createTitledBorder("Detect a Flight"));
 		
-		setVisible(true);
+		container.add(detectAflight);
+		
+//********************************************************************************************************************************
+		//JPanel to displayed the already detected flights and allow them to be marked as leaving local airspace
+		JPanel detectedFlights = new JPanel(); //Create a new JPanel for the flights that are already detected to appear on
+		
+		//A button to allow the aircraft to be removed from SAAMS when the aircraft 'leaves local airspace'
+		leftLocalAirspace = new JButton("Departed Local Airspace");//Assign the text for the button
+		leftLocalAirspace.addActionListener(this);//Add the action listener to respond on click
+        detectedFlights.add(leftLocalAirspace);//Add the button to the JPanel
+		
+		list = new DefaultListModel<String>();//Create a new list for the flights to be added to
+		outputList = new JList<>(list);//'Create a JList based on the list to display the list of flights
+		outputList.addListSelectionListener(e -> aircraftSelected());//Add an action listener to the output list and call the aircraftSelected method
+		JScrollPane scroll = new JScrollPane(outputList);//Create a new scroll bar for the output list
+		scroll.setPreferredSize(new Dimension(495, 75));//Set the preferred size for the scroll list
+		detectedFlights.add(scroll);//Add the scroll pane to the panel
+		list.setSize(aircraftManagementDatabase.maxMRs);//Set the size of the list to the maximum number of management records, as defined in the aircraft management database
+        
+		JLabel passengersOnboardlbl = new JLabel("Passengers Onboard:");//Create a new label for the passengers on board list:
+		detectedFlights.add(passengersOnboardlbl);//Add the label to the JPanel
+		
+        passengerList = new JList<PassengerDetails>(new DefaultListModel<PassengerDetails>());//Create a JList of passenger details
+        JScrollPane scroll2 = new JScrollPane(passengerList);//Add a scroll pane to the passenger list
+        scroll2.setPreferredSize(new Dimension(495, 75));//Set the size for the new list with scroll pane
+        detectedFlights.add(scroll2);//Add the scroll pane to the JPanel
+        updatePassengerList();//Call the update passengers list
+        
+        detectedFlights.setSize(getMinimumSize());//Set the size of the detected flights pane to be the minimum size it can be
+        
+		detectedFlights.setBorder(BorderFactory.createTitledBorder("Detected Flights"));//Add a titled border/ group box to the JPanel
+		
+		aircraftListUpdate();//Call the update aircraftList
+		container.add(detectedFlights);//Adds the JPanel to the container
+		aircraftSelected();//Call the aircraft selected method
 
+		setVisible(true);//Allow the elements to be displayed
+		
+		getContentPane().add(container);//Add the entire container to the display. This will add the two JPanels above to the window
+		
+		
+
+	}
+	
+	private void aircraftListUpdate() {
+		
+	}
+	
+	private void aircraftSelected() {
+		
+	}
+	
+	private void updatePassengerList() {
+		
 	}
 
 	@Override
