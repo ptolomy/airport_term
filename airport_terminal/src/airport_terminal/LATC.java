@@ -123,7 +123,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 			} else {
 				list.set(i, null);
 				if (managementRecord.getStatus() == 3 || managementRecord.getStatus() == 4
-						|| managementRecord.getStatus() == 5 || managementRecord.getStatus() == 16
+						|| managementRecord.getStatus() == 16
 						|| managementRecord.getStatus() == 18) { // If status equals one of the five here
 
 					String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
