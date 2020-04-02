@@ -98,7 +98,7 @@ public class CleaningSupervisor extends JFrame implements ActionListener, Observ
 				list.set(i, null);
 			} else {
 				list.set(i, null);
-				if (managementRecord.getStatus() == 11 || managementRecord.getStatus() == 9) {
+				if (managementRecord.getStatus() == 11 || managementRecord.getStatus() == 9 || managementRecord.getStatus() == 8) {
 
 					String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
 							+ managementRecord.getStatusString();
@@ -157,6 +157,10 @@ public class CleaningSupervisor extends JFrame implements ActionListener, Observ
 			}
 			else if (list.elementAt(selectedFlight).contains("FAULTY_AWAIT_CLEAN")) {
 				aircraftManagementDatabase.setStatus(MRIndex, 12); // Change status
+				aircraftListUpdate();
+				aircraftSelected();
+			} else if (list.elementAt(selectedFlight).contains("READY_FOR_CLEAN_MAINT")) {
+				aircraftManagementDatabase.setStatus(MRIndex, 10); // Change status
 				aircraftListUpdate();
 				aircraftSelected();
 			}
