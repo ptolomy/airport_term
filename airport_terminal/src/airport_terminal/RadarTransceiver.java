@@ -49,13 +49,13 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 	
 	private JList<PassengerDetails> passengerList;
 	private PassengerList passengers;
-	private ArrayList<Integer> mCodes;
+	//private ArrayList<Integer> mCodes;
 	
 	public RadarTransceiver(AircraftManagementDatabase amd) {
 		this.aircraftManagementDatabase = amd;
 		amd.addObserver(this);
 		
-		mCodes = new ArrayList<Integer>();
+		//mCodes = new ArrayList<Integer>();
 		passengers = new PassengerList();
 		
 		//Code to initialise the GUI
@@ -138,7 +138,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		
         passengerList = new JList<PassengerDetails>(new DefaultListModel<PassengerDetails>());//Create a JList of passenger details
         JScrollPane scroll2 = new JScrollPane(passengerList);//Add a scroll pane to the passenger list
-        scroll2.setPreferredSize(new Dimension(450, 75));//Set the size for the new list with scroll pane
+        scroll2.setPreferredSize(new Dimension(450, 100));//Set the size for the new list with scroll pane
         detectedFlights.add(scroll2);//Add the scroll pane to the JPanel
         
         detectedFlights.setSize(getMinimumSize());//Set the size of the detected flights pane to be the minimum size it can be
@@ -158,7 +158,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 	}
 	
 	private void aircraftListUpdate() {
-		mCodes.clear();
+		//mCodes.clear();
 		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) { // For each record in database
 			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i); // Create local instance of that MR
 
@@ -168,7 +168,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 			} else if (managementRecord.getStatus() == ManagementRecord.IN_TRANSIT || managementRecord.getStatus() == ManagementRecord.DEPARTING_THROUGH_LOCAL_AIRSPACE) { // If status equals one of the two here
 				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: " + managementRecord.getStatusString();
 				list.set(i, record);
-				mCodes.add(i);
+				//mCodes.add(i);
 			}
 		}
 	}
@@ -217,15 +217,18 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		fromText.setText("");
 		nextText.setText("");
 		namesText.setText("");
-		
-		
-			
 		}
 	
 	private void clearFlightInfo() {
 		
-		//Need to sort the mCodes list first....
-		//aircraftManagementDatabase.radarLostContact(mCodes.get(outputList.getSelectedIndex()));
+		aircraftManagementDatabase.radarLostContact(outputList.getSelectedIndex());
+		list.remove(outputList.getSelectedIndex());
+		clearPassengerDisplay();
+	}
+	
+	private void clearPassengerDisplay() {
+		
+		passengerList.setListData(new PassengerDetails[0]);
 	}
 
 
@@ -242,7 +245,8 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		aircraftListUpdate();
+		//aircraftSelected();
 
 	}
 
