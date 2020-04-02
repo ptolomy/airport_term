@@ -1,5 +1,6 @@
 package airport_terminal;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Font;
@@ -48,14 +49,14 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
   private JTabbedPane tabbedPane;
   
   //For the arrivals pane
-  private JLabel gateStatusArrivinglbl, flightCodeArrivinglbl, flightStatusArrivinglbl, noOfPassengersArrivinglbl;
+  private JLabel gateNumberArrivinglbl, gateStatusArrivinglbl, flightCodeArrivinglbl, flightStatusArrivinglbl, noOfPassengersArrivinglbl;
   private JButton docked, unloaded;
   
   //For the departing pane
-  private JLabel gateStatusDepartinglbl, flightCodeDepartinglbl, flightStatusDepartinglbl, tolbl, nextlbl, fromlbl, aircraftCapacitylbl, noOfPassengersDepartinglbl, passengerNamelbl;
+  private JLabel gateNumberDepartinglbl, gateStatusDepartinglbl, flightCodeDepartinglbl, flightStatusDepartinglbl, tolbl, nextlbl, fromlbl, aircraftCapacitylbl, noOfPassengersDepartinglbl, passengerNamelbl;
   
   private JTextField flightCodeText, flightStatusText, toText, nextText, fromText, aircraftCapacityText, noOfPassengersText, passengerNameText; 
-  
+  private JButton addPassengerButton;
   
   public GateConsole(int gNumber, AircraftManagementDatabase amd, GateInfoDatabase gid) {
 		this.gateNumber = gNumber;
@@ -65,7 +66,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		
 		setTitle("Gate " + gNumber);
 		setLocationRelativeTo(null);
-		setSize(400, 150);
+		setSize(400, 450);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		tabbedPane = new JTabbedPane();
@@ -85,10 +86,16 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	  	  
 	  JPanel gateInformation = new JPanel();
 	  
-	  gateStatusArrivinglbl = new JLabel("Gate Number: " + gateNumber);
+	  gateNumberArrivinglbl = new JLabel("              Gate Number: " + gateNumber + "                ");
+	  gateInformation.add(gateNumberArrivinglbl);
+	  
+	  gateNumberArrivinglbl.setFont(new Font(gateNumberArrivinglbl.getName(), Font.BOLD, 20));
+	  
+	  gateStatusArrivinglbl = new JLabel("VACANT");
 	  gateInformation.add(gateStatusArrivinglbl);
 	  
 	  gateStatusArrivinglbl.setFont(new Font(gateStatusArrivinglbl.getName(), Font.BOLD, 20));
+	  gateStatusArrivinglbl.setForeground(Color.green);
 	  
 	  gateInformation.setBorder(BorderFactory.createTitledBorder("Gate Information"));
 	  
@@ -113,7 +120,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
       unloaded.addActionListener(this);
       flightInformation.add(unloaded);
       
-      gateInformation.setBorder(BorderFactory.createTitledBorder("Flight Information"));
+      flightInformation.setBorder(BorderFactory.createTitledBorder("Flight Information"));
       
       arrivingFlights.add(flightInformation);
 	  
@@ -129,12 +136,18 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	  
 	  JPanel gateInformation = new JPanel();
 	  
-	  gateStatusDepartinglbl = new JLabel("Gate Number: " + gateNumber);
+	  gateNumberDepartinglbl = new JLabel("              Gate Number: " + gateNumber + "                ");
+	  gateInformation.add(gateNumberDepartinglbl);
+	  
+	  gateNumberDepartinglbl.setFont(new Font(gateNumberDepartinglbl.getName(), Font.BOLD, 20));
+	  
+	  gateStatusDepartinglbl = new JLabel("VACANT");
 	  gateInformation.add(gateStatusDepartinglbl);
 	  
 	  gateStatusDepartinglbl.setFont(new Font(gateStatusDepartinglbl.getName(), Font.BOLD, 20));
 	  
 	  gateInformation.setBorder(BorderFactory.createTitledBorder("Gate Information"));
+	  gateStatusDepartinglbl.setForeground(Color.green);
 	  
 	  departingFlights.add(gateInformation);
 	  
@@ -143,7 +156,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	  flightCodeDepartinglbl = new JLabel("Flight Code:");
 	  flightInformation.add(flightCodeDepartinglbl);
 	  
-	  flightCodeText = new JTextField(5);
+	  flightCodeText = new JTextField(8);
 	  flightInformation.add(flightCodeText);
 	  
 	  flightStatusDepartinglbl = new JLabel("Flight Status:");
@@ -152,32 +165,32 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	  flightStatusText = new JTextField(10);
 	  flightInformation.add(flightStatusText);
 	  
-	  tolbl = new JLabel();
+	  tolbl = new JLabel("To:");
 	  flightInformation.add(tolbl);
 	  
 	  toText = new JTextField(5);
 	  flightInformation.add(toText);
 	  
-	  nextlbl = new JLabel();
+	  nextlbl = new JLabel("Next:");
 	  flightInformation.add(nextlbl);
 	  
 	  nextText = new JTextField(5);
 	  flightInformation.add(nextText);
 	  
-	  fromlbl = new JLabel();
+	  fromlbl = new JLabel("From:");
 	  flightInformation.add(fromlbl);
 	  
 	  fromText = new JTextField(5);
 	  fromText.setText("Stirling");
 	  flightInformation.add(fromText);
 	  
-	  aircraftCapacitylbl = new JLabel();
+	  aircraftCapacitylbl = new JLabel("Aircraft Capacity:");
 	  flightInformation.add(aircraftCapacitylbl);
 	  
-	  aircraftCapacityText = new JTextField(2);
+	  aircraftCapacityText = new JTextField(5);
 	  flightInformation.add(aircraftCapacityText);
 	  
-	  noOfPassengersDepartinglbl = new JLabel();
+	  noOfPassengersDepartinglbl = new JLabel("Number of Passengers Checked In:");
 	  flightInformation.add(noOfPassengersDepartinglbl);
 	  
 	  flightInformation.setBorder(BorderFactory.createTitledBorder("Flight Information"));
@@ -191,6 +204,10 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	  
 	  passengerNameText = new JTextField(10);
 	  addPassenger.add(passengerNameText);
+	  
+	  addPassengerButton = new JButton("Check-in Passenger");
+	  addPassengerButton.addActionListener(this);
+	  addPassenger.add(addPassengerButton);
 	    
 	  addPassenger.setBorder(BorderFactory.createTitledBorder("Check in a Passenger"));
 	  
