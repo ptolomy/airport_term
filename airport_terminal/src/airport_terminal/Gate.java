@@ -38,6 +38,11 @@ public class Gate {
   public int getStatus(){
 	return status;
   }
+  
+  //Return the specific mCode for the aircraft at this gate
+  public int getmCode() {
+	  return this.mCode;
+  }
 
 /**
  *  The gate has been allocated to the given aircraft, identified by mCode: Change status from FREE to RESERVED and note the mCode.

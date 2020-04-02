@@ -36,6 +36,11 @@ public class GateInfoDatabase {
 		}
 		return sCode;
 	}
+	
+	//Return the m code for the flight that is currently at the gate
+	public int getmCode(int gateNumber) {
+		return this.gates[gateNumber].getmCode();
+	}
 
 	/**
 	 * Returns an array containing the status of all gates. For data collection by
