@@ -42,7 +42,6 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	private int MRIndex; // Used to index database
 	private boolean isButtonAvailable; // Used to determine if button should be clickable
 
-
 	// Buttons
 	private JButton landingAllowed;
 	private JButton confirmLanding;
@@ -122,8 +121,8 @@ public class LATC extends JFrame implements ActionListener, Observer {
 				list.set(i, null);
 			} else {
 				list.set(i, null);
-				if (managementRecord.getStatus() == 3 || managementRecord.getStatus() == 4
-						|| managementRecord.getStatus() == 16
+				if (managementRecord.getStatus() == 2 || managementRecord.getStatus() == 3
+						|| managementRecord.getStatus() == 4 || managementRecord.getStatus() == 16
 						|| managementRecord.getStatus() == 18) { // If status equals one of the five here
 
 					String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
