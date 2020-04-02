@@ -21,6 +21,8 @@ public class Main {
 		// Instantiate databases
 		//ManagementRecord mrd = new ManagementRecord();
 		AircraftManagementDatabase amd = new AircraftManagementDatabase();
+		
+		GateInfoDatabase gid = new GateInfoDatabase();
 
 		// New passenger list
 		PassengerList passengerList = new PassengerList();
@@ -36,11 +38,6 @@ public class Main {
 		passengerList2.addPassenger(new PassengerDetails("Dylan"));
 		passengerList2.addPassenger(new PassengerDetails("Harrison"));
 		
-		//Gate Console
-		//String gate1 = "Gate 1";
-		//String gate2 = "Gate 2";
-		//String gate3 = "Gate 3";
-
 		// Replicate flight being detected by radarDetect
 		amd.radarDetect(new FlightDescriptor("BAS101", new Itinerary("Gatwick", "Stirling", "Madrid"), passengerList));
 		amd.radarDetect(new FlightDescriptor("ESY202", new Itinerary("Paris", "Stirling", null), passengerList));
@@ -68,16 +65,16 @@ public class Main {
 		//MaintenanceInspector m1 = new MaintenanceInspector(amd);
 		//PublicInfo pi = new PublicInfo(amd);
 
-		RefuellingSupervisor rs = new RefuellingSupervisor(amd);
-		//RadarTransceiver rt = new RadarTransceiver(amd);
-		CleaningSupervisor cs = new CleaningSupervisor(amd);
 		//RefuellingSupervisor rs = new RefuellingSupervisor(amd);
-		RadarTransceiver rt = new RadarTransceiver(amd);
-		PublicInfo pi = new PublicInfo(amd);
-		LATC la = new LATC(amd);
+		//RadarTransceiver rt = new RadarTransceiver(amd);
+		//CleaningSupervisor cs = new CleaningSupervisor(amd);
+		//RefuellingSupervisor rs = new RefuellingSupervisor(amd);
+		//RadarTransceiver rt = new RadarTransceiver(amd);
+		//PublicInfo pi = new PublicInfo(amd);
+		//LATC la = new LATC(amd);
 		//GOC go = new GOC();
 		
-		//GateConsole g1 = new GateConsole(gate1);
+		GateConsole g1 = new GateConsole(1,amd,gid);
 		//GateConsole g2 = new GateConsole(gate2);
 		//GateConsole g3 = new GateConsole(gate3);
 	}
