@@ -40,14 +40,8 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	private AircraftManagementDatabase aircraftManagementDatabase;
 
 	private int MRIndex; // Used to index database
-	private boolean isButtonAvailable;
+	private boolean isButtonAvailable; // Used to determine if button should be clickable
 
-	// Labels
-	private JLabel labelBuffer;
-	private JLabel labelFlightCode;
-	private JLabel flightCode;
-	private JLabel labelFlightStatus;
-	private JLabel flightStatus;
 
 	// Buttons
 	private JButton landingAllowed;
@@ -66,31 +60,11 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		amd.addObserver(this);
 
 		setTitle(title);
-		setLocation(100, 0);
-		setSize(600, 500);
+		setLocation(0, 0);
+		setSize(600, 410);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		Container window = getContentPane();
 		window.setLayout(new FlowLayout());
-
-		// Buffer
-		labelBuffer = new JLabel("                          ");
-		window.add(labelBuffer);
-
-		// Labels for flight code
-		labelFlightCode = new JLabel("Flight Code: ");
-		window.add(labelFlightCode);
-		flightCode = new JLabel("               ");
-		window.add(flightCode);
-
-		// Labels for flight status
-		labelFlightStatus = new JLabel("Flight Status: ");
-		window.add(labelFlightStatus);
-		flightStatus = new JLabel("               ");
-		window.add(flightStatus);
-
-		// Buffer
-		labelBuffer = new JLabel("                          ");
-		window.add(labelBuffer);
 
 		// Button to allow landing
 		landingAllowed = new JButton("Allow Landing");
@@ -168,16 +142,12 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		if (!outputList.getValueIsAdjusting()) {
 			if (outputList.getSelectedValue() == null) { // If no aircraft is selected from list
 				MRIndex = -1;
-				flightCode.setText("               "); // Set flight code to be blank
-				flightStatus.setText("               "); // Set flight status to be blank
 				if (isButtonAvailable) { // If buttons are available, set them to not be
 					isButtonAvailable = false;
 				}
 				buttonUpdates();
 			} else {
 				MRIndex = outputList.getSelectedIndex();
-				flightCode.setText(aircraftManagementDatabase.getFlightCode(MRIndex));
-				flightStatus.setText(aircraftManagementDatabase.getStatusString(MRIndex));
 				if (!isButtonAvailable) {
 					isButtonAvailable = true;
 				}

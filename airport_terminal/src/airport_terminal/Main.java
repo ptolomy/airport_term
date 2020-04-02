@@ -71,10 +71,9 @@ public class Main {
 		RefuellingSupervisor rs = new RefuellingSupervisor(amd);
 		//RadarTransceiver rt = new RadarTransceiver(amd);
 		CleaningSupervisor cs = new CleaningSupervisor(amd);
-
 		//RefuellingSupervisor rs = new RefuellingSupervisor(amd);
 		RadarTransceiver rt = new RadarTransceiver(amd);
-		//CleaningSupervisor cs = new CleaningSupervisor(amd);
+		PublicInfo pi = new PublicInfo(amd);
 		LATC la = new LATC(amd);
 		//GOC go = new GOC();
 		

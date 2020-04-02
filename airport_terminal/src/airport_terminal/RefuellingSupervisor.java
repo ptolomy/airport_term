@@ -63,8 +63,8 @@ public class RefuellingSupervisor extends JFrame implements ActionListener, Obse
 		
 		// Code to initialise the GUI
 		setTitle("Refuelling Supervisor"); // Set the title text that will appear on the window
-		setLocationRelativeTo(null);// Set location
-		setSize(500, 250); // Set the size of the window
+		setLocation(500, 750);// Set location
+		setSize(500, 225); // Set the size of the window
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); // Set nothing to happen when the closed option is selected
 		Container window = getContentPane();
 		window.setLayout(new FlowLayout());
