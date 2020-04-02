@@ -317,7 +317,7 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 				faultDescriptionField.setText("");
 
 				aircraftListUpdate();
-				aircraftSelected_ReadyForMaint();
+				aircraftSelected_ReadyForMaint(); 
 			}
 		}
 
