@@ -47,9 +47,9 @@ public class Main {
 		
 		
 		// Set status to allow testing before GOC is working
-		amd.setStatus(0, 1);
-		amd.setStatus(1, 2);
-		amd.setStatus(2, 2);
+		amd.setStatus(0, 5);
+		amd.setStatus(1, 5);
+		amd.setStatus(2, 5);
 
 		
 		gid.allocate(1, 1);
@@ -67,7 +67,7 @@ public class Main {
 		LATC la = new LATC(amd);
 		GOC go = new GOC(amd, gid);
 		
-		//GateConsole g1 = new GateConsole(1,amd,gid);
+		GateConsole g1 = new GateConsole(0,amd,gid);
 		//GateConsole g2 = new GateConsole(2,amd,gid);
 		//GateConsole g3 = new GateConsole(3,amd,gid);
 	}

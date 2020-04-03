@@ -13,7 +13,7 @@ import java.util.Observable;
  * 
  * @stereotype model
  */
-
+@SuppressWarnings("deprecation")
 public class GateInfoDatabase extends Observable {
 
 	
