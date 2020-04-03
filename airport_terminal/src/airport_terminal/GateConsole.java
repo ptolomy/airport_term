@@ -73,6 +73,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		this.aircraftManagementDatabase = amd;
 		this.gateDB = gid;
 		//Subscribe to the gate database  
+		amd.addObserver(this);
 		gid.addObserver(this);
 		
 		passengers = new PassengerList();
@@ -227,7 +228,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	  
 	  confirmFlightDetailsButton = new JButton("Save Flight Details");
 	  confirmFlightDetailsButton.addActionListener(this);
-	  confirmFlightDetailsButton.setEnabled(false);
+	  confirmFlightDetailsButton.setEnabled(true);
 	  flightInformation.add(confirmFlightDetailsButton);
 	  
 	  departingFlights.add(flightInformation);
@@ -242,7 +243,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	  
 	  addPassengerButton = new JButton("Check-in Passenger");
 	  addPassengerButton.addActionListener(this);
-	  addPassengerButton.setEnabled(false);
+	  addPassengerButton.setEnabled(true);
 	  addPassenger.add(addPassengerButton);
 	    
 	  addPassenger.setBorder(BorderFactory.createTitledBorder("Check in a Passenger"));

@@ -43,18 +43,19 @@ public class Main {
 		amd.radarDetect(new FlightDescriptor("ESY202", new Itinerary("Paris", "Stirling", null), passengerList));
 		//The below flight should appear in the radar transceiver 
 		amd.radarDetect(new FlightDescriptor("BA127", new Itinerary("Las Vegas", "Stirling", null), passengerList2));
-		
+		amd.radarDetect(new FlightDescriptor("BAS404", new Itinerary("Gatwick", "Stirling", "Madrid"), passengerList));
+
 		
 		
 		// Set status to allow testing before GOC is working
-		amd.setStatus(0, 5);
-		amd.setStatus(1, 5);
-		amd.setStatus(2, 5);
-
+		amd.setStatus(0, 4);
+		amd.setStatus(1, 4);
+		amd.setStatus(2, 4);
+		amd.setStatus(3, 4);
 		
-		gid.allocate(1, 1);
-		gid.allocate(1, 1);
-		gid.allocate(1, 1);
+		//gid.allocate(1, 1);
+		//gid.allocate(1, 1);
+		//gid.allocate(1, 1);
 
 		
 		// Add databases to Frames as required..
@@ -66,15 +67,12 @@ public class Main {
 		PublicInfo pi = new PublicInfo(amd);
 		LATC la = new LATC(amd);
 		GOC go = new GOC(amd, gid);
+
 		
-<<<<<<< HEAD
-		GateConsole g1 = new GateConsole(0,amd,gid);	
-		GateConsole g2 = new GateConsole(1,amd,gid);
-		GateConsole g3 = new GateConsole(2,amd,gid);
-=======
+
 		GateConsole g1 = new GateConsole(0,amd,gid);
 		//GateConsole g2 = new GateConsole(2,amd,gid);
 		//GateConsole g3 = new GateConsole(3,amd,gid);
->>>>>>> branch 'master' of https://github.com/ptolomy/airport_terminal
+
 	}
 }
