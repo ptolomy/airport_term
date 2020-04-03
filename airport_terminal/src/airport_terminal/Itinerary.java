@@ -32,6 +32,12 @@ public class Itinerary {
   public String getTo(){
 	  return to;	// Returns to attribute
   }
+  
+  public void setItinerary(String from, String to, String next) {
+	  this.from = from;
+	  this.to = to;
+	  this.next = next;
+  }
 
   /**
    *  See Itinerary class description.

@@ -373,12 +373,13 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
   //closes the flight and creates the new flight descriptor
   private void closeFlight() {  
 	  if (aircraftManagementDatabase.getStatus(mCode) == ManagementRecord.READY_PASSENGERS) {
+		  aircraftManagementDatabase.setPassengerList(mCode, passengers);
 		  aircraftManagementDatabase.setStatus(mCode, ManagementRecord.READY_DEPART);
 	  }
 	  else {
 		  JOptionPane.showMessageDialog(this, "Flight " + aircraftManagementDatabase.getFlightCode(mCode) + " could not be closed.");
 	  }
-  }
+}
   
   private void updateFlightDetails() {
 	  to = toText.getText();
@@ -391,9 +392,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	  else {
 		  JOptionPane.showMessageDialog(this, "Please enter a suitable circraft capacity.");
 	  }
-	  
-	  //Add code here to update the itinerary of the flight
-	  //Add code here to change the passenger list of the flight
+	  aircraftManagementDatabase.setItinerary(mCode, from, to, next);
   }
 
 @Override

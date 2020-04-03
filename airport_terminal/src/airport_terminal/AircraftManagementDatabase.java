@@ -179,6 +179,22 @@ public class AircraftManagementDatabase extends Observable {
 
 		MRs[mCode].addPassenger(details);
 	}
+	
+	/**
+	 * 
+	 */
+	public void setItinerary(int mCode, String from, String to, String next) {
+		MRs[mCode].setItinerary(from, to, next);
+	}
+	
+	/**
+	 * 
+	 * @param mCode
+	 * @param itin
+	 */
+	public void setPassengerList(int mCode, PassengerList list) {
+		MRs[mCode].setPassengerList(list);
+	}
 
 	/**
 	 * Return the PassengerList of the aircraft with the given mCode.
