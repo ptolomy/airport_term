@@ -65,6 +65,7 @@ public class GOC extends JFrame implements ActionListener, Observer {
 
 	// Buttons
 	private JButton permissionToLandButton;
+	private JButton allocateGateButton;
 
 	private JPanel panel_Aircrafts;
 	private JList<String> outputList_Aircrafts;
@@ -99,8 +100,6 @@ public class GOC extends JFrame implements ActionListener, Observer {
 		panel_Aircrafts.add(scroll_Aircrafts);
 		list_Aircrafts.setSize(aircraftManagementDatabase.maxMRs);
 
-		
-		
 		panel_Gates = new JPanel();
 		list_Gates = new DefaultListModel<String>();
 		outputList_Gates = new JList<>(list_Gates);
@@ -113,14 +112,20 @@ public class GOC extends JFrame implements ActionListener, Observer {
 
 		aircraftListUpdate();
 		gateListUpdate();
+
 		window.add(panel_Aircrafts);
-		permissionToLandButton = new JButton("Allow Landing");
+
+		permissionToLandButton = new JButton("Grant Ground Clearance");
 		permissionToLandButton.setEnabled(false);
 		window.add(permissionToLandButton);
 		permissionToLandButton.addActionListener(this);
+
 		window.add(panel_Gates);
 
-
+		allocateGateButton = new JButton("Allocate Gate");
+		allocateGateButton.setEnabled(false);
+		window.add(allocateGateButton);
+		allocateGateButton.addActionListener(this);
 
 		aircraftSelected();
 		gateSelected();
@@ -144,9 +149,10 @@ public class GOC extends JFrame implements ActionListener, Observer {
 				list_Aircrafts.set(i, null);
 				if (managementRecord.getStatus() == 1 || managementRecord.getStatus() == 2
 						|| managementRecord.getStatus() == 3 || managementRecord.getStatus() == 4
-						|| managementRecord.getStatus() == 16 || managementRecord.getStatus() == 18) { // If status
-																										// equals one of
-																										// the five here
+						|| managementRecord.getStatus() == 5 || managementRecord.getStatus() == 16
+						|| managementRecord.getStatus() == 18) { // If status
+																	// equals one of
+																	// the statuses here
 
 					String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
 							+ managementRecord.getStatusString();
@@ -191,7 +197,7 @@ public class GOC extends JFrame implements ActionListener, Observer {
 			}
 		}
 	}
-	
+
 	/*
 	 * Method to change view depending if a gate has been selected
 	 */
@@ -220,10 +226,9 @@ public class GOC extends JFrame implements ActionListener, Observer {
 		// If buttons should not be available then all set to false
 		if (!isButtonAvailable) {
 			permissionToLandButton.setEnabled(false); // Disables button
-
+			allocateGateButton.setEnabled(false);
 		} else {
 			String statusAircraft = aircraftManagementDatabase.getStatusString(MRIndex);
-		//	String statusGate = gateInfoDatabase.getStatusString(GIndex);
 
 			if (statusAircraft.equalsIgnoreCase("WANTING_TO_LAND")) {
 				for (int i = 0; i < gateInfoDatabase.maxGateNumber; i++) {
@@ -233,9 +238,18 @@ public class GOC extends JFrame implements ActionListener, Observer {
 						permissionToLandButton.setEnabled(false);
 					}
 				}
-				
+
 			} else {
 				permissionToLandButton.setEnabled(false);
+			}
+			if (GIndex >= 0) {
+				String statusGate = gateInfoDatabase.getStatusString(GIndex);
+				if (statusAircraft.equalsIgnoreCase("LANDED") && statusGate.contains("FREE")) {
+					allocateGateButton.setEnabled(true);
+				} else {
+					allocateGateButton.setEnabled(false);
+				}
+
 			}
 		}
 	}
@@ -248,6 +262,12 @@ public class GOC extends JFrame implements ActionListener, Observer {
 			aircraftSelected();
 		}
 
+		if (e.getSource() == allocateGateButton) {
+			aircraftManagementDatabase.setStatus(MRIndex, 6); // Change status
+			gateInfoDatabase.allocate(GIndex, MRIndex);
+			aircraftListUpdate();
+			aircraftSelected();
+		}
 	}
 
 	@Override
