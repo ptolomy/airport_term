@@ -44,14 +44,14 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 
 	private AircraftManagementDatabase aircraftManagementDatabase;
 
+	// Lists
 	private JList<String> outputList_ReadyForMaint;
 	private DefaultListModel<String> list_ReadyForMaint;
-
 	private JList<String> outputList_AwaitRepair;
 	private DefaultListModel<String> list_AwaitRepair;
 
 	private int MRIndex; // Used to index database
-	private boolean isButtonAvailable;
+	private boolean isButtonAvailable; 
 
 	// Buttons
 	private JButton maintenanceCompleteButton;
@@ -101,11 +101,11 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 																		// of management
 		// records, as defined in the aircraft management database
 
-		awaitingRepair = new JLabel("Awaiting Repair: ");
-		readyForMaintenance_Panel.add(awaitingRepair);
+		awaitingRepair = new JLabel("Awaiting Repair: "); // Creates label with text
+		readyForMaintenance_Panel.add(awaitingRepair); // Adds label to panel
 
-		list_AwaitRepair = new DefaultListModel<String>();
-		outputList_AwaitRepair = new JList<>(list_AwaitRepair);
+		list_AwaitRepair = new DefaultListModel<String>(); // Creates a list of strings
+		outputList_AwaitRepair = new JList<>(list_AwaitRepair); // Adds list to a list that can appear on screen
 
 		outputList_AwaitRepair.addListSelectionListener(e -> aircraftSelected_AwaitRepair());
 
@@ -114,48 +114,42 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 		readyForMaintenance_Panel.add(scroll_AwaitRepair);// Add the scroll pane to the panel
 		list_AwaitRepair.setSize(aircraftManagementDatabase.maxMRs);
 
-		readyForMaintenance_Panel.setSize(getMinimumSize());// Set the size of the detected flights pane to be the
-															// minimum size it can be
+		readyForMaintenance_Panel.setSize(getMinimumSize());// Set the size of the detected flights pane to be the minimum size it can be
 
-		repairCompleteButton = new JButton("Repair Complete");
-		repairCompleteButton.addActionListener(this);
-		readyForMaintenance_Panel.add(repairCompleteButton);
+		repairCompleteButton = new JButton("Repair Complete"); // Creates button called repair complete
+		repairCompleteButton.addActionListener(this); // Adds action listener to button
+		readyForMaintenance_Panel.add(repairCompleteButton); // Adds button to panel
 
 		maintenanceCompleteButton = new JButton("Maintenance Complete");// Assign the text for the button
 		maintenanceCompleteButton.addActionListener(this);// Add the action listener to respond on click
 		readyForMaintenance_Panel.add(maintenanceCompleteButton);// Add the button to the JPanel
 
-		readyForMaintenance_Panel.setBorder(BorderFactory.createTitledBorder("Maintenance"));// Add a
-																								// titled
-																								// border/
-																								// group
-																								// box
-																								// to
-																								// the
-																								// JPanel
+		readyForMaintenance_Panel.setBorder(BorderFactory.createTitledBorder("Maintenance"));// Add a titled border/ group box to the JPanel
+		
+		/*
+		 * 
+		 */
 
-		// **********************************************************************************************
+		JPanel faultFound_Panel = new JPanel(); // Creates a new panel to display information
 
-		JPanel faultFound_Panel = new JPanel();
+		faultDescriptionHeader = new JLabel("Enter description of fault found:"); // Creates header label
+		faultFound_Panel.add(faultDescriptionHeader); // Adds label to panel
 
-		faultDescriptionHeader = new JLabel("Enter description of fault found:");
-		faultFound_Panel.add(faultDescriptionHeader);
+		faultDescriptionField = new JTextArea(10, 35); // Creates a text area that the user can type in
+		faultDescriptionField.setLineWrap(true); // Sets line wrap so text doesn't go off screen
 
-		faultDescriptionField = new JTextArea(10, 35);
-		faultDescriptionField.setLineWrap(true);
+		faultFound_Panel.add(faultDescriptionField); // Adds text area to panel 
 
-		faultFound_Panel.add(faultDescriptionField);
-
-		faultFlightHeader = new JLabel("Fault found with aircraft: ");
-		faultFlightNumber = new JLabel("");
-		faultFound_Panel.add(faultFlightHeader);
-		faultFound_Panel.add(faultFlightNumber);
+		faultFlightHeader = new JLabel("Fault found with aircraft: "); // Creates a label
+		faultFlightNumber = new JLabel(""); // Creates a blank label which will be filled when a flight is selected
+		faultFound_Panel.add(faultFlightHeader); // Adds label to panel
+		faultFound_Panel.add(faultFlightNumber); // Adds label to panel
 
 		reportFaultButton = new JButton("Report Fault");// Assign the text for the button
 		reportFaultButton.addActionListener(this);// Add the action listener to respond on click
 		faultFound_Panel.add(reportFaultButton);// Add the button to the JPanel
 
-		faultFound_Panel.setBorder(BorderFactory.createTitledBorder("Faults Found"));
+		faultFound_Panel.setBorder(BorderFactory.createTitledBorder("Faults Found")); // Adds title to panel
 
 		aircraftListUpdate();// Call the update aircraftList
 		container.add(readyForMaintenance_Panel);// Adds the JPanel to the container
@@ -180,26 +174,26 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 																									// instance of that
 																									// MR
 
-			if (managementRecord == null) {
-				list_ReadyForMaint.set(i, null);
-				list_AwaitRepair.set(i, null);
+			if (managementRecord == null) { // If management record is empty
+				list_ReadyForMaint.set(i, null); // Set list 'ready for maintenance' position i to empty
+				list_AwaitRepair.set(i, null); // Set list 'awaiting repair' position i to empty
 			} else {
-				list_ReadyForMaint.set(i, null);
-				list_AwaitRepair.set(i, null);
+				list_ReadyForMaint.set(i, null); // Set list 'ready for maintenance' position i to empty
+				list_AwaitRepair.set(i, null); // Set list 'awaiting repair' position i to empty
 				if (managementRecord.getStatus() == 8 || managementRecord.getStatus() == 3
 						|| managementRecord.getStatus() == 10) { // If status equals one of the five here
 
 					String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
-							+ managementRecord.getStatusString();
+							+ managementRecord.getStatusString(); // Sets 'record' to be the flight code and status of the current ManagementRecord
 
-					list_ReadyForMaint.set(i, record);
+					list_ReadyForMaint.set(i, record); // Adds the record declared above to the list
 				}
 
 				if (managementRecord.getStatus() == 12) {
 					String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
-							+ managementRecord.getStatusString();
+							+ managementRecord.getStatusString(); // Sets 'record' to be the flight code and status of the current ManagementRecord
 
-					list_AwaitRepair.set(i, record);
+					list_AwaitRepair.set(i, record); // Adds the record declared above to the list
 				}
 			}
 
@@ -214,23 +208,26 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 			outputList_AwaitRepair.clearSelection();
 			if (outputList_ReadyForMaint.getSelectedValue() == null) { // If no aircraft is selected from list
 				MRIndex = -1;
-				faultFlightNumber.setText("");
+				faultFlightNumber.setText(""); // Sets flight number label to be blank
 				if (isButtonAvailable) { // If buttons are available, set them to not be
-					isButtonAvailable = false;
+					isButtonAvailable = false; // Buttons are set to NOT be available
 				}
-				buttonUpdates();
+				buttonUpdates(); // Calls method
 			} else {
 				MRIndex = outputList_ReadyForMaint.getSelectedIndex();
 				faultFlightNumber.setText(aircraftManagementDatabase.getFlightCode(MRIndex));
 				if (!isButtonAvailable) {
-					isButtonAvailable = true;
-				}
-				buttonUpdates();
+					isButtonAvailable = true; // Buttons are made available
+				} 
+				buttonUpdates(); // Calls method
 			}
 
 		}
 	}
 
+	/*
+	 * Method to change view depending if an aircraft has been selected
+	 */
 	public void aircraftSelected_AwaitRepair() {
 
 		if (!outputList_AwaitRepair.getValueIsAdjusting()) {
@@ -238,15 +235,15 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 			if (outputList_AwaitRepair.getSelectedValue() == null) { // If no aircraft is selected from list
 				MRIndex = -1;
 				if (isButtonAvailable) { // If buttons are available, set them to not be
-					isButtonAvailable = false;
+					isButtonAvailable = false; // Buttons are set to NOT be available
 				}
-				buttonUpdates();
+				buttonUpdates(); // Calls method
 			} else {
-				MRIndex = outputList_AwaitRepair.getSelectedIndex();
+				MRIndex = outputList_AwaitRepair.getSelectedIndex(); // 
 				if (!isButtonAvailable) {
-					isButtonAvailable = true;
+					isButtonAvailable = true; // Buttons are made available
 				}
-				buttonUpdates();
+				buttonUpdates(); // Calls method
 			}
 
 		}
@@ -258,73 +255,81 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 	private void buttonUpdates() {
 		// If buttons should not be available then all set to false
 		if (!isButtonAvailable) {
-			maintenanceCompleteButton.setEnabled(false);
-			reportFaultButton.setEnabled(false);
-			repairCompleteButton.setEnabled(false);
+			maintenanceCompleteButton.setEnabled(false); // Disables button
+			reportFaultButton.setEnabled(false); // Disables button
+			repairCompleteButton.setEnabled(false); // Disables button
 
 		} else {
-			String status = aircraftManagementDatabase.getStatusString(MRIndex);
-
+			String status = aircraftManagementDatabase.getStatusString(MRIndex); // Sets status variable to status of
+																					// current management record
+			// If user has entered text to fault description text area AND status matches
+			// READY_FOR_CLEAN_MAINT or READY_FOR_CLEAN_MAINT
 			if (faultDescriptionField.getText().isEmpty() == false && (status.equalsIgnoreCase("READY_FOR_CLEAN_MAINT")
 					|| status.equalsIgnoreCase("CLEAN_AWAIT_MAINT"))) {
-				reportFaultButton.setEnabled(true);
+				reportFaultButton.setEnabled(true); // Report fault button is enabled
 			} else {
-				reportFaultButton.setEnabled(false);
+				reportFaultButton.setEnabled(false); // Report fault button stays disabled
 			}
-
+			// If status matches AWAIT_REPAIR
 			if (status.equalsIgnoreCase("AWAIT_REPAIR")) {
-				repairCompleteButton.setEnabled(true);
+				repairCompleteButton.setEnabled(true); // Repair complete button is enabled
 			} else {
-				repairCompleteButton.setEnabled(false);
+				repairCompleteButton.setEnabled(false); // Repair complete button stays disabled
 			}
-
+			// If status matches CLEAN_AWAIT_MAINT or READY_FOR_CLEAN_MAINT
 			if (status.equalsIgnoreCase("CLEAN_AWAIT_MAINT") || status.equalsIgnoreCase("READY_FOR_CLEAN_MAINT")) {
-				maintenanceCompleteButton.setEnabled(true);
+				maintenanceCompleteButton.setEnabled(true); // Maintenance complete button is enabled
 			} else {
-				maintenanceCompleteButton.setEnabled(false);
+				maintenanceCompleteButton.setEnabled(false); // Maintenance complete button stays diabled
 			}
 		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String status = aircraftManagementDatabase.getStatusString(MRIndex);
 
-		if (e.getSource() == maintenanceCompleteButton) {
-			if (status.equalsIgnoreCase("READY_FOR_CLEAN_MAINT")) {
+		String status = aircraftManagementDatabase.getStatusString(MRIndex); // Status of current managementRecord
+
+		if (e.getSource() == maintenanceCompleteButton) { // If maintenance complete button is clicked
+			if (status.equalsIgnoreCase("READY_FOR_CLEAN_MAINT")) { // If status of current ManagementRecord matches
+																	// READY_FOR_CLEAN_MAINT
 				aircraftManagementDatabase.setStatus(MRIndex, 11); // Change status
-				aircraftListUpdate();
+				aircraftListUpdate(); // update list
 				aircraftSelected_ReadyForMaint();
 			}
-			if (status.equalsIgnoreCase("CLEAN_AWAIT_MAINT"))
+			if (status.equalsIgnoreCase("CLEAN_AWAIT_MAINT")) // If status of current ManagementRecord matches
+																// CLEAN_AWAIT_MAINT
 				aircraftManagementDatabase.setStatus(MRIndex, 13); // Change status
 			aircraftListUpdate();
 			aircraftSelected_ReadyForMaint();
 		}
 
-		if (e.getSource() == reportFaultButton) {
-			String faultDescription = faultDescriptionField.getText();
-			if (status.equalsIgnoreCase("CLEAN_AWAIT_MAINT")) {
-				aircraftManagementDatabase.faultsFound(MRIndex, faultDescription);
-				aircraftManagementDatabase.setStatus(MRIndex, 12);
-				faultDescriptionField.setText("");
-
-				aircraftListUpdate();
-				aircraftSelected_ReadyForMaint();
-			} else if (status.equalsIgnoreCase("READY_FOR_CLEAN_MAINT")) {
-				aircraftManagementDatabase.faultsFound(MRIndex, faultDescription);
-				aircraftManagementDatabase.setStatus(MRIndex, 9);
-				faultDescriptionField.setText("");
-
-				aircraftListUpdate();
-				aircraftSelected_ReadyForMaint(); 
+		if (e.getSource() == reportFaultButton) { // If report fault button is clicked
+			String faultDescription = faultDescriptionField.getText(); // Gets the text that the user has input in fault
+																		// description
+			if (status.equalsIgnoreCase("CLEAN_AWAIT_MAINT")) { // If status of current ManagementRecord matches
+																// CLEAN_AWAIT_MAINT
+				aircraftManagementDatabase.faultsFound(MRIndex, faultDescription); // Saves the fault description to the
+																					// Management Record
+				aircraftManagementDatabase.setStatus(MRIndex, 12); // Change status
+				faultDescriptionField.setText(""); // Sets editable field to be empty
+				aircraftListUpdate(); // Call to method
+				aircraftSelected_ReadyForMaint(); // Call to method
+			} else if (status.equalsIgnoreCase("READY_FOR_CLEAN_MAINT")) { // If status of current ManagementRecord
+																			// matches READY_FOR_CLEAN_MAINT
+				aircraftManagementDatabase.faultsFound(MRIndex, faultDescription);// Saves the fault description to the
+																					// Management Record
+				aircraftManagementDatabase.setStatus(MRIndex, 9); // Change status
+				faultDescriptionField.setText("");// Sets editable field to be empty
+				aircraftListUpdate(); // Call to method
+				aircraftSelected_ReadyForMaint(); // Call to method
 			}
 		}
 
-		if (e.getSource() == repairCompleteButton) {
+		if (e.getSource() == repairCompleteButton) { // If repair compelete button is clicked
 			aircraftManagementDatabase.setStatus(MRIndex, 8); // Change status
-			aircraftListUpdate();
-			aircraftSelected_ReadyForMaint();
+			aircraftListUpdate(); // Call to method
+			aircraftSelected_ReadyForMaint(); // Call to method
 		}
 
 	}

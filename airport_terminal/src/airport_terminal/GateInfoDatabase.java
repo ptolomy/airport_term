@@ -1,6 +1,6 @@
 package airport_terminal;
 
-import java.util.ArrayList;
+import java.util.Observable;
 
 /**
  * A central database ("model" class): It is intended that there will be only
@@ -10,31 +10,51 @@ import java.util.ArrayList;
  * be changed. GateConsoles and GroundOperationsControllers also register as
  * observers of this class. Whenever a change occurs to any gate, the obervers
  * are notified.
+ * 
+ * @stereotype model
  */
-public class GateInfoDatabase {
-	// Holds one gate object per gate in the airport.
+
+public class GateInfoDatabase extends Observable {
+
+	
+
+	/**
+	 * Holds one gate object per gate in the airport.
+	 * 
+	 * @clientCardinality 1
+	 * @directed true
+	 * @label contains
+	 * @link aggregationByValue
+	 * @supplierCardinality 0..*
+	 */
 	private Gate[] gates;
-	Gate gate;
 	int sCode = 0;
-	private int[] code;
-	//ArrayList<Integer> code = new ArrayList<Integer>();
+
 	/**
 	 * A constant: the number of aircraft gates at the airport.
 	 */
-	public int maxGateNumber = 2;
+	public int maxGateNumber = 3;
 
+	
+	public GateInfoDatabase() {
+		gates = new Gate[maxGateNumber];
+		for (int i = 0; i < maxGateNumber; i++) {
+            gates[i] = new Gate();
+        }
+	}
+	
 	/**
 	 * Obtain and return the status of the given gate identified by the gateNumber
 	 * parameter.
 	 */
 	public int getStatus(int gateNumber) {
-		
 		for (int i = 0; i < gates.length; i++) {
 			if (i == gateNumber) {
 				sCode = gates[i].getStatus();	
 			}
 		}
 		return sCode;
+
 	}
 	
 	//Return the m code for the flight that is currently at the gate
@@ -47,11 +67,11 @@ public class GateInfoDatabase {
 	 * the GOC.
 	 */
 	public int[] getStatuses() {
-		
-		for (int i = 0; i < gates.length; i++) {
-				code[i] = gates[i].getStatus();	
+		int[] statuses = null;
+		for (int i = 0; i < maxGateNumber; i++) {
+			statuses[i] = getStatus(i);
 		}
-		return code;
+		return statuses;
 	}
 
 	/**
