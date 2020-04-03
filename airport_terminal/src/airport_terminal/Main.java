@@ -59,16 +59,16 @@ public class Main {
 		
 		// Add databases to Frames as required..
 		// Instantiate and show all interfaces as Frames
-		//MaintenanceInspector m1 = new MaintenanceInspector(amd);
-		//RefuellingSupervisor rs = new RefuellingSupervisor(amd);
-		//RadarTransceiver rt = new RadarTransceiver(amd);
-		//CleaningSupervisor cs = new CleaningSupervisor(amd);
-		//PublicInfo pi = new PublicInfo(amd);
+		MaintenanceInspector m1 = new MaintenanceInspector(amd);
+		RefuellingSupervisor rs = new RefuellingSupervisor(amd);
+		RadarTransceiver rt = new RadarTransceiver(amd);
+		CleaningSupervisor cs = new CleaningSupervisor(amd);
+		PublicInfo pi = new PublicInfo(amd);
 		LATC la = new LATC(amd);
 		GOC go = new GOC(amd, gid);
 		
-		//GateConsole g1 = new GateConsole(1,amd,gid);
-		//GateConsole g2 = new GateConsole(2,amd,gid);
-		//GateConsole g3 = new GateConsole(3,amd,gid);
+		GateConsole g1 = new GateConsole(0,amd,gid);	
+		GateConsole g2 = new GateConsole(1,amd,gid);
+		GateConsole g3 = new GateConsole(2,amd,gid);
 	}
 }
