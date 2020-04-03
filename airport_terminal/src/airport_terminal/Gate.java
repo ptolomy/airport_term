@@ -69,10 +69,10 @@ public class Gate {
 			return "FREE"; // Return FREE
 		}	
 		else if (statusCode == 1) { // If status code is 0
-			return "RESERVED"; // Return FREE
+			return "RESERVED"; // Return RESERVED
 		}	
 		else if (statusCode == 2) { // If status code is 0
-			return "OCCUPIED"; // Return FREE
+			return "OCCUPIED"; // Return OCCUPIED
 		}	
 		else { // If status code doesn't match any preset value
 			return "UNKNOWN"; // Return UNKNOWN

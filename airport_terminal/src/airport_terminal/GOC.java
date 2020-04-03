@@ -99,27 +99,31 @@ public class GOC extends JFrame implements ActionListener, Observer {
 		panel_Aircrafts.add(scroll_Aircrafts);
 		list_Aircrafts.setSize(aircraftManagementDatabase.maxMRs);
 
+		
+		
 		panel_Gates = new JPanel();
 		list_Gates = new DefaultListModel<String>();
 		outputList_Gates = new JList<>(list_Gates);
-		outputList_Gates.addListSelectionListener(e -> aircraftSelected());
+		outputList_Gates.addListSelectionListener(e -> gateSelected());
 
 		JScrollPane scroll_Gates = new JScrollPane(outputList_Gates);
 		scroll_Gates.setPreferredSize(new Dimension(500, 150));
 		panel_Gates.add(scroll_Gates);
 		list_Gates.setSize(gateInfoDatabase.maxGateNumber);
 
-
 		aircraftListUpdate();
 		gateListUpdate();
 		window.add(panel_Aircrafts);
-		window.add(panel_Gates);
-
 		permissionToLandButton = new JButton("Allow Landing");
+		permissionToLandButton.setEnabled(false);
 		window.add(permissionToLandButton);
 		permissionToLandButton.addActionListener(this);
-		
-		// aircraftSelected();
+		window.add(panel_Gates);
+
+
+
+		aircraftSelected();
+		gateSelected();
 
 		setVisible(true);
 
@@ -187,6 +191,27 @@ public class GOC extends JFrame implements ActionListener, Observer {
 			}
 		}
 	}
+	
+	/*
+	 * Method to change view depending if a gate has been selected
+	 */
+	private void gateSelected() {
+		if (!outputList_Gates.getValueIsAdjusting()) {
+			if (outputList_Gates.getSelectedValue() == null) { // If no gate is selected from list
+				GIndex = -1;
+				if (isButtonAvailable) { // If buttons are available, set them to not be
+					isButtonAvailable = false;
+				}
+				buttonUpdates();
+			} else {
+				GIndex = outputList_Gates.getSelectedIndex();
+				if (!isButtonAvailable) {
+					isButtonAvailable = true;
+				}
+				buttonUpdates();
+			}
+		}
+	}
 
 	/*
 	 * Method to update the buttons availability
@@ -197,11 +222,18 @@ public class GOC extends JFrame implements ActionListener, Observer {
 			permissionToLandButton.setEnabled(false); // Disables button
 
 		} else {
-			String status = aircraftManagementDatabase.getStatusString(MRIndex);
+			String statusAircraft = aircraftManagementDatabase.getStatusString(MRIndex);
+		//	String statusGate = gateInfoDatabase.getStatusString(GIndex);
 
-			if (permissionToLandButton.getText().isEmpty() == false && (status.equalsIgnoreCase("READY_FOR_CLEAN_MAINT")
-					|| status.equalsIgnoreCase("CLEAN_AWAIT_MAINT"))) {
-				permissionToLandButton.setEnabled(true);
+			if (statusAircraft.equalsIgnoreCase("WANTING_TO_LAND")) {
+				for (int i = 0; i < gateInfoDatabase.maxGateNumber; i++) {
+					if (gateInfoDatabase.getStatus(i) == 0) {
+						permissionToLandButton.setEnabled(true);
+					} else {
+						permissionToLandButton.setEnabled(false);
+					}
+				}
+				
 			} else {
 				permissionToLandButton.setEnabled(false);
 			}
@@ -210,7 +242,11 @@ public class GOC extends JFrame implements ActionListener, Observer {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getSource() == permissionToLandButton) {
+			aircraftManagementDatabase.setStatus(MRIndex, 3); // Change status
+			aircraftListUpdate();
+			aircraftSelected();
+		}
 
 	}
 
