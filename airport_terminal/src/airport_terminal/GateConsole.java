@@ -91,6 +91,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		tabbedPane.setEnabledAt(0, true);
 		tabbedPane.setEnabledAt(1, false);
 		
+		updateGate();
 			
 		setVisible(true);
 		
@@ -399,6 +400,12 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 
 @Override
 public void update(Observable o, Object arg) {
+	//arrivingPane();
+	//dock();
+	//unloading();
+	//addPassenger();
+	//closeFlight();
+	//updateFlightDetails();
 	updateGate();
 	System.out.println("THe update method was called.");
 }
