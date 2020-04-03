@@ -188,7 +188,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		
 	}
 	
-	//Allow the flight to be detected by the GOC 
+	//Allow the flight to be detected by the GOC   
 	private void detectFlight() {
 		String flightCode = flightCodeText.getText();
 		String to = toText.getText();
