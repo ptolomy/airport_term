@@ -72,7 +72,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		this.gateNumber = gNumber;
 		this.aircraftManagementDatabase = amd;
 		this.gateDB = gid;
-		//Subscribe to the gate database
+		//Subscribe to the gate database  
 		gid.addObserver(this);
 		
 		passengers = new PassengerList();
