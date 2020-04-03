@@ -38,10 +38,19 @@ public class Gate {
 	private int status = FREE;
 
 	/**
+
 	 * If the gate is reserved or occupied, the mCode of the MR of the aircraft
 	 * which is expected/present.
 	 */
 	private int mCode;
+
+	 
+  
+  //Return the specific mCode for the aircraft at this gate
+  public int getmCode() {
+	  return this.mCode;
+  }
+
 
 	/**
 	 * Return the status code for this gate.
