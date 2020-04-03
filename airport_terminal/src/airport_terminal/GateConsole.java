@@ -47,6 +47,9 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
     private int gateNumber;
     private int mCode =-1;
     
+    private String to, next, from;
+    private int numberOfPassengers = 0, aircraftCapacity;
+    
   //GUI Components:
   //To allow for a tabbed window
   private JTabbedPane tabbedPane;
@@ -60,7 +63,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
   //For the departing pane
   private JLabel gateNumberDepartinglbl, gateStatusDepartinglbl, flightCodeDepartinglbl, flightStatusDepartinglbl, tolbl, nextlbl, fromlbl, aircraftCapacitylbl, noOfPassengersDepartinglbl, passengerNamelbl;
   private JTextField flightCodeText, flightStatusText, toText, nextText, fromText, aircraftCapacityText, noOfPassengersText, passengerNameText; 
-  private JButton addPassengerButton, closeFlightButton;
+  private JButton confirmFlightDetailsButton, addPassengerButton, closeFlightButton;
   
   private JList<PassengerDetails> passengerList;
   private PassengerList passengers;
@@ -70,6 +73,8 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		this.aircraftManagementDatabase = amd;
 		amd.addObserver(this);
 		this.gateDB = gid;
+		
+		passengers = new PassengerList();
 		
 		setTitle("Gate " + gNumber);
 		setLocationRelativeTo(null);
@@ -81,6 +86,9 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		
 		arrivingPane();
 		departingPane();
+		
+		tabbedPane.setEnabledAt(0, true);
+		tabbedPane.setEnabledAt(1, false);
 		
 			
 		setVisible(true);
@@ -129,10 +137,12 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	  
 	  dockedButton = new JButton("Docked at Gate");
       dockedButton.addActionListener(this);
+      dockedButton.setEnabled(false);
       flightInformation.add(dockedButton);
       
       unloadedButton = new JButton("Unloading Complete");
       unloadedButton.addActionListener(this);
+      unloadedButton.setEnabled(false);
       flightInformation.add(unloadedButton);
       
       flightInformation.setBorder(BorderFactory.createTitledBorder("Flight Information"));
@@ -211,6 +221,11 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	  
 	  flightInformation.setBorder(BorderFactory.createTitledBorder("Flight Information"));
 	  
+	  confirmFlightDetailsButton = new JButton("Save Flight Details");
+	  confirmFlightDetailsButton.addActionListener(this);
+	  confirmFlightDetailsButton.setEnabled(false);
+	  flightInformation.add(confirmFlightDetailsButton);
+	  
 	  departingFlights.add(flightInformation);
 	  
 	  JPanel addPassenger = new JPanel();
@@ -223,6 +238,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	  
 	  addPassengerButton = new JButton("Check-in Passenger");
 	  addPassengerButton.addActionListener(this);
+	  addPassengerButton.setEnabled(false);
 	  addPassenger.add(addPassengerButton);
 	    
 	  addPassenger.setBorder(BorderFactory.createTitledBorder("Check in a Passenger"));
@@ -237,6 +253,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	  int gateStatus = gateDB.getStatus(gateNumber);
 	  
 	  if (gateStatus == Gate.FREE) {
+		  
 		  gateStatusArrivinglbl.setText("VACANT");
 		  gateStatusArrivinglbl.setForeground(Color.green);
 		  flightCodeArrivinglbl.setText("");
@@ -245,6 +262,8 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		  dockedButton.setEnabled(false);
 		  unloadedButton.setEnabled(false);
 		  tabbedPane.setSelectedIndex(0);
+		  tabbedPane.setEnabledAt(0, true);
+		  tabbedPane.setEnabledAt(1, false);
 	  }
 	  else if (gateStatus == Gate.RESERVED) {
 		  gateStatusArrivinglbl.setText("RESERVED");
@@ -270,7 +289,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		  gateStatusArrivinglbl.setForeground(Color.red);
 		  
 		  dockedButton.setEnabled(true);
-		  unloadedButton.setEnabled(true);
+		  unloadedButton.setEnabled(false);
 		  tabbedPane.setSelectedIndex(0);
 		  }
 		  
@@ -285,13 +304,23 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 			  unloadedButton.setEnabled(false);
 			  tabbedPane.setSelectedIndex(0);		  
 		  }
-		  else if (aircraftManagementDatabase.getStatus(mCode) >= ManagementRecord.READY_PASSENGERS) {
+		  else if (aircraftManagementDatabase.getStatus(mCode) >= ManagementRecord.READY_PASSENGERS
+				  && aircraftManagementDatabase.getStatus(mCode) <= ManagementRecord.AWAITING_TAXI) {
 			  gateStatusDepartinglbl.setText("OCCUPIED");
-			  gateStatusArrivinglbl.setForeground(Color.red);
+			  gateStatusDepartinglbl.setForeground(Color.red);
+			  
+			  passengers = new PassengerList();
+			  
+			  flightCodeText.setText(aircraftManagementDatabase.getFlightCode(mCode));
+			  flightStatusText.setText(aircraftManagementDatabase.getStatusString(mCode));
+			  
+			  //Check here 
 			  
 			  tabbedPane.setSelectedIndex(1);
+			  tabbedPane.setEnabledAt(0, false);
+			  tabbedPane.setEnabledAt(1, true);
 			  
-			  JOptionPane.showMessageDialog(departingFlights, "Please enter the flight information for the departing flight.");
+			  JOptionPane.showMessageDialog(this, "Please enter the flight information for the departing flight and click 'confirm' before adding passengers.");
 			  
 		  }
 	  }
@@ -299,22 +328,72 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
   
    //update status of aircraft to docked at gate
   private void dock() {
-	  
+	  if (aircraftManagementDatabase.getStatus(mCode) == ManagementRecord.TAXIING) {
+		  aircraftManagementDatabase.setStatus(mCode, ManagementRecord.UNLOADING);
+	  }
+	  else {
+		  JOptionPane.showMessageDialog(this, "Flight " + aircraftManagementDatabase.getFlightCode(mCode) + " could not be marked as docked.");
+	  }
+	  unloadedButton.setEnabled(true);
   }
   
    //update status of aircraft to unloaded
   private void unloading() {
-	  
+	  if (aircraftManagementDatabase.getStatus(mCode) == ManagementRecord.UNLOADING) {
+		  aircraftManagementDatabase.setStatus(mCode, ManagementRecord.READY_FOR_CLEAN_MAINT);
+	  }
+	  else {
+		  JOptionPane.showMessageDialog(this, "Flight " + aircraftManagementDatabase.getFlightCode(mCode) + " could not be marked as unloaded.");
+	  }
   }
  
   //checks a passenger into a flight by adding them to the passenger list
   private void addPassenger() {
+	  String passengerName = passengerNameText.getText();
+	  
+	  if (numberOfPassengers < aircraftCapacity) {
+	  PassengerDetails details = new PassengerDetails(passengerName);
+	  
+	  passengers.addPassenger(details);
+	  
+	  numberOfPassengers ++;
+	  
+	  noOfPassengersDepartinglbl.setText("Number of Passengers Checked In:" + numberOfPassengers);
+	  
+	  Vector<PassengerDetails> detailsToDisplay = passengers.getPassengerList();
+	  passengerList.setListData(detailsToDisplay);
+	  }
+	  else {
+		  JOptionPane.showMessageDialog(this, "Aircraft capacity reached. The passenger could not be added.");
+	  }
+	  
 	  
   }
   
   //closes the flight and creates the new flight descriptor
-  private void closeFlight() {
+  private void closeFlight() {  
+	  if (aircraftManagementDatabase.getStatus(mCode) == ManagementRecord.READY_PASSENGERS) {
+		  aircraftManagementDatabase.setStatus(mCode, ManagementRecord.READY_DEPART);
+	  }
+	  else {
+		  JOptionPane.showMessageDialog(this, "Flight " + aircraftManagementDatabase.getFlightCode(mCode) + " could not be closed.");
+	  }
+  }
+  
+  private void updateFlightDetails() {
+	  to = toText.getText();
+	  next = nextText.getText();
+	  from = fromText.getText();
+	  String aircraftCapacityString = aircraftCapacityText.getText();
+	  if (aircraftCapacityString.matches("[0-9]+")) {
+		  aircraftCapacity = Integer.parseInt(aircraftCapacityString);
+	  }
+	  else {
+		  JOptionPane.showMessageDialog(this, "Please enter a suitable circraft capacity.");
+	  }
 	  
+	  //Add code here to update the itinerary of the flight
+	  //Add code here to change the passenger list of the flight
   }
 
 @Override
@@ -335,6 +414,9 @@ public void actionPerformed(ActionEvent e) {
 	}
 	if (e.getSource() == closeFlightButton) {
 		closeFlight();
+	}
+	if (e.getSource() == confirmFlightDetailsButton) {
+		updateFlightDetails();
 	}
 	
 }
