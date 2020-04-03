@@ -56,6 +56,14 @@ public class GateInfoDatabase extends Observable {
 		return sCode;
 
 	}
+
+	/*
+	 * Return the status of the MR (as a String) with the given mCode supplied as a
+	 * parameter
+	 */
+	public String getStatusString(int gateNumber) {
+		return gates[gateNumber].getStatusString();
+	}
 	
 	//Return the m code for the flight that is currently at the gate
 	public int getmCode(int gateNumber) {
