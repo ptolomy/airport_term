@@ -208,8 +208,6 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		
 		aircraftManagementDatabase.radarDetect(fd);
 		
-		aircraftManagementDatabase.setStatus(4, 3);
-		
 		JOptionPane.showMessageDialog(this, "Flight " + flightCode + " Detected");
 		
 		flightCodeText.setText("");

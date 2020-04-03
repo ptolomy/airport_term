@@ -71,10 +71,9 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
   public GateConsole(int gNumber, AircraftManagementDatabase amd, GateInfoDatabase gid) {
 		this.gateNumber = gNumber;
 		this.aircraftManagementDatabase = amd;
-		amd.addObserver(this);
 		this.gateDB = gid;
 		
-		mCode = gateDB.getmCode(gNumber);
+		gid.addObserver(this);
 		
 		passengers = new PassengerList();
 		
@@ -94,6 +93,8 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		
 			
 		setVisible(true);
+		
+		updateGate();
 		
   }
   //Set up the arriving pane in the tabbed window
@@ -120,10 +121,10 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	  
 	  JPanel flightInformation = new JPanel();
 	  
-	  flightCodeArrivinglbl = new JLabel();
+	  flightCodeArrivinglbl = new JLabel("Flight Code:");
 	  flightInformation.add(flightCodeArrivinglbl);
 	  
-	  flightStatusArrivinglbl = new JLabel();
+	  flightStatusArrivinglbl = new JLabel("Flight Status:");
 	  flightInformation.add(flightStatusArrivinglbl);
 	  
 	  passengerListArrivinglbl = new JLabel("Passengers Onboard");
@@ -255,11 +256,10 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	  int gateStatus = gateDB.getStatus(gateNumber);
 	  
 	  if (gateStatus == Gate.FREE) {
-		  
 		  gateStatusArrivinglbl.setText("VACANT");
 		  gateStatusArrivinglbl.setForeground(Color.green);
-		  flightCodeArrivinglbl.setText("");
-		  flightStatusArrivinglbl.setText("");
+		  flightCodeArrivinglbl.setText("Flight Code:");
+		  flightStatusArrivinglbl.setText("Flight Status:");
 		  passengerList.setListData(new PassengerDetails[0]);
 		  dockedButton.setEnabled(false);
 		  unloadedButton.setEnabled(false);
@@ -273,33 +273,32 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		  
 		  mCode = gateDB.getmCode(gateNumber);
 		  
-		  flightCodeArrivinglbl.setText(aircraftManagementDatabase.getFlightCode(mCode));
-		  flightStatusArrivinglbl.setText(aircraftManagementDatabase.getStatusString(mCode));
+		  flightCodeArrivinglbl.setText("Flight Code: " + aircraftManagementDatabase.getFlightCode(mCode));
+		  flightStatusArrivinglbl.setText("Flight Status: " + aircraftManagementDatabase.getStatusString(mCode));
 		 
 		  passengers = aircraftManagementDatabase.getPassengerList(mCode);
 		  Vector<PassengerDetails> detailsToDisplay = passengers.getPassengerList();
 		  passengerList.setListData(detailsToDisplay);
 		  		  
-		  dockedButton.setEnabled(false);
+		  dockedButton.setEnabled(true);
 		  unloadedButton.setEnabled(false);
 		  tabbedPane.setSelectedIndex(0);
 	  }
 	  else if (gateStatus == Gate.OCCUPIED) {
-		  
 		  if (aircraftManagementDatabase.getStatus(mCode) == ManagementRecord.UNLOADING) {
 		  gateStatusArrivinglbl.setText("OCCUPIED");
 		  gateStatusArrivinglbl.setForeground(Color.red);
 		  
-		  dockedButton.setEnabled(true);
-		  unloadedButton.setEnabled(false);
+		  dockedButton.setEnabled(false);
+		  unloadedButton.setEnabled(true);
 		  tabbedPane.setSelectedIndex(0);
 		  }
 		  
 		  else if (aircraftManagementDatabase.getStatus(mCode) >= ManagementRecord.READY_FOR_CLEAN_MAINT
 				  && aircraftManagementDatabase.getStatus(mCode) <= ManagementRecord.READY_REFUEL) {
 			  
-			  flightCodeArrivinglbl.setText("");
-			  flightStatusArrivinglbl.setText("");
+			  flightCodeArrivinglbl.setText("Flight Code:");
+			  flightStatusArrivinglbl.setText("Flight Code:");
 			  passengerList.setListData(new PassengerDetails[0]);
 			  
 			  dockedButton.setEnabled(false);
@@ -313,8 +312,8 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 			  
 			  passengers = new PassengerList();
 			  
-			  flightCodeText.setText(aircraftManagementDatabase.getFlightCode(mCode));
-			  flightStatusText.setText(aircraftManagementDatabase.getStatusString(mCode));
+			  flightCodeText.setText("Flight Code: " + aircraftManagementDatabase.getFlightCode(mCode));
+			  flightStatusText.setText("Flight Code: " + aircraftManagementDatabase.getStatusString(mCode));
 			  
 			  //Check here 
 			  
@@ -332,7 +331,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
   private void dock() {
 	  if (aircraftManagementDatabase.getStatus(mCode) == ManagementRecord.TAXIING) {
 		  aircraftManagementDatabase.setStatus(mCode, ManagementRecord.UNLOADING);
-		  gateDB.docked(gateNumber-1);
+		  gateDB.docked(gateNumber);
 	  }
 	  else {
 		  JOptionPane.showMessageDialog(this, "Flight " + aircraftManagementDatabase.getFlightCode(mCode) + " could not be marked as docked.");
@@ -401,6 +400,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 @Override
 public void update(Observable o, Object arg) {
 	updateGate();
+	System.out.println("THe update method was called.");
 }
 
 @Override

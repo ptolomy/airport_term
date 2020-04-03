@@ -129,6 +129,9 @@ public class AircraftManagementDatabase extends Observable {
 			MRs[nextAvailableMR].setStatus(0);
 			MRs[nextAvailableMR].radarDetect(fd);
 		}
+		
+		setChanged();
+		notifyObservers();
 
 //		try {
 //			for (int i = 0; i < MRs.length; i++) {
