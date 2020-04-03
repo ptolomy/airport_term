@@ -81,6 +81,7 @@ public class GOC extends JFrame implements ActionListener, Observer {
 		this.gateInfoDatabase = gid;
 
 		amd.addObserver(this);
+		gid.addObserver(this);
 
 		setTitle("GOC");
 		setLocation(600, 0);
@@ -168,7 +169,6 @@ public class GOC extends JFrame implements ActionListener, Observer {
 	 */
 	private void gateListUpdate() {
 		for (int i = 0; i < gateInfoDatabase.maxGateNumber; i++) { // For each record in database
-			int gate = gateInfoDatabase.getStatus(i);
 
 			String record = "Gate Number: " + i + "     " + "Gate Status: " + gateInfoDatabase.getStatusString(i);
 
@@ -228,7 +228,8 @@ public class GOC extends JFrame implements ActionListener, Observer {
 			permissionToLandButton.setEnabled(false); // Disables button
 			allocateGateButton.setEnabled(false);
 		} else {
-			if (MRIndex >= 0) {
+			if (MRIndex >= 0 && GIndex >= 0) {
+				MRIndex = outputList_Aircrafts.getSelectedIndex();
 				String statusAircraft = aircraftManagementDatabase.getStatusString(MRIndex);
 				if (statusAircraft.equalsIgnoreCase("WANTING_TO_LAND")) {
 					for (int i = 0; i < gateInfoDatabase.maxGateNumber; i++) {
@@ -242,9 +243,11 @@ public class GOC extends JFrame implements ActionListener, Observer {
 				} else {
 					permissionToLandButton.setEnabled(false);
 				}
-			}
-			if (GIndex >= 0 && MRIndex >= 0) {
-				String statusAircraft = aircraftManagementDatabase.getStatusString(MRIndex);
+			
+			
+				MRIndex = outputList_Aircrafts.getSelectedIndex();
+				GIndex = outputList_Gates.getSelectedIndex();
+				//String statusAircraft = aircraftManagementDatabase.getStatusString(MRIndex);
 				String statusGate = gateInfoDatabase.getStatusString(GIndex);
 				if (statusAircraft.equalsIgnoreCase("LANDED") && statusGate.contains("FREE")) {
 					allocateGateButton.setEnabled(true);
@@ -255,6 +258,7 @@ public class GOC extends JFrame implements ActionListener, Observer {
 			}
 		}
 	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -262,8 +266,9 @@ public class GOC extends JFrame implements ActionListener, Observer {
 			aircraftManagementDatabase.setStatus(MRIndex, 3); // Change status
 			aircraftListUpdate();
 			aircraftSelected();
-			gateSelected();
 			gateListUpdate();
+			gateSelected();
+			
 		}
 
 		if (e.getSource() == allocateGateButton) {
@@ -271,9 +276,8 @@ public class GOC extends JFrame implements ActionListener, Observer {
 			gateInfoDatabase.allocate(GIndex, MRIndex);
 			aircraftListUpdate();
 			aircraftSelected();
-			gateSelected();
 			gateListUpdate();
-		}
+		}	gateSelected();
 	}
 
 	@Override
