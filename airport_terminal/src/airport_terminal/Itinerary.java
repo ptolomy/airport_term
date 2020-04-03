@@ -33,7 +33,7 @@ public class Itinerary {
 	  return to;	// Returns to attribute
   }
   
-  //Set the variables in this instance of the class to be the updated ones that are passed in  
+  //Set the variables in this instance of the class to be the updated ones that are passed in - used in the gate console 
   public void setItinerary(String from, String to, String next) {
 	  this.from = from;
 	  this.to = to;
