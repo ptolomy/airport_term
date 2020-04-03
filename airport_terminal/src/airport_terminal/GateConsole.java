@@ -53,7 +53,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
   //GUI Components:
   //To allow for a tabbed window
   private JTabbedPane tabbedPane;
-  
+  //A JPanel for the departing flights
   JPanel departingFlights;
   
   //For the arrivals pane
@@ -73,6 +73,8 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		this.aircraftManagementDatabase = amd;
 		amd.addObserver(this);
 		this.gateDB = gid;
+		
+		mCode = gateDB.getmCode(gNumber);
 		
 		passengers = new PassengerList();
 		
@@ -330,6 +332,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
   private void dock() {
 	  if (aircraftManagementDatabase.getStatus(mCode) == ManagementRecord.TAXIING) {
 		  aircraftManagementDatabase.setStatus(mCode, ManagementRecord.UNLOADING);
+		  gateDB.docked(gateNumber-1);
 	  }
 	  else {
 		  JOptionPane.showMessageDialog(this, "Flight " + aircraftManagementDatabase.getFlightCode(mCode) + " could not be marked as docked.");

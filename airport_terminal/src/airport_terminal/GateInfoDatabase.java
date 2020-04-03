@@ -81,7 +81,7 @@ public class GateInfoDatabase extends Observable {
 		}
 		return statuses;
 	}
-
+	
 	/**
 	 * Forward a status change request to the given gate identified by the
 	 * gateNumber parameter. Called to allocate a free gate to the aircraft
@@ -89,6 +89,8 @@ public class GateInfoDatabase extends Observable {
 	 */
 	public void allocate(int gateNumber, int mCode) {
 		gates[gateNumber].allocate(mCode);
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -98,6 +100,8 @@ public class GateInfoDatabase extends Observable {
 	 */
 	public void docked(int gateNumber) {
 		gates[gateNumber].docked();
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -107,6 +111,8 @@ public class GateInfoDatabase extends Observable {
 	 */
 	public void departed(int gateNumber) {
 		gates[gateNumber].departed();
+		setChanged();
+		notifyObservers();
 	}
 
 }
