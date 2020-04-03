@@ -341,9 +341,7 @@ public class ManagementRecord {
 	 * @preconditions Status is IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE
 	 */
 	public void radarLostContact() {
-		if (status == IN_TRANSIT || status == DEPARTING_THROUGH_LOCAL_AIRSPACE) { // If status is IN_TRANSIT or
-																					// DEPARTING_THROUGH_LOCAL_AIRSPACE
-																					// <PRECONDITION>
+		if (status == IN_TRANSIT || status == DEPARTING_THROUGH_LOCAL_AIRSPACE) { // If status is IN_TRANSIT or DEPARTING_THROUGH_LOCAL_AIRSPACE <PRECONDITION>
 			status = FREE; // Status becomes 'FREE'
 			flightCode = ""; // Set the flight code to an empty string i.e. have no flight code
 			faultDescription = ""; // Set the fault description to an empty string i.e. there are no faults
@@ -403,6 +401,21 @@ public class ManagementRecord {
 		if (status == READY_PASSENGERS) { // If status is READY_PASSENGERS <PRECONDITION>
 			passengerList.addPassenger(details); // Add details to passenger list
 		}
+	}
+	
+	public void setItinerary(String from, String to, String next) {
+		//Call the set itinerary method in the method class to update the itinerary based on the new from, to and next that are passed in
+		itinerary.setItinerary(from, to, next);
+	}
+	
+	/**
+	 * 
+	 * @param mCode
+	 * @param itin
+	 */
+	public void setPassengerList(PassengerList list) {
+		//Set the passengerList in this class to be the new one that is passed in
+		passengerList = list;
 	}
 
 	/** Return the entire current PassengerList. */
