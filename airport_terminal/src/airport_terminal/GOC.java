@@ -228,21 +228,23 @@ public class GOC extends JFrame implements ActionListener, Observer {
 			permissionToLandButton.setEnabled(false); // Disables button
 			allocateGateButton.setEnabled(false);
 		} else {
-			String statusAircraft = aircraftManagementDatabase.getStatusString(MRIndex);
-
-			if (statusAircraft.equalsIgnoreCase("WANTING_TO_LAND")) {
-				for (int i = 0; i < gateInfoDatabase.maxGateNumber; i++) {
-					if (gateInfoDatabase.getStatus(i) == 0) {
-						permissionToLandButton.setEnabled(true);
-					} else {
-						permissionToLandButton.setEnabled(false);
+			if (MRIndex >= 0) {
+				String statusAircraft = aircraftManagementDatabase.getStatusString(MRIndex);
+				if (statusAircraft.equalsIgnoreCase("WANTING_TO_LAND")) {
+					for (int i = 0; i < gateInfoDatabase.maxGateNumber; i++) {
+						if (gateInfoDatabase.getStatus(i) == 0) {
+							permissionToLandButton.setEnabled(true);
+						} else {
+							permissionToLandButton.setEnabled(false);
+						}
 					}
-				}
 
-			} else {
-				permissionToLandButton.setEnabled(false);
+				} else {
+					permissionToLandButton.setEnabled(false);
+				}
 			}
-			if (GIndex >= 0) {
+			if (GIndex >= 0 && MRIndex >= 0) {
+				String statusAircraft = aircraftManagementDatabase.getStatusString(MRIndex);
 				String statusGate = gateInfoDatabase.getStatusString(GIndex);
 				if (statusAircraft.equalsIgnoreCase("LANDED") && statusGate.contains("FREE")) {
 					allocateGateButton.setEnabled(true);
@@ -260,6 +262,8 @@ public class GOC extends JFrame implements ActionListener, Observer {
 			aircraftManagementDatabase.setStatus(MRIndex, 3); // Change status
 			aircraftListUpdate();
 			aircraftSelected();
+			gateSelected();
+			gateListUpdate();
 		}
 
 		if (e.getSource() == allocateGateButton) {
@@ -267,6 +271,8 @@ public class GOC extends JFrame implements ActionListener, Observer {
 			gateInfoDatabase.allocate(GIndex, MRIndex);
 			aircraftListUpdate();
 			aircraftSelected();
+			gateSelected();
+			gateListUpdate();
 		}
 	}
 
@@ -274,6 +280,7 @@ public class GOC extends JFrame implements ActionListener, Observer {
 	public void update(Observable o, Object arg) {
 
 		aircraftSelected();
+		gateSelected();
 		aircraftListUpdate();
 		gateListUpdate();
 
