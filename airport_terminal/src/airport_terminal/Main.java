@@ -47,7 +47,6 @@ public class Main {
 		
 		
 		// Set status to allow testing before GOC is working
-
 		amd.setStatus(0, 9);
 		amd.setStatus(1, 11);
 
@@ -57,6 +56,7 @@ public class Main {
 		amd.setStatus(2, 1);
 
 		amd.setStatus(1, 3);
+
 
 
 		
@@ -72,7 +72,7 @@ public class Main {
 		//RadarTransceiver rt = new RadarTransceiver(amd);
 		//PublicInfo pi = new PublicInfo(amd);
 		//LATC la = new LATC(amd);
-		//GOC go = new GOC();
+		GOC go = new GOC(amd, gid);
 		
 		GateConsole g1 = new GateConsole(1,amd,gid);
 		//GateConsole g2 = new GateConsole(gate2);

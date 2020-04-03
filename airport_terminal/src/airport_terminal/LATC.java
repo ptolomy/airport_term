@@ -36,11 +36,10 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	 * @directed
 	 */
 
-	private String title = "LATC";
 	private AircraftManagementDatabase aircraftManagementDatabase;
 
 	private int MRIndex; // Used to index database
-	private boolean isButtonAvailable; // Used to determine if button should be clickable
+	private boolean isButtonAvailable; // Used to determine if button should be used
 
 	// Buttons
 	private JButton landingAllowed;
@@ -58,7 +57,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		this.aircraftManagementDatabase = amd;
 		amd.addObserver(this);
 
-		setTitle(title);
+		setTitle("LATC");
 		setLocation(0, 0);
 		setSize(600, 410);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
