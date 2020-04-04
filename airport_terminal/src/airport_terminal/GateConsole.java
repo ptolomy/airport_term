@@ -280,7 +280,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	  else if (gateStatus == Gate.RESERVED) {
 		  gateStatusArrivinglbl.setText("RESERVED");
 		  gateStatusArrivinglbl.setForeground(Color.red);
-		  
+		  //Problems on this line?
 		  mCode = gateDB.getmCode(gateNumber);
 		  
 		  flightCodeArrivinglbl.setText("Flight Code: " + aircraftManagementDatabase.getFlightCode(mCode));
