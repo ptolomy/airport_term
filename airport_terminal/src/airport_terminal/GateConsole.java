@@ -338,10 +338,6 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 				tabbedPane.setSelectedIndex(1);
 				tabbedPane.setEnabledAt(0, false);
 				tabbedPane.setEnabledAt(1, true);
-				
-				if (aircraftManagementDatabase.getStatus(mCode) == ManagementRecord.READY_PASSENGERS) {
-					JOptionPane.showMessageDialog(this,"Please enter the flight information for the departing flight and click 'confirm' before adding passengers.");
-				}
 			}
 		}
 	}
