@@ -328,8 +328,8 @@ public class GOC extends JFrame implements ActionListener, Observer {
 	}
 }
 	/*
-	 * Everything below this line was done by Gareth Tucker, but when I William O'Neill had to take over his
-	 * work due to sickness I started from scratch to follow the layout and logic I had implimented in the other
+	 * Everything below this line was done by Gareth Tucker, but when I (William O'Neill) had to take over his
+	 * work due to sickness I started from scratch to follow the layout and logic I had implemented in the other
 	 * classes I had created. I left Gareths work to show what he had contributed.
 	 * 
 	 **********************************************************************************************************************
