@@ -63,7 +63,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		// Code to initialise the GUI
 		setTitle("Radar Transceiver");
 		setLocationRelativeTo(null);
-		setSize(500, 600); // change to suit preferred size
+		setSize(450, 550); // change to suit preferred size
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
 		// Container to allow multiple JPanels to be added to the screen
@@ -135,7 +135,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		outputList.addListSelectionListener(e -> aircraftSelected());// Add an action listener to the output list and
 																		// call the aircraftSelected method
 		JScrollPane scroll = new JScrollPane(outputList);// Create a new scroll bar for the output list
-		scroll.setPreferredSize(new Dimension(450, 75));// Set the preferred size for the scroll list
+		scroll.setPreferredSize(new Dimension(430, 100));// Set the preferred size for the scroll list
 		detectedFlights.add(scroll);// Add the scroll pane to the panel
 		list.setSize(aircraftManagementDatabase.maxMRs);// Set the size of the list to the maximum number of management
 														// records, as defined in the aircraft management database
@@ -147,7 +147,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		passengerList = new JList<PassengerDetails>(new DefaultListModel<PassengerDetails>());// Create a JList of
 																								// passenger details
 		JScrollPane scroll2 = new JScrollPane(passengerList);// Add a scroll pane to the passenger list
-		scroll2.setPreferredSize(new Dimension(450, 100));// Set the size for the new list with scroll pane
+		scroll2.setPreferredSize(new Dimension(430, 100));// Set the size for the new list with scroll pane
 		detectedFlights.add(scroll2);// Add the scroll pane to the JPanel
 
 		detectedFlights.setSize(getMinimumSize());// Set the size of the detected flights pane to be the minimum size it

@@ -72,8 +72,8 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 		amd.addObserver(this);
 
 		setTitle("Maintenance Inspector");
-		setLocation(800, 0);
-		setSize(500, 700); // change to suit preferred size
+		setLocation(0, 400);
+		setSize(500, 630); // change to suit preferred size
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
 		// Container to allow multiple JPanels to be added to the screen

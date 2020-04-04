@@ -59,7 +59,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 
 		setTitle("LATC");
 		setLocation(0, 0);
-		setSize(600, 410);
+		setSize(600, 310);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		Container window = getContentPane();
 		window.setLayout(new FlowLayout());
@@ -95,7 +95,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 		outputList.addListSelectionListener(e -> aircraftSelected());
 
 		JScrollPane scroll = new JScrollPane(outputList);
-		scroll.setPreferredSize(new Dimension(500, 300));
+		scroll.setPreferredSize(new Dimension(500, 200));
 		panel.add(scroll);
 		list.setSize(aircraftManagementDatabase.maxMRs);
 

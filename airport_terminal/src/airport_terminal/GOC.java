@@ -85,8 +85,8 @@ public class GOC extends JFrame implements ActionListener, Observer {
 		gid.addObserver(this);
 
 		setTitle("GOC"); // Sets title
-		setLocation(600, 0); // Sets location of window
-		setSize(600, 500); // Sets size of window
+		setLocation(500, 0); // Sets location of window
+		setSize(600, 430); // Sets size of window
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		Container window = getContentPane(); // Creates window
@@ -98,7 +98,7 @@ public class GOC extends JFrame implements ActionListener, Observer {
 		outputList_Aircrafts.addListSelectionListener(e -> aircraftSelected()); // Adds action listener to list, i.e detects when something is selected
 
 		JScrollPane scroll_Aircrafts = new JScrollPane(outputList_Aircrafts); 
-		scroll_Aircrafts.setPreferredSize(new Dimension(500, 200));
+		scroll_Aircrafts.setPreferredSize(new Dimension(500, 150));
 		panel_Aircrafts.add(scroll_Aircrafts);
 		list_Aircrafts.setSize(aircraftManagementDatabase.maxMRs);
 

@@ -87,7 +87,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		passengers = new PassengerList();
 
 		setTitle("Gate " + gNumber);
-		setLocationRelativeTo(null);
+		setLocation(1000, 0);
 		setSize(450, 780);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
