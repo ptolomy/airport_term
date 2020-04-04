@@ -88,7 +88,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 
 		setTitle("Gate " + gNumber);
 		setLocationRelativeTo(null);
-		setSize(400, 550);
+		setSize(450, 780);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		tabbedPane = new JTabbedPane();
