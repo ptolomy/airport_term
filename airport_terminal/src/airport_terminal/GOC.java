@@ -195,11 +195,20 @@ public class GOC extends JFrame implements ActionListener, Observer {
 				}
 				buttonUpdates();
 			} else {
+				if (!outputList_Aircrafts.getSelectedValue().contains("LANDED")) {
+					outputList_Gates.clearSelection();
+					MRIndex = outputList_Aircrafts.getSelectedIndex();
+					if (!isButtonAvailable) {
+						isButtonAvailable = true;
+					}
+					buttonUpdates();
+				} else {
 				MRIndex = outputList_Aircrafts.getSelectedIndex();
 				if (!isButtonAvailable) {
 					isButtonAvailable = true;
 				}
 				buttonUpdates();
+				}
 			}
 		}
 	}
@@ -284,11 +293,11 @@ public class GOC extends JFrame implements ActionListener, Observer {
 		}
 
 		if (e.getSource() == allocateGateButton) {
-			MRIndex = outputList_Aircrafts.getSelectedIndex();
-			GIndex = outputList_Gates.getSelectedIndex();
-			gateInfoDatabase.allocate(GIndex, MRIndex);
-			aircraftManagementDatabase.taxiTo(MRIndex, GIndex);
-			aircraftManagementDatabase.setStatus(MRIndex, 6); // Change status
+			int newMRIndex = outputList_Aircrafts.getSelectedIndex();
+			int newGIndex = outputList_Gates.getSelectedIndex();
+			gateInfoDatabase.allocate(newGIndex, newMRIndex);
+			aircraftManagementDatabase.taxiTo(newMRIndex, newGIndex);
+			aircraftManagementDatabase.setStatus(newMRIndex, 6); // Change status
 			aircraftListUpdate();
 			gateListUpdate();
 			aircraftSelected();
