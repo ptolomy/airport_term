@@ -119,49 +119,34 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		container.add(detectAflight);
 
 //********************************************************************************************************************************
-		// JPanel to displayed the already detected flights and allow them to be marked
-		// as leaving local airspace
-		JPanel detectedFlights = new JPanel(); // Create a new JPanel for the flights that are already detected to
-												// appear on
+		// JPanel to displayed the already detected flights and allow them to be marked as leaving local airspace
+		JPanel detectedFlights = new JPanel(); // Create a new JPanel for the flights that are already detected to appear on
 
-		// A button to allow the aircraft to be removed from SAAMS when the aircraft
-		// 'leaves local airspace'
+		// A button to allow the aircraft to be removed from SAAMS when the aircraft 'leaves local airspace'
 		leftLocalAirspace = new JButton("Departed Local Airspace");// Assign the text for the button
 		leftLocalAirspace.addActionListener(this);// Add the action listener to respond on click
 		detectedFlights.add(leftLocalAirspace);// Add the button to the JPanel
 
 		list = new DefaultListModel<String>();// Create a new list for the flights to be added to
 		outputList = new JList<>(list);// 'Create a JList based on the list to display the list of flights
-		outputList.addListSelectionListener(e -> aircraftSelected());// Add an action listener to the output list and
-																		// call the aircraftSelected method
+		outputList.addListSelectionListener(e -> aircraftSelected());// Add an action listener to the output list and call the aircraftSelected method
+		
 		JScrollPane scroll = new JScrollPane(outputList);// Create a new scroll bar for the output list
 		scroll.setPreferredSize(new Dimension(430, 100));// Set the preferred size for the scroll list
 		detectedFlights.add(scroll);// Add the scroll pane to the panel
-		list.setSize(aircraftManagementDatabase.maxMRs);// Set the size of the list to the maximum number of management
-														// records, as defined in the aircraft management database
+		list.setSize(aircraftManagementDatabase.maxMRs);// Set the size of the list to the maximum number of management records, as defined in the aircraft management database
 
-		JLabel passengersOnboardlbl = new JLabel("Passengers Onboard:");// Create a new label for the passengers on
-																		// board list:
+		JLabel passengersOnboardlbl = new JLabel("Passengers Onboard:");// Create a new label for the passengers on board list:
 		detectedFlights.add(passengersOnboardlbl);// Add the label to the JPanel
 
-		passengerList = new JList<PassengerDetails>(new DefaultListModel<PassengerDetails>());// Create a JList of
-																								// passenger details
+		passengerList = new JList<PassengerDetails>(new DefaultListModel<PassengerDetails>());// Create a JList of passenger details
 		JScrollPane scroll2 = new JScrollPane(passengerList);// Add a scroll pane to the passenger list
 		scroll2.setPreferredSize(new Dimension(430, 100));// Set the size for the new list with scroll pane
 		detectedFlights.add(scroll2);// Add the scroll pane to the JPanel
 
-		detectedFlights.setSize(getMinimumSize());// Set the size of the detected flights pane to be the minimum size it
-													// can be
+		detectedFlights.setSize(getMinimumSize());// Set the size of the detected flights pane to be the minimum size it can be
 
-		detectedFlights.setBorder(
-				BorderFactory.createTitledBorder("Detected Flights: In Transit or Departing Local Airspace"));// Add a
-																												// titled
-																												// border/
-																												// group
-																												// box
-																												// to
-																												// the
-																												// JPanel
+		detectedFlights.setBorder(BorderFactory.createTitledBorder("Detected Flights: In Transit or Departing Local Airspace"));// Add a titled border/ group box to the JPanel
 
 		aircraftListUpdate();// Call the update aircraftList
 		container.add(detectedFlights);// Adds the JPanel to the container
@@ -169,41 +154,30 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 
 		setVisible(true);// Allow the elements to be displayed
 
-		getContentPane().add(container);// Add the entire container to the display. This will add the two JPanels above
-										// to the window
-
+		getContentPane().add(container);// Add the entire container to the display. This will add the two JPanels above to the window
 	}
 
+	/**
+	 * A method that will be called from the update() method when something in the aircraft database changes
+	 */
 	private void aircraftListUpdate() {
-		// mCodes.clear();
 		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) { // For each record in database
-			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i); // Create local
-																									// instance of that
-																									// MR
+			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i); // Create local instance of that MR
 
-			if (managementRecord == null) {
-				list.set(i, null);
-			} else {
+			if (managementRecord == null) {//If the management record is empty THEN
+				list.set(i, null);//Set the list to have an empty position - helps getSelected() to work correctly
+			} else {//Otherwise do this
 				list.set(i, null);
 				if (managementRecord.getStatus() == ManagementRecord.IN_TRANSIT
-						|| managementRecord.getStatus() == ManagementRecord.DEPARTING_THROUGH_LOCAL_AIRSPACE) { // If
-																												// status
-																												// equals
-																												// one
-																												// of
-																												// the
-																												// two
-																												// here
-					String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
-							+ managementRecord.getStatusString();
-					list.set(i, record);
-					// mCodes.add(i);
+						|| managementRecord.getStatus() == ManagementRecord.DEPARTING_THROUGH_LOCAL_AIRSPACE) { // If the status of the aircraft equals in transit or departing through local airspace THEN
+					String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: " + managementRecord.getStatusString();//Declare a new string to hold the flight code and status
+					list.set(i, record);//add the record to the Jlist - to allow it to be displayed
 				}
 			}
 		}
 	}
 
-	/*
+	/**
 	 * Method to change view depending if an aircraft has been selected
 	 */
 	private void aircraftSelected() {
