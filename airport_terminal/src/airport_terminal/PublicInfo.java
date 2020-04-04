@@ -125,8 +125,7 @@ public class PublicInfo extends JFrame implements Observer {
 			if (managementRecord == null) {
 				break;
 			}
-			
-			
+
 			// If the flight status is either WAITING_TO_LAND, GROUND_CLEARENCE_GRANTED or
 			// LANDING
 			else if (managementRecord.getStatusString().equalsIgnoreCase("WANTING_TO_LAND")
@@ -134,13 +133,11 @@ public class PublicInfo extends JFrame implements Observer {
 					|| managementRecord.getStatusString().equalsIgnoreCase("LANDING")) {
 
 				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
-						+ managementRecord.getStatusString();
+						+ "LANDING";
 
 				listLanding.set(i, record); // Add to list of landing aircrafts
 			}
-			
-			
-			
+
 			// If the flight status is LANDED
 			else if (managementRecord.getStatusString().equalsIgnoreCase("LANDED")) {
 
@@ -148,38 +145,117 @@ public class PublicInfo extends JFrame implements Observer {
 						+ managementRecord.getStatusString();
 
 				listLanded.set(i, record); // Add to list of landed aircrafts
-				
+
 				for (int index = 0; index < listLanding.getSize(); index++) {
 					if (listLanding.elementAt(index) == null) {
 						listLanding.set(i, null);
-					}
-					else if (listLanding.elementAt(index).contains(managementRecord.getFlightCode())){
+					} else if (listLanding.elementAt(index).contains(managementRecord.getFlightCode())) {
 						listLanding.remove(index);
 					}
 				}
 
 			}
-			
-			
-			
-			// If the flight status is AWAITING_TAKEOFF
-			else if (managementRecord.getStatusString().equalsIgnoreCase("AWAITING_TAKEOFF")) {
+
+			else if (managementRecord.getStatusString().equalsIgnoreCase("TAXIING")) {
 
 				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
-						+ managementRecord.getStatusString();
+						+ managementRecord.getStatusString() + "     " + "Gate Number: "
+						+ (managementRecord.getGateNumber() + 1);
 
-				listDeparting.set(i, record); // Add to list of departing aircrafts
-				
+				listLanded.set(i, record); // Add to list of landed aircrafts
+
+				for (int index = 0; index < listLanding.getSize(); index++) {
+					if (listLanding.elementAt(index) == null) {
+						listLanding.set(i, null);
+					} else if (listLanding.elementAt(index).contains(managementRecord.getFlightCode())) {
+						listLanding.remove(index);
+					}
+				}
+			}
+
+			else if (managementRecord.getStatusString().equalsIgnoreCase("UNLOADING")) {
+				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
+						+ "DOCKED" + "     " + "Gate Number: " + (managementRecord.getGateNumber() + 1);
+
+				listLanded.set(i, record); // Add to list of landed aircrafts
+
+				for (int index = 0; index < listLanding.getSize(); index++) {
+					if (listLanding.elementAt(index) == null) {
+						listLanding.set(i, null);
+					} else if (listLanding.elementAt(index).contains(managementRecord.getFlightCode())) {
+						listLanding.remove(index);
+					}
+				}
+			}
+			
+			else if (managementRecord.getStatusString().equalsIgnoreCase("READY_FOR_CLEAN_MAINT")) {
 				for (int index = 0; index < listLanded.getSize(); index++) {
 					if (listLanded.elementAt(index) == null) {
 						listLanded.set(i, null);
-					}
-					else if (listLanded.elementAt(index).contains(managementRecord.getFlightCode())){
+					} else {
 						listLanded.remove(index);
 					}
 				}
 			}
+
+			else if (managementRecord.getStatusString().equalsIgnoreCase("READY_PASSENGERS")) {
+				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
+						+ "NOW BOARDING";
+
+				listDeparting.set(i, record); // Add to list of departing aircrafts
+
+				for (int index = 0; index < listLanded.getSize(); index++) {
+					if (listLanded.elementAt(index) == null) {
+						listLanded.set(i, null);
+					} else if (listLanded.elementAt(index).contains(managementRecord.getFlightCode())) {
+						listLanded.remove(index);
+					}
+				}
+			}
+
+			else if (managementRecord.getStatusString().equalsIgnoreCase("READY_DEPART")) {
+				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
+						+ "BOARDING COMPLETE";
+
+				listDeparting.set(i, record); // Add to list of departing aircrafts
+
+				for (int index = 0; index < listLanded.getSize(); index++) {
+					if (listLanded.elementAt(index) == null) {
+						listLanded.set(i, null);
+					} else if (listLanded.elementAt(index).contains(managementRecord.getFlightCode())) {
+						listLanded.remove(index);
+					}
+				}
+			}
+			// If the flight status is
+			else if (managementRecord.getStatusString().equalsIgnoreCase("AWAITING_TAXI")
+					|| managementRecord.getStatusString().equalsIgnoreCase("AWAITING_TAKEOFF")) {
+
+				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
+						+ "DEPARTED";
+
+				listDeparting.set(i, record); // Add to list of departing aircrafts
+
+				for (int index = 0; index < listLanded.getSize(); index++) {
+					if (listLanded.elementAt(index) == null) {
+						listLanded.set(i, null);
+					} else if (listLanded.elementAt(index).contains(managementRecord.getFlightCode())) {
+						listLanded.remove(index);
+					}
+				}
+			}
+			
+			else if (managementRecord.getStatusString().equalsIgnoreCase("DEPARTING_THROUGH_LOCAL_AIRSPACE") || managementRecord.getStatusString().equalsIgnoreCase("FREE")) {
+				for (int index = 0; index < listDeparting.getSize(); index++) {
+					if (listDeparting.elementAt(index) == null) {
+						listDeparting.set(i, null);
+					} else {
+						listDeparting.remove(index);
+					}
+				}
+			}
 		}
+
 	}
 
 	@Override

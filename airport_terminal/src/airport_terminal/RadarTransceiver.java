@@ -256,7 +256,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		String next = nextText.getText();
 		String passengerString = namesText.getText();
 
-		if (flightCode.isBlank() || to.isBlank() || from.isBlank() || passengerString.isBlank()) {
+		if (flightCode.isEmpty() || to.isEmpty() || from.isEmpty() || passengerString.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Please enter the following: Flight Code, To, From, Passenger List");
 		} else {
 
