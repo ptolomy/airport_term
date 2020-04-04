@@ -275,7 +275,7 @@ public class GOC extends JFrame implements ActionListener, Observer {
 			GIndex = outputList_Gates.getSelectedIndex();
 			gateInfoDatabase.allocate(GIndex, MRIndex);
 			aircraftManagementDatabase.taxiTo(MRIndex, GIndex);
-			///aircraftManagementDatabase.setStatus(MRIndex, 6); // Change status
+			aircraftManagementDatabase.setStatus(MRIndex, 6); // Change status
 			aircraftListUpdate();
 			gateListUpdate();
 			aircraftSelected();
