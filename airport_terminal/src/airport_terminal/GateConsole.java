@@ -228,7 +228,6 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	  
 	  confirmFlightDetailsButton = new JButton("Save Flight Details");
 	  confirmFlightDetailsButton.addActionListener(this);
-	  confirmFlightDetailsButton.setEnabled(true);
 	  flightInformation.add(confirmFlightDetailsButton);
 	  
 	  departingFlights.add(flightInformation);
@@ -243,13 +242,22 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	  
 	  addPassengerButton = new JButton("Check-in Passenger");
 	  addPassengerButton.addActionListener(this);
-	  addPassengerButton.setEnabled(true);
 	  addPassenger.add(addPassengerButton);
 	    
 	  addPassenger.setBorder(BorderFactory.createTitledBorder("Check in a Passenger"));
 	  
 	  departingFlights.add(addPassenger);
 	  
+	  JPanel closeFlight = new JPanel();
+	  
+	  closeFlightButton = new JButton("Close Flight");
+	  closeFlightButton.addActionListener(this);
+	  closeFlight.add(closeFlightButton);
+	  
+	  closeFlight.setBorder(BorderFactory.createTitledBorder("Close Flight"));
+	  
+	  departingFlights.add(closeFlight);
+	  	  
 	  tabbedPane.addTab("Departing Flights", departingFlights);
 	  
   }
@@ -323,8 +331,9 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 			  tabbedPane.setEnabledAt(0, false);
 			  tabbedPane.setEnabledAt(1, true);
 			  
-			  JOptionPane.showMessageDialog(this, "Please enter the flight information for the departing flight and click 'confirm' before adding passengers.");
-			  
+			  if (aircraftManagementDatabase.getStatus(mCode) >= ManagementRecord.READY_PASSENGERS) {
+				  JOptionPane.showMessageDialog(this, "Please enter the flight information for the departing flight and click 'confirm' before adding passengers.");
+			  }
 		  }
 	  }
   }
@@ -366,6 +375,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	  
 	  Vector<PassengerDetails> detailsToDisplay = passengers.getPassengerList();
 	  passengerList.setListData(detailsToDisplay);
+	  passengerNameText.setText("");
 	  }
 	  else {
 		  JOptionPane.showMessageDialog(this, "Aircraft capacity reached. The passenger could not be added.");
@@ -381,7 +391,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		  aircraftManagementDatabase.setStatus(mCode, ManagementRecord.READY_DEPART);
 	  }
 	  else {
-		  JOptionPane.showMessageDialog(this, "Flight " + aircraftManagementDatabase.getFlightCode(mCode) + " could not be closed.");
+		  JOptionPane.showMessageDialog(this, "Flight " + aircraftManagementDatabase.getFlightCode(mCode) + " could not be closed. The status of the flight is: " + aircraftManagementDatabase.getStatusString(mCode));
 	  }
 }
   
@@ -401,14 +411,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 
 @Override
 public void update(Observable o, Object arg) {
-	//arrivingPane();
-	//dock();
-	//unloading();
-	//addPassenger();
-	//closeFlight();
-	//updateFlightDetails();
 	updateGate();
-	System.out.println("THe update method was called.");
 }
 
 @Override
