@@ -38,14 +38,15 @@ public class PublicInfo extends JFrame implements Observer {
 	private JLabel labelFlightsLanded;
 	private JLabel labelFlightsDeparting;
 
+	// Panels
 	private JPanel landing;
 	private JPanel landed;
 	private JPanel departing;
 
+	// Lists
 	private JList<String> outputListLanding;
 	private JList<String> outputListLanded;
 	private JList<String> outputListDeparting;
-
 	private DefaultListModel<String> listLanding;
 	private DefaultListModel<String> listLanded;
 	private DefaultListModel<String> listDeparting;

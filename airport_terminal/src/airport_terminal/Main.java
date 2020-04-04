@@ -49,22 +49,18 @@ public class Main {
 		
 		// Set status to allow testing before GOC is working
 		amd.setStatus(0, 2);
-		amd.setStatus(1, 2);
-		amd.setStatus(2, 2);
-		amd.setStatus(3, 2);
+		amd.setStatus(1, 15);
+		amd.setStatus(2, 15);
+		amd.setStatus(3, 15);
 		
-		//gid.allocate(1, 1);
-		//gid.allocate(1, 1);
-		//gid.allocate(1, 1);
-
 		
 		// Add databases to Frames as required..
 		// Instantiate and show all interfaces as Frames
 		MaintenanceInspector m1 = new MaintenanceInspector(amd);
-		RefuellingSupervisor rs = new RefuellingSupervisor(amd);
+		//RefuellingSupervisor rs = new RefuellingSupervisor(amd);
 		RadarTransceiver rt = new RadarTransceiver(amd);
-		CleaningSupervisor cs = new CleaningSupervisor(amd);
-		PublicInfo pi = new PublicInfo(amd);
+		//CleaningSupervisor cs = new CleaningSupervisor(amd);
+		//PublicInfo pi = new PublicInfo(amd);
 		LATC la = new LATC(amd);
 		GOC go = new GOC(amd, gid);
 

@@ -65,6 +65,7 @@ public class GOC extends JFrame implements ActionListener, Observer {
 
 	// Buttons
 	private JButton permissionToLandButton;
+	private JButton allowTaxiAcrossTarmacButton;
 	private JButton allocateGateButton;
 
 	private JPanel panel_Aircrafts;
@@ -83,28 +84,28 @@ public class GOC extends JFrame implements ActionListener, Observer {
 		amd.addObserver(this);
 		gid.addObserver(this);
 
-		setTitle("GOC");
-		setLocation(600, 0);
-		setSize(600, 500);
+		setTitle("GOC"); // Sets title
+		setLocation(600, 0); // Sets location of window
+		setSize(600, 500); // Sets size of window
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		Container window = getContentPane();
-		window.setLayout(new FlowLayout());
+		Container window = getContentPane(); // Creates window
+		window.setLayout(new FlowLayout()); // Sets layout
 
-		panel_Aircrafts = new JPanel();
-		list_Aircrafts = new DefaultListModel<String>();
-		outputList_Aircrafts = new JList<>(list_Aircrafts);
-		outputList_Aircrafts.addListSelectionListener(e -> aircraftSelected());
+		panel_Aircrafts = new JPanel(); // Creates new panel to display information
+		list_Aircrafts = new DefaultListModel<String>(); // Creates new list
+		outputList_Aircrafts = new JList<>(list_Aircrafts); // Adds list to output
+		outputList_Aircrafts.addListSelectionListener(e -> aircraftSelected()); // Adds action listener to list, i.e detects when something is selected
 
-		JScrollPane scroll_Aircrafts = new JScrollPane(outputList_Aircrafts);
+		JScrollPane scroll_Aircrafts = new JScrollPane(outputList_Aircrafts); 
 		scroll_Aircrafts.setPreferredSize(new Dimension(500, 200));
 		panel_Aircrafts.add(scroll_Aircrafts);
 		list_Aircrafts.setSize(aircraftManagementDatabase.maxMRs);
 
-		panel_Gates = new JPanel();
-		list_Gates = new DefaultListModel<String>();
-		outputList_Gates = new JList<>(list_Gates);
-		outputList_Gates.addListSelectionListener(e -> gateSelected());
+		panel_Gates = new JPanel();// Creates new panel to display information
+		list_Gates = new DefaultListModel<String>();// Creates new list
+		outputList_Gates = new JList<>(list_Gates);// Adds list to output
+		outputList_Gates.addListSelectionListener(e -> gateSelected());// Adds action listener to list, i.e detects when something is selected
 
 		JScrollPane scroll_Gates = new JScrollPane(outputList_Gates);
 		scroll_Gates.setPreferredSize(new Dimension(500, 150));
@@ -120,6 +121,11 @@ public class GOC extends JFrame implements ActionListener, Observer {
 		permissionToLandButton.setEnabled(false);
 		window.add(permissionToLandButton);
 		permissionToLandButton.addActionListener(this);
+		
+		allowTaxiAcrossTarmacButton = new JButton("Grant Taxiing Permission");
+		allowTaxiAcrossTarmacButton.setEnabled(false);
+		window.add(allowTaxiAcrossTarmacButton);
+		allowTaxiAcrossTarmacButton.addActionListener(this);
 
 		window.add(panel_Gates);
 
@@ -227,8 +233,9 @@ public class GOC extends JFrame implements ActionListener, Observer {
 		if (!isButtonAvailable) {
 			permissionToLandButton.setEnabled(false); // Disables button
 			allocateGateButton.setEnabled(false);
+			allowTaxiAcrossTarmacButton.setEnabled(false);
 		} else {
-			if (MRIndex >= 0 && GIndex < 0) {
+			if (MRIndex >= 0 && GIndex < 0) { //Only selecting an aircraft
 				MRIndex = outputList_Aircrafts.getSelectedIndex();
 				String statusAircraft = aircraftManagementDatabase.getStatusString(MRIndex);
 				if (statusAircraft.equalsIgnoreCase("WANTING_TO_LAND")) {
@@ -243,7 +250,13 @@ public class GOC extends JFrame implements ActionListener, Observer {
 				} else {
 					permissionToLandButton.setEnabled(false);
 				}
-			} else if (MRIndex >= 0 && GIndex >= 0) {
+				if (statusAircraft.equalsIgnoreCase("AWAITING_TAXI")) {
+					allowTaxiAcrossTarmacButton.setEnabled(true);
+				} else {
+					allowTaxiAcrossTarmacButton.setEnabled(false);
+				}
+				
+			} else if (MRIndex >= 0 && GIndex >= 0) { // Selecting both an aircraft and gate
 				MRIndex = outputList_Aircrafts.getSelectedIndex();
 				GIndex = outputList_Gates.getSelectedIndex();
 				String statusAircraft = aircraftManagementDatabase.getStatusString(MRIndex);
@@ -281,6 +294,16 @@ public class GOC extends JFrame implements ActionListener, Observer {
 			aircraftSelected();
 			gateSelected();
 		}
+		
+		if (e.getSource() == allowTaxiAcrossTarmacButton) {
+			MRIndex = outputList_Aircrafts.getSelectedIndex();
+			aircraftManagementDatabase.setStatus(MRIndex, 17); // Change status
+			aircraftListUpdate();
+			gateListUpdate();
+			aircraftSelected();
+			gateSelected();
+
+		}
 	}
 
 	@Override
@@ -291,8 +314,12 @@ public class GOC extends JFrame implements ActionListener, Observer {
 		aircraftSelected();
 		gateSelected();
 	}
-
+}
 	/*
+	 * Everything below this line was done by Gareth Tucker, but when I William O'Neill had to take over his
+	 * work due to sickness I started from scratch to follow the layout and logic I had implimented in the other
+	 * classes I had created. I left Gareths work to show what he had contributed.
+	 * 
 	 **********************************************************************************************************************
 	 */
 
@@ -401,4 +428,3 @@ public class GOC extends JFrame implements ActionListener, Observer {
 //		aircraftManagementDatabase.setStatus(mCode, 17); // sets the status of mCode value to Awaiting TakeOff?
 //	}
 
-}

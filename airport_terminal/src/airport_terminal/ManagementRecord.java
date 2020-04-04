@@ -344,7 +344,7 @@ public class ManagementRecord {
 		if (status == IN_TRANSIT || status == DEPARTING_THROUGH_LOCAL_AIRSPACE) { // If status is IN_TRANSIT or
 																					// DEPARTING_THROUGH_LOCAL_AIRSPACE
 																					// <PRECONDITION>
-			status = FREE; // Status becomes 'FREE'
+			setStatus(0);  // Status becomes 'FREE'
 			flightCode = ""; // Set the flight code to an empty string i.e. have no flight code
 			faultDescription = ""; // Set the fault description to an empty string i.e. there are no faults
 			//gateNumber = 0; // Reset the gate number to 0

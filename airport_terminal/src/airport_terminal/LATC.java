@@ -120,9 +120,12 @@ public class LATC extends JFrame implements ActionListener, Observer {
 				list.set(i, null);
 			} else {
 				list.set(i, null);
-				if (managementRecord.getStatus() == 1 || managementRecord.getStatus() == 2 || managementRecord.getStatus() == 3
-						|| managementRecord.getStatus() == 4 || managementRecord.getStatus() == 16
-						|| managementRecord.getStatus() == 18) { // If status equals one of the five here
+				if (managementRecord.getStatus() == 1 || managementRecord.getStatus() == 2
+						|| managementRecord.getStatus() == 3 || managementRecord.getStatus() == 4
+						|| managementRecord.getStatus() == 15 || managementRecord.getStatus() == 16
+						|| managementRecord.getStatus() == 17 || managementRecord.getStatus() == 18) { // If status
+																										// equals one of
+																										// the five here
 
 					String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
 							+ managementRecord.getStatusString();
@@ -211,12 +214,6 @@ public class LATC extends JFrame implements ActionListener, Observer {
 			aircraftListUpdate();
 			aircraftSelected();
 		}
-		// If takeOffAllowed button is clicked
-		if (e.getSource() == takeOffAllowed) {
-			aircraftManagementDatabase.setStatus(MRIndex, 18); // Change status
-			aircraftListUpdate();
-			aircraftSelected();
-		}
 		// If waitingForTaxi button is clicked
 		if (e.getSource() == waitingForTaxi) {
 			aircraftManagementDatabase.setStatus(MRIndex, 16); // Change status
@@ -224,7 +221,16 @@ public class LATC extends JFrame implements ActionListener, Observer {
 			aircraftSelected();
 		}
 
-		if (e.getSource() == flightInfo) {
+		// If takeOffAllowed button is clicked
+		if (e.getSource() == takeOffAllowed) {
+			aircraftManagementDatabase.setStatus(MRIndex, 18); // Change status
+			aircraftListUpdate();
+			aircraftSelected();
+		}
+
+		if (e.getSource() == flightInfo)
+
+		{
 			JOptionPane.showMessageDialog(null,
 					"Flight Code of Flight: " + aircraftManagementDatabase.getFlightCode(MRIndex) + "\nFlight Status: "
 							+ aircraftManagementDatabase.getStatus(MRIndex) + "\nComing From: "

@@ -151,6 +151,8 @@ public class AircraftManagementDatabase extends Observable {
 	 */
 	public void radarLostContact(int mCode) {
 		MRs[mCode].radarLostContact();
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -162,6 +164,8 @@ public class AircraftManagementDatabase extends Observable {
 	 */
 	public void taxiTo(int mCode, int gateNumber) {
 		MRs[mCode].taxiTo(gateNumber);
+		setChanged();
+		notifyObservers();
 
 	}
 	
@@ -179,6 +183,8 @@ public class AircraftManagementDatabase extends Observable {
 	 */
 	public void faultsFound(int mCode, String description) {
 		MRs[mCode].faultsFound(description);
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -186,8 +192,9 @@ public class AircraftManagementDatabase extends Observable {
 	 * the message to the given MR for recording in the passenger list.
 	 */
 	public void addPassenger(int mCode, PassengerDetails details) {
-
 		MRs[mCode].addPassenger(details);
+		setChanged();
+		notifyObservers();
 	}
 	
 	/**
@@ -195,6 +202,8 @@ public class AircraftManagementDatabase extends Observable {
 	 */
 	public void setItinerary(int mCode, String from, String to, String next) {
 		MRs[mCode].setItinerary(from, to, next);
+		setChanged();
+		notifyObservers();
 	}
 	
 	/**
@@ -204,6 +213,8 @@ public class AircraftManagementDatabase extends Observable {
 	 */
 	public void setPassengerList(int mCode, PassengerList list) {
 		MRs[mCode].setPassengerList(list);
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
