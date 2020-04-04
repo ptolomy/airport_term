@@ -164,7 +164,14 @@ public class AircraftManagementDatabase extends Observable {
 		MRs[mCode].taxiTo(gateNumber);
 
 	}
-
+	
+	/*
+	 * Returns gateNumber
+	 */
+	public int getGateNumber(int mCode) {
+		return MRs[mCode].getGateNumber();
+	}
+	
 	/**
 	 * The Maintenance Supervisor has reported faults with the given description in
 	 * the aircraft with the given mCode. The message is forwarded to the given MR

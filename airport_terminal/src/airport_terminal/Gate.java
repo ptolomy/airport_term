@@ -86,8 +86,9 @@ public class Gate {
 	 * @preconditions Status must be Free
 	 */
 	public void allocate(int mCode) {
-		if (mCode > 0 && status == FREE) {
+		if (status == FREE) {
 			status = RESERVED;
+			this.mCode = mCode;
 		}
 	}
 

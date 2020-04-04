@@ -48,10 +48,10 @@ public class Main {
 		
 		
 		// Set status to allow testing before GOC is working
-		amd.setStatus(0, 4);
-		amd.setStatus(1, 4);
-		amd.setStatus(2, 4);
-		amd.setStatus(3, 4);
+		amd.setStatus(0, 2);
+		amd.setStatus(1, 2);
+		amd.setStatus(2, 2);
+		amd.setStatus(3, 2);
 		
 		//gid.allocate(1, 1);
 		//gid.allocate(1, 1);

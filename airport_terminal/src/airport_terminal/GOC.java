@@ -228,7 +228,7 @@ public class GOC extends JFrame implements ActionListener, Observer {
 			permissionToLandButton.setEnabled(false); // Disables button
 			allocateGateButton.setEnabled(false);
 		} else {
-			if (MRIndex >= 0 && GIndex >= 0) {
+			if (MRIndex >= 0 && GIndex < 0) {
 				MRIndex = outputList_Aircrafts.getSelectedIndex();
 				String statusAircraft = aircraftManagementDatabase.getStatusString(MRIndex);
 				if (statusAircraft.equalsIgnoreCase("WANTING_TO_LAND")) {
@@ -243,11 +243,10 @@ public class GOC extends JFrame implements ActionListener, Observer {
 				} else {
 					permissionToLandButton.setEnabled(false);
 				}
-			
-			
+			} else if (MRIndex >= 0 && GIndex >= 0) {
 				MRIndex = outputList_Aircrafts.getSelectedIndex();
 				GIndex = outputList_Gates.getSelectedIndex();
-				//String statusAircraft = aircraftManagementDatabase.getStatusString(MRIndex);
+				String statusAircraft = aircraftManagementDatabase.getStatusString(MRIndex);
 				String statusGate = gateInfoDatabase.getStatusString(GIndex);
 				if (statusAircraft.equalsIgnoreCase("LANDED") && statusGate.contains("FREE")) {
 					allocateGateButton.setEnabled(true);
@@ -258,36 +257,39 @@ public class GOC extends JFrame implements ActionListener, Observer {
 			}
 		}
 	}
-	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == permissionToLandButton) {
+			MRIndex = outputList_Aircrafts.getSelectedIndex();
 			aircraftManagementDatabase.setStatus(MRIndex, 3); // Change status
 			aircraftListUpdate();
-			aircraftSelected();
 			gateListUpdate();
+			aircraftSelected();
 			gateSelected();
-			
+
 		}
 
 		if (e.getSource() == allocateGateButton) {
-			aircraftManagementDatabase.setStatus(MRIndex, 6); // Change status
+			MRIndex = outputList_Aircrafts.getSelectedIndex();
+			GIndex = outputList_Gates.getSelectedIndex();
 			gateInfoDatabase.allocate(GIndex, MRIndex);
+			aircraftManagementDatabase.taxiTo(MRIndex, GIndex);
+			///aircraftManagementDatabase.setStatus(MRIndex, 6); // Change status
 			aircraftListUpdate();
-			aircraftSelected();
 			gateListUpdate();
-		}	gateSelected();
+			aircraftSelected();
+			gateSelected();
+		}
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-
-		aircraftSelected();
-		gateSelected();
+	
 		aircraftListUpdate();
 		gateListUpdate();
-
+		aircraftSelected();
+		gateSelected();
 	}
 
 	/*
