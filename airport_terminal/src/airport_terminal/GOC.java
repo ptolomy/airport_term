@@ -306,6 +306,8 @@ public class GOC extends JFrame implements ActionListener, Observer {
 		
 		if (e.getSource() == allowTaxiAcrossTarmacButton) {
 			MRIndex = outputList_Aircrafts.getSelectedIndex();
+			int gate = aircraftManagementDatabase.getGateNumber(MRIndex);
+			gateInfoDatabase.departed(gate);
 			aircraftManagementDatabase.setStatus(MRIndex, 17); // Change status
 			aircraftListUpdate();
 			gateListUpdate();

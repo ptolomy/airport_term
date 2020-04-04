@@ -39,19 +39,19 @@ public class Main {
 		passengerList2.addPassenger(new PassengerDetails("Harrison"));
 		
 		// Replicate flight being detected by radarDetect
-		amd.radarDetect(new FlightDescriptor("BAS101", new Itinerary("Gatwick", "Stirling", "Madrid"), passengerList));
-		amd.radarDetect(new FlightDescriptor("ESY202", new Itinerary("Paris", "Stirling", null), passengerList));
+		//amd.radarDetect(new FlightDescriptor("BAS101", new Itinerary("Gatwick", "Stirling", "Madrid"), passengerList));
+		//amd.radarDetect(new FlightDescriptor("ESY202", new Itinerary("Paris", "Stirling", null), passengerList));
 		//The below flight should appear in the radar transceiver 
-		amd.radarDetect(new FlightDescriptor("BA127", new Itinerary("Las Vegas", "Stirling", null), passengerList2));
-		amd.radarDetect(new FlightDescriptor("BAS404", new Itinerary("Gatwick", "Stirling", "Madrid"), passengerList));
+		//amd.radarDetect(new FlightDescriptor("BA127", new Itinerary("Las Vegas", "Stirling", null), passengerList2));
+		//amd.radarDetect(new FlightDescriptor("BAS404", new Itinerary("Gatwick", "Stirling", "Madrid"), passengerList));
 
 		
 		
 		// Set status to allow testing before GOC is working
-		amd.setStatus(0, 2);
-		amd.setStatus(1, 15);
-		amd.setStatus(2, 15);
-		amd.setStatus(3, 15);
+		//amd.setStatus(0, 2);
+		//amd.setStatus(1, 15);
+		//amd.setStatus(2, 15);
+		//amd.setStatus(3, 15);
 		
 		
 		// Add databases to Frames as required..
@@ -67,8 +67,8 @@ public class Main {
 		
 
 		GateConsole g1 = new GateConsole(0,amd,gid);
-		//GateConsole g2 = new GateConsole(2,amd,gid);
-		//GateConsole g3 = new GateConsole(3,amd,gid);
+		GateConsole g2 = new GateConsole(1,amd,gid);
+		//GateConsole g3 = new GateConsole(2,amd,gid);
 
 	}
 }

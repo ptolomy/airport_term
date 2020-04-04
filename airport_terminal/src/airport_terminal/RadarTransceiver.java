@@ -239,7 +239,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 			MRIndex = outputList.getSelectedIndex();
 			String statusAircraft = aircraftManagementDatabase.getStatusString(MRIndex);
 
-			if (statusAircraft.equalsIgnoreCase("DEPARTING_THROUGH_LOCAL_AIRSPACE")) {
+			if (statusAircraft.equalsIgnoreCase("DEPARTING_THROUGH_LOCAL_AIRSPACE") || statusAircraft.equalsIgnoreCase("IN_TRANSIT") ) {
 				leftLocalAirspace.setEnabled(true);
 			} else {
 				leftLocalAirspace.setEnabled(false);
