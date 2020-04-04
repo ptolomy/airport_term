@@ -173,7 +173,8 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		departingFlights.setLayout(new BoxLayout(departingFlights, BoxLayout.Y_AXIS));
 
 		JPanel gateInformation = new JPanel();
-
+		
+		//+1 to the gate number to avoid displaying gate 0
 		gateNumberDepartinglbl = new JLabel("              Gate Number: " + (gateNumber+1) + "                ");
 		gateInformation.add(gateNumberDepartinglbl);
 
