@@ -287,39 +287,46 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
-		String status = aircraftManagementDatabase.getStatusString(MRIndex); // Status of current managementRecord
-
+		//int newMRIndex = outputList_AwaitRepair.getSelectedIndex();
+		//String status = aircraftManagementDatabase.getStatusString(newMRIndex); // Status of current managementRecord
+	
+		
 		if (e.getSource() == maintenanceCompleteButton) { // If maintenance complete button is clicked
+			int newMRIndex = outputList_ReadyForMaint.getSelectedIndex();
+			String status = aircraftManagementDatabase.getStatusString(newMRIndex); // Status of current managementRecord
+		
 			if (status.equalsIgnoreCase("READY_FOR_CLEAN_MAINT")) { // If status of current ManagementRecord matches
 																	// READY_FOR_CLEAN_MAINT
-				aircraftManagementDatabase.setStatus(MRIndex, 11); // Change status
+				aircraftManagementDatabase.setStatus(newMRIndex, 11); // Change status
 				aircraftListUpdate(); // update list
 				aircraftSelected_ReadyForMaint();
 			}
 			if (status.equalsIgnoreCase("CLEAN_AWAIT_MAINT")) // If status of current ManagementRecord matches
 																// CLEAN_AWAIT_MAINT
-				aircraftManagementDatabase.setStatus(MRIndex, 13); // Change status
+				aircraftManagementDatabase.setStatus(newMRIndex, 13); // Change status
 			aircraftListUpdate();
 			aircraftSelected_ReadyForMaint();
 		}
 
 		if (e.getSource() == reportFaultButton) { // If report fault button is clicked
+			int newMRIndex = outputList_ReadyForMaint.getSelectedIndex();
+			String status = aircraftManagementDatabase.getStatusString(newMRIndex); // Status of current managementRecord
+		
 			String faultDescription = faultDescriptionField.getText(); // Gets the text that the user has input in fault
 																		// description
 			if (status.equalsIgnoreCase("CLEAN_AWAIT_MAINT")) { // If status of current ManagementRecord matches
 																// CLEAN_AWAIT_MAINT
-				aircraftManagementDatabase.faultsFound(MRIndex, faultDescription); // Saves the fault description to the
+				aircraftManagementDatabase.faultsFound(newMRIndex, faultDescription); // Saves the fault description to the
 																					// Management Record
-				aircraftManagementDatabase.setStatus(MRIndex, 12); // Change status
+				aircraftManagementDatabase.setStatus(newMRIndex, 12); // Change status
 				faultDescriptionField.setText(""); // Sets editable field to be empty
 				aircraftListUpdate(); // Call to method
 				aircraftSelected_ReadyForMaint(); // Call to method
 			} else if (status.equalsIgnoreCase("READY_FOR_CLEAN_MAINT")) { // If status of current ManagementRecord
 																			// matches READY_FOR_CLEAN_MAINT
-				aircraftManagementDatabase.faultsFound(MRIndex, faultDescription);// Saves the fault description to the
+				aircraftManagementDatabase.faultsFound(newMRIndex, faultDescription);// Saves the fault description to the
 																					// Management Record
-				aircraftManagementDatabase.setStatus(MRIndex, 9); // Change status
+				aircraftManagementDatabase.setStatus(newMRIndex, 9); // Change status
 				faultDescriptionField.setText("");// Sets editable field to be empty
 				aircraftListUpdate(); // Call to method
 				aircraftSelected_ReadyForMaint(); // Call to method
@@ -327,7 +334,9 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 		}
 
 		if (e.getSource() == repairCompleteButton) { // If repair compelete button is clicked
-			aircraftManagementDatabase.setStatus(MRIndex, 8); // Change status
+			int newMRIndex = outputList_AwaitRepair.getSelectedIndex();
+	
+			aircraftManagementDatabase.setStatus(newMRIndex, 8); // Change status
 			aircraftListUpdate(); // Call to method
 			aircraftSelected_ReadyForMaint(); // Call to method
 		}
@@ -336,6 +345,8 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 
 	@Override
 	public void update(Observable o, Object arg) {
+		outputList_AwaitRepair.clearSelection();
+		outputList_ReadyForMaint.clearSelection();
 
 		aircraftSelected_AwaitRepair();
 		aircraftSelected_ReadyForMaint();

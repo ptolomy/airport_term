@@ -234,12 +234,12 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		// If buttons should not be available then all set to false
 		if (!isButtonAvailable) {
 			leftLocalAirspace.setEnabled(false); // Disables button
-
 		} else {
 			MRIndex = outputList.getSelectedIndex();
 			String statusAircraft = aircraftManagementDatabase.getStatusString(MRIndex);
 
-			if (statusAircraft.equalsIgnoreCase("DEPARTING_THROUGH_LOCAL_AIRSPACE") || statusAircraft.equalsIgnoreCase("IN_TRANSIT") ) {
+			if (statusAircraft.equalsIgnoreCase("DEPARTING_THROUGH_LOCAL_AIRSPACE")
+					|| statusAircraft.equalsIgnoreCase("IN_TRANSIT")) {
 				leftLocalAirspace.setEnabled(true);
 			} else {
 				leftLocalAirspace.setEnabled(false);
@@ -256,25 +256,30 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		String next = nextText.getText();
 		String passengerString = namesText.getText();
 
-		String[] passengerArray = passengerString.split(",");
+		if (flightCode.isBlank() || to.isBlank() || from.isBlank() || passengerString.isBlank()) {
+			JOptionPane.showMessageDialog(this, "Please enter the following: Flight Code, To, From, Passenger List");
+		} else {
 
-		for (String s : passengerArray) {
-			PassengerDetails details = new PassengerDetails(s);
-			passengers.addPassenger(details);
+			String[] passengerArray = passengerString.split(",");
+
+			for (String s : passengerArray) {
+				PassengerDetails details = new PassengerDetails(s);
+				passengers.addPassenger(details);
+			}
+
+			Itinerary itin = new Itinerary(from, to, next);
+			FlightDescriptor fd = new FlightDescriptor(flightCode, itin, passengers);
+
+			aircraftManagementDatabase.radarDetect(fd);
+
+			JOptionPane.showMessageDialog(this, "Flight " + flightCode + " Detected");
+
+			flightCodeText.setText("");
+			toText.setText("");
+			fromText.setText("");
+			nextText.setText("");
+			namesText.setText("");
 		}
-
-		Itinerary itin = new Itinerary(from, to, next);
-		FlightDescriptor fd = new FlightDescriptor(flightCode, itin, passengers);
-
-		aircraftManagementDatabase.radarDetect(fd);
-
-		JOptionPane.showMessageDialog(this, "Flight " + flightCode + " Detected");
-
-		flightCodeText.setText("");
-		toText.setText("");
-		fromText.setText("");
-		nextText.setText("");
-		namesText.setText("");
 	}
 
 	private void clearFlightInfo() {

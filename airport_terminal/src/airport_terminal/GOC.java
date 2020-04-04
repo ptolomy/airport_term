@@ -305,10 +305,10 @@ public class GOC extends JFrame implements ActionListener, Observer {
 		}
 		
 		if (e.getSource() == allowTaxiAcrossTarmacButton) {
-			MRIndex = outputList_Aircrafts.getSelectedIndex();
-			int gate = aircraftManagementDatabase.getGateNumber(MRIndex);
+			int newMRIndex = outputList_Aircrafts.getSelectedIndex();
+			int gate = aircraftManagementDatabase.getGateNumber(newMRIndex);
 			gateInfoDatabase.departed(gate);
-			aircraftManagementDatabase.setStatus(MRIndex, 17); // Change status
+			aircraftManagementDatabase.setStatus(newMRIndex, 17); // Change status
 			aircraftListUpdate();
 			gateListUpdate();
 			aircraftSelected();
@@ -319,7 +319,8 @@ public class GOC extends JFrame implements ActionListener, Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-	
+		outputList_Aircrafts.clearSelection();
+		outputList_Gates.clearSelection();
 		aircraftListUpdate();
 		gateListUpdate();
 		aircraftSelected();
