@@ -69,9 +69,8 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 
 	// For the departing pane
 	private JLabel gateNumberDepartinglbl, gateStatusDepartinglbl, flightCodeDepartinglbl, flightStatusDepartinglbl,
-			tolbl, nextlbl, fromlbl, aircraftCapacitylbl, noOfPassengersDepartinglbl, passengerNamelbl;
-	private JTextField flightCodeText, flightStatusText, toText, nextText, fromText, aircraftCapacityText,
-			noOfPassengersText, passengerNameText;
+			tolbl, nextlbl, fromlbl, aircraftCapacitylbl, noOfPassengersDepartinglbl, passengerNamelbl, passengerDescriptionlbl, closeFlightDescriptionlbl;
+	private JTextField toText, nextText, fromText, aircraftCapacityText, passengerNameText;
 	private JButton confirmFlightDetailsButton, addPassengerButton, closeFlightButton;
 
 	private JList<PassengerDetails> passengerList;
@@ -89,7 +88,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 
 		setTitle("Gate " + gNumber);
 		setLocationRelativeTo(null);
-		setSize(400, 450);
+		setSize(400, 550);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		tabbedPane = new JTabbedPane();
@@ -100,8 +99,6 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 
 		tabbedPane.setEnabledAt(0, true);
 		tabbedPane.setEnabledAt(1, false);
-
-		updateGate();
 
 		setVisible(true);
 
@@ -197,14 +194,8 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		flightCodeDepartinglbl = new JLabel("Flight Code:");
 		flightInformation.add(flightCodeDepartinglbl);
 
-		flightCodeText = new JTextField(8);
-		flightInformation.add(flightCodeText);
-
 		flightStatusDepartinglbl = new JLabel("Flight Status:");
 		flightInformation.add(flightStatusDepartinglbl);
-
-		flightStatusText = new JTextField(10);
-		flightInformation.add(flightStatusText);
 
 		tolbl = new JLabel("To:");
 		flightInformation.add(tolbl);
@@ -223,6 +214,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 
 		fromText = new JTextField(5);
 		fromText.setText("Stirling");
+		fromText.setEditable(false);
 		flightInformation.add(fromText);
 
 		aircraftCapacitylbl = new JLabel("Aircraft Capacity:");
@@ -232,6 +224,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		flightInformation.add(aircraftCapacityText);
 
 		noOfPassengersDepartinglbl = new JLabel("Number of Passengers Checked In:");
+		noOfPassengersDepartinglbl.setFont(new Font(noOfPassengersDepartinglbl.getName(), Font.BOLD, 14));
 		flightInformation.add(noOfPassengersDepartinglbl);
 
 		flightInformation.setBorder(BorderFactory.createTitledBorder("Flight Information"));
@@ -244,6 +237,9 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		departingFlights.add(flightInformation);
 
 		JPanel addPassenger = new JPanel();
+		
+		passengerDescriptionlbl = new JLabel("<html> Enter one passenger name at a time, and click 'Add Passenger' <br> to mark them as having boarded the flight. <html>");
+		addPassenger.add(passengerDescriptionlbl);
 
 		passengerNamelbl = new JLabel("Passenger Name");
 		addPassenger.add(passengerNamelbl);
@@ -259,6 +255,19 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		addPassenger.setBorder(BorderFactory.createTitledBorder("Check in a Passenger"));
 
 		departingFlights.add(addPassenger);
+		
+		JPanel closeFlight = new JPanel();
+		 
+		closeFlightDescriptionlbl = new JLabel("<html> Click 'Close Flight' when all of the passengers have boarded <br> the flight. This will update the status to ready <br> to depart.<html>");
+		closeFlight.add(closeFlightDescriptionlbl);
+		
+		closeFlightButton = new JButton("Close Flight");
+		closeFlightButton.addActionListener(this);
+		closeFlight.add(closeFlightButton);
+		  
+		closeFlight.setBorder(BorderFactory.createTitledBorder("Close Flight"));
+		  
+		departingFlights.add(closeFlight);
 
 		tabbedPane.addTab("Departing Flights", departingFlights);
 
@@ -322,18 +331,16 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 
 				passengers = new PassengerList();
 
-				flightCodeText.setText("Flight Code: " + aircraftManagementDatabase.getFlightCode(mCode));
-				flightStatusText.setText("Flight Code: " + aircraftManagementDatabase.getStatusString(mCode));
-
-				// Check here
+				flightCodeDepartinglbl.setText("Flight Code:   " + aircraftManagementDatabase.getFlightCode(mCode));
+				flightStatusDepartinglbl.setText("      Flight Status:     " + aircraftManagementDatabase.getStatusString(mCode));
 
 				tabbedPane.setSelectedIndex(1);
 				tabbedPane.setEnabledAt(0, false);
 				tabbedPane.setEnabledAt(1, true);
-
-				JOptionPane.showMessageDialog(this,
-						"Please enter the flight information for the departing flight and click 'confirm' before adding passengers.");
-
+				
+				if (aircraftManagementDatabase.getStatus(mCode) == ManagementRecord.READY_PASSENGERS) {
+					JOptionPane.showMessageDialog(this,"Please enter the flight information for the departing flight and click 'confirm' before adding passengers.");
+				}
 			}
 		}
 	}
@@ -365,13 +372,11 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		String passengerName = passengerNameText.getText();
 
 		if (numberOfPassengers < aircraftCapacity) {
-			PassengerDetails details = new PassengerDetails(passengerName);
-
+			PassengerDetails details = new PassengerDetails(passengerName);	
+			passengerNameText.setText("");
 			passengers.addPassenger(details);
-
 			numberOfPassengers++;
-
-			noOfPassengersDepartinglbl.setText("Number of Passengers Checked In:" + numberOfPassengers);
+			noOfPassengersDepartinglbl.setText("Number of Passengers Checked In: " + numberOfPassengers);
 
 			Vector<PassengerDetails> detailsToDisplay = passengers.getPassengerList();
 			passengerList.setListData(detailsToDisplay);
@@ -403,18 +408,14 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 			JOptionPane.showMessageDialog(this, "Please enter a suitable circraft capacity.");
 		}
 		aircraftManagementDatabase.setItinerary(mCode, from, to, next);
+		JOptionPane.showMessageDialog(this, "Flight details sucessfully updated.");
+
+		
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// arrivingPane();
-		// dock();
-		// unloading();
-		// addPassenger();
-		// closeFlight();
-		// updateFlightDetails();
 		updateGate();
-		System.out.println("THe update method was called.");
 	}
 
 	@Override
