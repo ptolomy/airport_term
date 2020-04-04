@@ -45,15 +45,7 @@ public class Main {
 		//amd.radarDetect(new FlightDescriptor("BA127", new Itinerary("Las Vegas", "Stirling", null), passengerList2));
 		//amd.radarDetect(new FlightDescriptor("BAS404", new Itinerary("Gatwick", "Stirling", "Madrid"), passengerList));
 
-		
-		
-		// Set status to allow testing before GOC is working
-		//amd.setStatus(0, 2);
-		//amd.setStatus(1, 15);
-		//amd.setStatus(2, 15);
-		//amd.setStatus(3, 15);
-		
-		
+
 		// Add databases to Frames as required..
 		// Instantiate and show all interfaces as Frames
 		MaintenanceInspector m1 = new MaintenanceInspector(amd);
@@ -68,7 +60,7 @@ public class Main {
 
 		GateConsole g1 = new GateConsole(0,amd,gid);
 		GateConsole g2 = new GateConsole(1,amd,gid);
-		//GateConsole g3 = new GateConsole(2,amd,gid);
+		GateConsole g3 = new GateConsole(2,amd,gid);
 
 	}
 }
