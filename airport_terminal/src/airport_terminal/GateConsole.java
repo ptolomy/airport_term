@@ -86,9 +86,9 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 
 		passengers = new PassengerList();
 
-		setTitle("Gate " + gNumber);
+		setTitle("Gate " + gateNumber + 1);//To avoid displaying gate 0
 		setLocation(1000, 0);
-		setSize(450, 780);
+		setSize(400, 760);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		tabbedPane = new JTabbedPane();
@@ -113,7 +113,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 
 		JPanel gateInformation = new JPanel();
 
-		gateNumberArrivinglbl = new JLabel("              Gate Number: " + gateNumber + "                ");
+		gateNumberArrivinglbl = new JLabel("              Gate Number: " + gateNumber+1 + "                ");
 		gateInformation.add(gateNumberArrivinglbl);
 
 		gateNumberArrivinglbl.setFont(new Font(gateNumberArrivinglbl.getName(), Font.BOLD, 20));
@@ -174,7 +174,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 
 		JPanel gateInformation = new JPanel();
 
-		gateNumberDepartinglbl = new JLabel("              Gate Number: " + gateNumber + "                ");
+		gateNumberDepartinglbl = new JLabel("              Gate Number: " + gateNumber+1 + "                ");
 		gateInformation.add(gateNumberDepartinglbl);
 
 		gateNumberDepartinglbl.setFont(new Font(gateNumberDepartinglbl.getName(), Font.BOLD, 20));
