@@ -176,7 +176,7 @@ public class GOC extends JFrame implements ActionListener, Observer {
 	private void gateListUpdate() {
 		for (int i = 0; i < gateInfoDatabase.maxGateNumber; i++) { // For each record in database
 
-			String record = "Gate Number: " + i + "     " + "Gate Status: " + gateInfoDatabase.getStatusString(i);
+			String record = "Gate Number: " + (i + 1) + "     " + "Gate Status: " + gateInfoDatabase.getStatusString(i);
 
 			list_Gates.set(i, record);
 
