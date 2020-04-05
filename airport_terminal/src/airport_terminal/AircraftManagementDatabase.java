@@ -126,6 +126,10 @@ public class AircraftManagementDatabase extends Observable {
 				return;
 			}
 		}
+		setChanged();
+		notifyObservers();
+		
+	}
 		
 		
 //		int nextAvailableMR = 0;
@@ -167,7 +171,7 @@ public class AircraftManagementDatabase extends Observable {
 //		} catch (IndexOutOfBoundsException ex) {
 //			ex.printStackTrace();
 //		}
-	}
+	
 
 	/**
 	 * The aircraft in the MR given by mCode supplied as a parameter has departed

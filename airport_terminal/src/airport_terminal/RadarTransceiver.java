@@ -253,8 +253,8 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 			FlightDescriptor fd = new FlightDescriptor(flightCode, itin, passengers);//Create a new instance of the flight descriptor class and pass the flight code, itinerary and passenger list to the constructor
 
 			aircraftManagementDatabase.radarDetect(fd);//Call the radarDetect() method in the aircraft management database and pass in the flight descriptor
-
-			JOptionPane.showMessageDialog(this, "Flight " + flightCode + " Detected");//Print a message to say the flight has been detected
+			aircraftListUpdate();
+			//JOptionPane.showMessageDialog(this, "Flight " + flightCode + " Detected");//Print a message to say the flight has been detected
 
 			passengers = new PassengerList();//Set the passengers to become a new passenger list - same effect as clearing list
 			
