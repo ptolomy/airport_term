@@ -145,7 +145,7 @@ public class GOC extends JFrame implements ActionListener, Observer {
 			} else {// If record is not empty
 				list_Aircrafts.set(i, null);// Set the same position (i) in list to be empty
 				// If the status of the management record matches any of the following: 1, 2, 3, 4, 5, 16, 18
-				if (managementRecord.getStatus() > 0 && managementRecord.getStatus() < 18) { 
+				if (managementRecord.getStatus() > 1 && managementRecord.getStatus() < 18) { 
 					// Create String record and assign it with the flight code and flight status from the current record
 					String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
 							+ managementRecord.getStatusString();
