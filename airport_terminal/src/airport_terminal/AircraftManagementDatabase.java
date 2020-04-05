@@ -120,9 +120,11 @@ public class AircraftManagementDatabase extends Observable {
 			MRs[nextAvailableMR].radarDetect(fd);
 		} else if (MRs.length >= 1) {
 			for (int i = 0; i < MRs.length; i++) {
-				if (MRs[i] == null) {
+				if (MRs[i] != null) {
+					if (MRs[i].getStatus() == 0) {
 					nextAvailableMR = i;
 					break;
+					}
 				}
 			}
 			MRs[nextAvailableMR] = new ManagementRecord();
@@ -132,16 +134,6 @@ public class AircraftManagementDatabase extends Observable {
 		
 		setChanged();
 		notifyObservers();
-
-//		try {
-//			for (int i = 0; i < MRs.length; i++) {
-//				if (MRs[i].getStatus() == 0) {
-//					MRs[i].radarDetect(fd); // Check
-//				}
-//			}
-//		} catch (IndexOutOfBoundsException ex) {
-//			ex.printStackTrace();
-//		}
 	}
 
 	/**
