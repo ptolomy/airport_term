@@ -40,31 +40,33 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 	private JTextField toText;// Create a text field for the to option
 	private JTextField nextText;// Create a text field for the next option on the itinerary
 	private JTextField namesText;// Create a text field for the names of the passengers to be typed in to
-	private JButton detectFlightButton;
+	private JButton detectFlightButton;//Create a button for detecting flight details
 
-	private JList<String> outputList;
-	private DefaultListModel<String> list;
-	private JButton leftLocalAirspace;
+	private JList<String> outputList;//Create a JList to use as the output list
+	private DefaultListModel<String> list;//Create a default list model of type string - also used for output
+	private JButton leftLocalAirspace;//Create a button for marking a flight as having left airspace 
 
-	private JList<PassengerDetails> passengerList;
-	private PassengerList passengers;
-	// private ArrayList<Integer> mCodes;
+	private JList<PassengerDetails> passengerList;//Create a new Jlist of passenger details
+	private PassengerList passengers; //Create a passenger list called passengers
 
-	private int MRIndex;
-	private boolean isButtonAvailable;
+	private int MRIndex;//Create an integer variable called MRIndex hold hold the index of the current management record
+	private boolean isButtonAvailable;//Create a boolean variable to flag whether the buttons are available or not
 
+	/**
+	 * The constructor for this method
+	 * @param amd The aircraft management database that will be created an passed in from main
+	 */
 	public RadarTransceiver(AircraftManagementDatabase amd) {
-		this.aircraftManagementDatabase = amd;
-		amd.addObserver(this);
+		this.aircraftManagementDatabase = amd;//Set the database in this class to become equal to the one that is passed into the constructor
+		amd.addObserver(this);//Set this class to observe the database
 
-		// mCodes = new ArrayList<Integer>();
-		passengers = new PassengerList();
+		passengers = new PassengerList();//Set passengers to become an empty passenger list (instantiates a new passenger list class)
 
 		// Code to initialise the GUI
-		setTitle("Radar Transceiver");
-		setLocationRelativeTo(null);
-		setSize(450, 550); // change to suit preferred size
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		setTitle("Radar Transceiver");//Set the title of the window
+		setLocationRelativeTo(null);//Choose a location to display at
+		setSize(450, 550); // Specifying a size for the window
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);//Set the window to do nothing when the close button is clicked
 
 		// Container to allow multiple JPanels to be added to the screen
 		JPanel container = new JPanel();
@@ -74,49 +76,49 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		// Create a new JPanel for entering new flight information
 		JPanel detectAflight = new JPanel();
 
-		JLabel flightCodelbl = new JLabel("Flight Code:");
-		detectAflight.add(flightCodelbl);
+		JLabel flightCodelbl = new JLabel("Flight Code:");//Create a new label for the flight code
+		detectAflight.add(flightCodelbl);//Add the flight code label to the detectAflight panel
 
-		flightCodeText = new JTextField(5);
-		detectAflight.add(flightCodeText);
+		flightCodeText = new JTextField(5);//Create a new text field for the flight code
+		detectAflight.add(flightCodeText);//Add the text field to the panel
 
-		JLabel spacer1 = new JLabel(
-				"                                                                                                    ");
-		detectAflight.add(spacer1);
+		//Create a label containing a space to set the GUI out a bit better
+		JLabel spacer1 = new JLabel("                                                                                        ");
+		detectAflight.add(spacer1);//Add the spacer to the panel 
 
-		JLabel fromlbl = new JLabel("From:");
-		detectAflight.add(fromlbl);
+		JLabel fromlbl = new JLabel("From:");//Create a label for the from text field
+		detectAflight.add(fromlbl);//Add the label to the panel
 
-		fromText = new JTextField(8);
-		detectAflight.add(fromText);
+		fromText = new JTextField(8);//Create a text field for the from text
+		detectAflight.add(fromText);//Add the text field to the panel
 
-		JLabel tolbl = new JLabel("To:");
-		detectAflight.add(tolbl);
+		JLabel tolbl = new JLabel("To:");//Add a label for the to text field
+		detectAflight.add(tolbl);//Add the label to the display
 
-		toText = new JTextField(8);
-		detectAflight.add(toText);
+		toText = new JTextField(8);//Create a text field for the to text
+		detectAflight.add(toText);//Add the text field to the display
 
-		JLabel nextlbl = new JLabel("Next:");
-		detectAflight.add(nextlbl);
+		JLabel nextlbl = new JLabel("Next:");//Create a label for the next text field
+		detectAflight.add(nextlbl);//Add the label to the panel
 
-		nextText = new JTextField(8);
-		detectAflight.add(nextText);
+		nextText = new JTextField(8);//Create a text field for the next text field
+		detectAflight.add(nextText);//Add the text field to the panel
 
-		JLabel passengerListlbl = new JLabel("Passenger List:");
-		detectAflight.add(passengerListlbl);
+		JLabel passengerListlbl = new JLabel("Passenger List:");//Create a label for the list of passengers that are to be entered
+		detectAflight.add(passengerListlbl);//Add the label to the panel
 
-		namesText = new JTextField(30);
-		detectAflight.add(namesText);
+		namesText = new JTextField(30);//Create a text field for the passenger list to be entered
+		detectAflight.add(namesText);//Add the text field to the panel
 
-		detectFlightButton = new JButton("Detect this Flight");
-		detectFlightButton.addActionListener(this);
-		detectAflight.add(detectFlightButton);
+		detectFlightButton = new JButton("Detect this Flight");//Create a new button to allow the flight details to be processed
+		detectFlightButton.addActionListener(this);//Add an action listener so the button can carry out operations when it is clicked
+		detectAflight.add(detectFlightButton);//Add the button to the panel
 
-		detectAflight.setPreferredSize(getMinimumSize());
+		detectAflight.setPreferredSize(getMinimumSize());//Set the panel to the minimum size possible
 
-		detectAflight.setBorder(BorderFactory.createTitledBorder("Detect a Flight"));
+		detectAflight.setBorder(BorderFactory.createTitledBorder("Detect a Flight"));//GIve the 'group box' a border
 
-		container.add(detectAflight);
+		container.add(detectAflight);//Add the group box to the display
 
 //********************************************************************************************************************************
 		// JPanel to displayed the already detected flights and allow them to be marked as leaving local airspace
