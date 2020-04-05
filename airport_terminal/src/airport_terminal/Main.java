@@ -8,7 +8,7 @@ package airport_terminal;
  *
  * Instantiates the databases. Instantiates and shows all the system interfaces
  * as Frames.
- * 
+ *  
  * @stereotype control
  */
 public class Main {
