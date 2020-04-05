@@ -406,7 +406,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 			passengerNameText.setText("");//Clear the contents of the passenger name text field - to allow for a new one to be typed in next time
 			passengers.addPassenger(details);//Add the passenger to the passenger list using the addPassenger() method in the passenger list class
 			numberOfPassengers++;//Increment the number of passengers that have been checked in (add 1)
-			noOfPassengersDepartinglbl.setText("Number of Passengers Checked In: " + numberOfPassengers);//Update the display to show how many passengers have checked in
+			noOfPassengersDepartinglbl.setText("Number of Passengers Checked In: " + numberOfPassengers + "/" + aircraftCapacity);//Update the display to show how many passengers have checked in
 
 			Vector<PassengerDetails> detailsToDisplay = passengers.getPassengerList();//Get the passenger list in a vector to allow it to be displayed
 			passengerList.setListData(detailsToDisplay);//Display the last of passengers in the JList
@@ -425,6 +425,8 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		if (aircraftManagementDatabase.getStatus(mCode) == ManagementRecord.READY_PASSENGERS) {
 			aircraftManagementDatabase.setPassengerList(mCode, passengers);//Update the passenger list for the flight
 			aircraftManagementDatabase.setStatus(mCode, ManagementRecord.READY_DEPART);//Set the status for the aircraft to ready to depart
+			addPassengerButton.setEnabled(false);
+			confirmFlightDetailsButton.setEnabled(false);
 		} else {//Otherwise do this
 			//Print a method saying the flight could not be closed
 			JOptionPane.showMessageDialog(this, "Flight " + aircraftManagementDatabase.getFlightCode(mCode) + " could not be closed.");

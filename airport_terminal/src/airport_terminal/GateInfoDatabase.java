@@ -8,7 +8,7 @@ import java.util.Observable;
  * is its index in the array (0..) GateConsoles and GroundOperationsControllers
  * are controllers of this class: sending it messages when the gate status is to
  * be changed. GateConsoles and GroundOperationsControllers also register as
- * observers of this class. Whenever a change occurs to any gate, the obervers
+ * observers of this class. Whenever a change occurs to any gate, the observers
  * are notified.
  * 
  * @stereotype model
@@ -75,8 +75,8 @@ public class GateInfoDatabase extends Observable {
 	 * the GOC.
 	 */
 	public int[] getStatuses() {
-		int[] statuses = null;
-		for (int i = 0; i < maxGateNumber; i++) {
+		int[] statuses = new int[maxGateNumber];
+		for (int i = 0; i < gates.length; i++) {
 			statuses[i] = getStatus(i);
 		}
 		return statuses;

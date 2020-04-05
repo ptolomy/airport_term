@@ -99,7 +99,9 @@ public class Gate {
 	 * @preconditions Status must be Reserved
 	 */
 	public void docked() {
-		status = OCCUPIED;
+		if (status == RESERVED) {
+			status = OCCUPIED;
+		}
 	}
 
 	/**
@@ -108,6 +110,9 @@ public class Gate {
 	 * @preconditions Status must be Occupied
 	 */
 	public void departed() {
+		if (status == OCCUPIED) {
 		status = FREE;
+		mCode = -1;
+		}
 	}
 }

@@ -3,36 +3,129 @@ package airport_terminal;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;;
 
 
 class GateInfoDatabaseTest {
 	GateInfoDatabase gateInfo;
+	
+	@BeforeEach
+	void setup() {
+		gateInfo = new GateInfoDatabase();
+	}
 
 	@Test
 	void testGetStatus() {
-		fail("Not yet implemented"); // TODO
+		gateInfo.allocate(0, 1);
+		
+		gateInfo.allocate(1, 2);
+		gateInfo.docked(1);
+		
+		gateInfo.allocate(2, 3);
+		gateInfo.docked(2);
+		gateInfo.departed(2);
+		
+		int statusOfGate0 = gateInfo.getStatus(0);
+		assertEquals(1, statusOfGate0, "getStatus() for gate 0 FAILED");
+		
+		int statusOfGate1 = gateInfo.getStatus(1);
+		assertEquals(2, statusOfGate1, "getStatus() for gate 1 FAILED");
+		
+		int statusOfGate2 = gateInfo.getStatus(2);
+		assertEquals(0, statusOfGate2, "getStatus() for gate 2 FAILED");
+	}
+	
+	@Test
+	void testGetStatusString() {
+		gateInfo.allocate(0, 1);
+		
+		gateInfo.allocate(1, 2);
+		gateInfo.docked(1);
+		
+		gateInfo.allocate(2, 3);
+		gateInfo.docked(2);
+		gateInfo.departed(2);
+		
+		String statusOfGate0 = gateInfo.getStatusString(0);
+		assertEquals("RESERVED", statusOfGate0, "getStatusString() for gate 0 FAILED");
+		
+		String statusOfGate1 = gateInfo.getStatusString(1);
+		assertEquals("OCCUPIED", statusOfGate1, "getStatusString() for gate 1 FAILED");
+
+		String statusOfGate2 = gateInfo.getStatusString(2);
+		assertEquals("FREE", statusOfGate2, "getStatusString() for gate 2 FAILED");
+
 	}
 
 	@Test
 	void testGetStatuses() {
-		fail("Not yet implemented"); // TODO
+		
+		gateInfo.allocate(0, 1);
+		
+		gateInfo.allocate(1, 2);
+		gateInfo.docked(1);
+		
+		gateInfo.allocate(2, 3);
+		gateInfo.docked(2);
+		gateInfo.departed(2);
+		
+		int[] statuses = gateInfo.getStatuses();
+		
+		for (int i: statuses) {
+			System.out.println(i + " ");
+		}
+		
+		assertEquals(1, statuses[0],"getStatuses() method FAILED at potision 0");
+		assertEquals(2, statuses[1],"getStatuses() method FAILED at potision 1");
+		assertEquals(0, statuses[2],"getStatuses() method FAILED at potision 2");
+		
 		
 	}
 
 	@Test
 	void testAllocate() {
-		fail("Not yet implemented"); // TODO
+		gateInfo.allocate(0, 1);
+		gateInfo.allocate(1, 2);
+		gateInfo.allocate(2, 3);
+		
+		assertEquals(1,gateInfo.getStatus(0), "Allocate gate 0 FAILED");
+		assertEquals(1,gateInfo.getStatus(1), "Allocate gate 1 FAILED");
+		assertEquals(1,gateInfo.getStatus(2), "Allocate gate 2 FAILED");
 	}
 
 	@Test
 	void testDocked() {
-		fail("Not yet implemented"); // TODO
-		//assertTrue("The Aircraft is docked", gateInfo.docked(1));
+		gateInfo.allocate(0, 1);
+		gateInfo.docked(0);
+		
+		gateInfo.allocate(1, 2);
+		gateInfo.docked(1);
+		
+		gateInfo.allocate(2, 3);
+		gateInfo.docked(2);
+				
+		assertEquals(2,gateInfo.getStatus(0), "Dock gate 0 FAILED");
+		assertEquals(2,gateInfo.getStatus(1), "Dock gate 1 FAILED");
+		assertEquals(2,gateInfo.getStatus(2), "Dock gate 2 FAILED");
 	}
 
 	@Test
 	void testDeparted() {
-		fail("Not yet implemented"); // TODO
+		gateInfo.allocate(0, 1);
+		gateInfo.docked(0);
+		gateInfo.departed(0);
+		
+		gateInfo.allocate(1, 2);
+		gateInfo.docked(1);
+		gateInfo.departed(1);
+		
+		gateInfo.allocate(2, 3);
+		gateInfo.docked(2);
+		gateInfo.departed(2);
+		
+		assertEquals(0,gateInfo.getStatus(0), "Depart gate 0 FAILED");
+		assertEquals(0,gateInfo.getStatus(1), "Depart gate 1 FAILED");
+		assertEquals(0,gateInfo.getStatus(2), "Depart gate 2 FAILED");
 	}
 
 }
