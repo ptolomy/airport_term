@@ -32,7 +32,6 @@ import javax.swing.JScrollPane;
 /**
  * Create a Screen which sends updates to the Gate and Aircraft
  * 
- * @author gareth
  *
  */
 public class GOC extends JFrame implements ActionListener, Observer {

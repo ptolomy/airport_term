@@ -21,8 +21,7 @@ public class Main {
 		// Instantiate databases
 		AircraftManagementDatabase amd = new AircraftManagementDatabase();
 		GateInfoDatabase gid = new GateInfoDatabase();
-
-
+		
 		// Add databases to Frames as required..
 		// Instantiate and show all interfaces as Frames
 		MaintenanceInspector m1 = new MaintenanceInspector(amd);
@@ -32,7 +31,6 @@ public class Main {
 		PublicInfo pi = new PublicInfo(amd);
 		LATC la = new LATC(amd);
 		GOC go = new GOC(amd, gid);
-
 
 		GateConsole g1 = new GateConsole(0,amd,gid);
 		GateConsole g2 = new GateConsole(1,amd,gid);
