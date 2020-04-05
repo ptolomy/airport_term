@@ -145,18 +145,20 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		JScrollPane scroll2 = new JScrollPane(passengerList);// Add a scroll pane to the passenger list
 		scroll2.setPreferredSize(new Dimension(430, 100));// Set the size for the new list with scroll pane
 		detectedFlights.add(scroll2);// Add the scroll pane to the JPanel
-
+		scroll2.setEnabled(false);
 		detectedFlights.setSize(getMinimumSize());// Set the size of the detected flights pane to be the minimum size it can be
 
 		detectedFlights.setBorder(BorderFactory.createTitledBorder("Detected Flights: In Transit or Departing Local Airspace"));// Add a titled border/ group box to the JPanel
 
-		aircraftListUpdate();// Call the update aircraftList
+		
 		container.add(detectedFlights);// Adds the JPanel to the container
+		getContentPane().add(container);// Add the entire container to the display. This will add the two JPanels above to the window
+
+		aircraftListUpdate();// Call the update aircraftList
 		aircraftSelected();// Call the aircraft selected method
 
 		setVisible(true);// Allow the elements to be displayed
 
-		getContentPane().add(container);// Add the entire container to the display. This will add the two JPanels above to the window
 	}
 
 	/**
@@ -274,7 +276,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 			MRIndex = outputList.getSelectedIndex();//Set the MRIndex to become equal to the selected index in the JList
 
 			aircraftManagementDatabase.radarLostContact(MRIndex);//Call the radarLostContact() method in the aircraft database, passing in the index of the management record 
-			list.remove(outputList.getSelectedIndex());//remove the selected index from the JList
+			list.set(MRIndex, null);//remove the selected index from the JList
 			clearPassengerDisplay();//Clear the list of passengers because the flight has been removed
 		}
 	}
