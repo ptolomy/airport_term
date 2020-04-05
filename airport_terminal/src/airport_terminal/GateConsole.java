@@ -202,7 +202,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		flightStatusDepartinglbl = new JLabel("Flight Status:");
 		flightInformation.add(flightStatusDepartinglbl);
 
-		tolbl = new JLabel("To:");
+		tolbl = new JLabel(" To:");
 		flightInformation.add(tolbl);
 
 		toText = new JTextField(5);
@@ -244,7 +244,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		JPanel addPassenger = new JPanel(); //Create a new panel called addPassenger
 		
 		//Create a label to hold some instructions for the user - contains HTML tags to allow for line breaks
-		passengerDescriptionlbl = new JLabel("<html> Enter one passenger name at a time, and click 'Add Passenger' <br> to mark them as having boarded the flight. <html>");
+		passengerDescriptionlbl = new JLabel("<html> Enter one passenger name at a time, and click <br> 'Add Passenger' to mark them as having <br> boarded the flight. <html>");
 		addPassenger.add(passengerDescriptionlbl);
 
 		passengerNamelbl = new JLabel("Passenger Name");//Create a label to highlight the passenger name text box
@@ -265,7 +265,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		JPanel closeFlight = new JPanel();//Create a new panel called closeFlight
 		
 		//Create a new label to contain some of the instructions for the user. This label contains HTML tags to allow for line breaks.		 
-		closeFlightDescriptionlbl = new JLabel("<html> Click 'Close Flight' when all of the passengers have boarded <br> the flight. This will update the status to ready <br> to depart.<html>");
+		closeFlightDescriptionlbl = new JLabel("<html> Click 'Close Flight' when all of the passengers have <br> boarded the flight. This will update the status to <br> ready to depart.<html>");
 		closeFlight.add(closeFlightDescriptionlbl);//Ad the label to the closeFlight panel
 		
 		closeFlightButton = new JButton("Close Flight");//Create a new button to allow the flight to be closed 

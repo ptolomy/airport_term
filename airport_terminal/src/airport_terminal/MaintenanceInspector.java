@@ -5,7 +5,9 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ContainerListener;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -132,12 +134,12 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 
 		JPanel faultFound_Panel = new JPanel(); // Creates a new panel to display information
 
-		faultDescriptionHeader = new JLabel("Enter description of fault found:"); // Creates header label
+		faultDescriptionHeader = new JLabel("Enter description of fault found and then select flight:"); // Creates header label
 		faultFound_Panel.add(faultDescriptionHeader); // Adds label to panel
 
 		faultDescriptionField = new JTextArea(10, 35); // Creates a text area that the user can type in
 		faultDescriptionField.setLineWrap(true); // Sets line wrap so text doesn't go off screen
-
+		
 		faultFound_Panel.add(faultDescriptionField); // Adds text area to panel 
 
 		faultFlightHeader = new JLabel("Fault found with aircraft: "); // Creates a label
@@ -163,7 +165,8 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 
 		setVisible(true);
 	}
-
+	
+	
 	/*
 	 * Method to update the list of aircrafts
 	 */
@@ -180,8 +183,7 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 			} else {
 				list_ReadyForMaint.set(i, null); // Set list 'ready for maintenance' position i to empty
 				list_AwaitRepair.set(i, null); // Set list 'awaiting repair' position i to empty
-				if (managementRecord.getStatus() == 8 || managementRecord.getStatus() == 3
-						|| managementRecord.getStatus() == 10) { // If status equals one of the five here
+				if (managementRecord.getStatus() == 8 || managementRecord.getStatus() == 10) { // If status equals one of the five here
 
 					String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
 							+ managementRecord.getStatusString(); // Sets 'record' to be the flight code and status of the current ManagementRecord
@@ -212,14 +214,14 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 				if (isButtonAvailable) { // If buttons are available, set them to not be
 					isButtonAvailable = false; // Buttons are set to NOT be available
 				}
-				buttonUpdates(); // Calls method
+				buttonAvailability(); // Calls method
 			} else {
 				MRIndex = outputList_ReadyForMaint.getSelectedIndex();
 				faultFlightNumber.setText(aircraftManagementDatabase.getFlightCode(MRIndex));
 				if (!isButtonAvailable) {
 					isButtonAvailable = true; // Buttons are made available
 				} 
-				buttonUpdates(); // Calls method
+				buttonAvailability(); // Calls method
 			}
 
 		}
@@ -237,13 +239,13 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 				if (isButtonAvailable) { // If buttons are available, set them to not be
 					isButtonAvailable = false; // Buttons are set to NOT be available
 				}
-				buttonUpdates(); // Calls method
+				buttonAvailability(); // Calls method
 			} else {
 				MRIndex = outputList_AwaitRepair.getSelectedIndex(); // 
 				if (!isButtonAvailable) {
 					isButtonAvailable = true; // Buttons are made available
 				}
-				buttonUpdates(); // Calls method
+				buttonAvailability(); // Calls method
 			}
 
 		}
@@ -252,7 +254,7 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 	/*
 	 * Method to update the buttons availability
 	 */
-	private void buttonUpdates() {
+	private void buttonAvailability() {
 		// If buttons should not be available then all set to false
 		if (!isButtonAvailable) {
 			maintenanceCompleteButton.setEnabled(false); // Disables button
@@ -287,9 +289,6 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//int newMRIndex = outputList_AwaitRepair.getSelectedIndex();
-		//String status = aircraftManagementDatabase.getStatusString(newMRIndex); // Status of current managementRecord
-	
 		
 		if (e.getSource() == maintenanceCompleteButton) { // If maintenance complete button is clicked
 			int newMRIndex = outputList_ReadyForMaint.getSelectedIndex();
@@ -333,7 +332,7 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 			}
 		}
 
-		if (e.getSource() == repairCompleteButton) { // If repair compelete button is clicked
+		if (e.getSource() == repairCompleteButton) { // If repair complete button is clicked
 			int newMRIndex = outputList_AwaitRepair.getSelectedIndex();
 	
 			aircraftManagementDatabase.setStatus(newMRIndex, 8); // Change status
@@ -345,8 +344,8 @@ public class MaintenanceInspector extends JFrame implements Observer, ActionList
 
 	@Override
 	public void update(Observable o, Object arg) {
-		outputList_AwaitRepair.clearSelection();
-		outputList_ReadyForMaint.clearSelection();
+		outputList_AwaitRepair.clearSelection(); // Clear selection 
+		outputList_ReadyForMaint.clearSelection(); // Clear selection 
 
 		aircraftSelected_AwaitRepair();
 		aircraftSelected_ReadyForMaint();

@@ -19,31 +19,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		// Instantiate databases
-		//ManagementRecord mrd = new ManagementRecord();
 		AircraftManagementDatabase amd = new AircraftManagementDatabase();
-		
 		GateInfoDatabase gid = new GateInfoDatabase();
-
-		// New passenger list
-		PassengerList passengerList = new PassengerList();
-
-		// Add passengers to list
-		passengerList.addPassenger(new PassengerDetails("Will O'Neill"));
-		passengerList.addPassenger(new PassengerDetails("Mikey Dempster"));
-		
-		// New passenger list
-		PassengerList passengerList2 = new PassengerList();
-
-		// Add passengers to list
-		passengerList2.addPassenger(new PassengerDetails("Dylan"));
-		passengerList2.addPassenger(new PassengerDetails("Harrison"));
-		
-		// Replicate flight being detected by radarDetect
-		//amd.radarDetect(new FlightDescriptor("BAS101", new Itinerary("Gatwick", "Stirling", "Madrid"), passengerList));
-		//amd.radarDetect(new FlightDescriptor("ESY202", new Itinerary("Paris", "Stirling", null), passengerList));
-		//The below flight should appear in the radar transceiver 
-		//amd.radarDetect(new FlightDescriptor("BA127", new Itinerary("Las Vegas", "Stirling", null), passengerList2));
-		//amd.radarDetect(new FlightDescriptor("BAS404", new Itinerary("Gatwick", "Stirling", "Madrid"), passengerList));
 
 
 		// Add databases to Frames as required..
@@ -56,7 +33,6 @@ public class Main {
 		LATC la = new LATC(amd);
 		GOC go = new GOC(amd, gid);
 
-		
 
 		GateConsole g1 = new GateConsole(0,amd,gid);
 		GateConsole g2 = new GateConsole(1,amd,gid);

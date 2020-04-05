@@ -66,30 +66,28 @@ public class RefuellingSupervisor extends JFrame implements ActionListener, Obse
 		setLocation(500, 750);// Set location
 		setSize(500, 225); // Set the size of the window
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); // Set nothing to happen when the closed option is selected
-		Container window = getContentPane();
+		Container window = getContentPane(); // New container to hold information
 		window.setLayout(new FlowLayout());
 
 		refuelledButton = new JButton("Refuelling Complete");// Create a new button with the text "Refuelling Complete"
-		window.add(refuelledButton);
-		refuelledButton.addActionListener(this);
-
-		
-		
+		window.add(refuelledButton); // Add button to window
+		refuelledButton.addActionListener(this);// Add action listener to button to start chain of events if clicked
+		 
 		panel = new JPanel(); // Create a new JPanel for the refuelling information to appear on
 		list = new DefaultListModel<String>();
 		outputList = new JList<>(list);
-		outputList.addListSelectionListener(e -> aircraftSelected());
+		outputList.addListSelectionListener(e -> aircraftSelected());// Adds action listener to list, i.e detects when something is selected
 
 		JScrollPane scroll = new JScrollPane(outputList); // Create a scroll list for the JList
 		scroll.setPreferredSize(new Dimension(450, 150));
 		panel.add(scroll);// Add the scroll list to the JPanel
 		list.setSize(aircraftManagementDatabase.maxMRs);
 
-		aircraftListUpdate();
-		window.add(panel);
-		aircraftSelected();
+		aircraftListUpdate(); // Update list of aircrafts
+		aircraftSelected(); // Method call
 
-		setVisible(true);
+		window.add(panel); // Add panel to window container
+		setVisible(true);// Set the window to be visible
 
 	}
 
@@ -98,15 +96,15 @@ public class RefuellingSupervisor extends JFrame implements ActionListener, Obse
 	 */
 	private void aircraftListUpdate() {
 		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) { // For each record in database
-			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i);
+			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i); // Create local instance of that MR
 
-			if (managementRecord == null) {
-				list.set(i, null);
+			if (managementRecord == null) {// If record is empty
+				list.set(i, null);// Set the same position (i) in list to be empty
 			}
-			else {
-				list.set(i, null);
-				if (managementRecord.getStatus() == 13) {
-
+			else { // If record is NOT empty
+				list.set(i, null);// Set the same position (i) in list to be empty
+				if (managementRecord.getStatus() == 13) { // Is status 13 "READY_REFUEL
+					// Create String record and assign it with the flight code and flight status from the current record
 					String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
 							+ managementRecord.getStatusString();
 					
@@ -120,19 +118,19 @@ public class RefuellingSupervisor extends JFrame implements ActionListener, Obse
 	 * Method to change view depending if an aircraft has been selected
 	 */
 	private void aircraftSelected() {
-		if (!outputList.getValueIsAdjusting()) {
+		if (!outputList.getValueIsAdjusting()) {// Checks whether a specific event (a change) is part of a chain
 			if (outputList.getSelectedValue() == null) { // If no aircraft is selected from list
-				MRIndex = -1;
+				MRIndex = -1;// MRIndex (ManagementRecordIndex) becomes -1 i.e not one of the records
 				if (isButtonAvailable) { // If buttons are available, set them to not be
 					isButtonAvailable = false;
 				}
-				buttonUpdates();
+				buttonAvailability(); // Method call
 			} else {
-				MRIndex = outputList.getSelectedIndex();
-				if (!isButtonAvailable) {
-					isButtonAvailable = true;
+				MRIndex = outputList.getSelectedIndex(); // MRIndex becomes the same index of the selected aircraft in the list
+				if (!isButtonAvailable) {// If buttons not available
+					isButtonAvailable = true;// Set buttons to be available
 				}
-				buttonUpdates();
+				buttonAvailability(); // Method call
 			}
 		}
 	}
@@ -140,12 +138,12 @@ public class RefuellingSupervisor extends JFrame implements ActionListener, Obse
 	/*
 	 * Method to update the buttons availability
 	 */
-	private void buttonUpdates() {
-		// If buttons should not be available then all set to false
+	private void buttonAvailability() {
+		// If buttons should not be available then set to false
 		if (!isButtonAvailable) {
 			refuelledButton.setEnabled(false);
 			
-		} else {
+		} else { //Otherwise set to true (available) 
 			refuelledButton.setEnabled(true);
 		}
 	}
@@ -161,7 +159,7 @@ public class RefuellingSupervisor extends JFrame implements ActionListener, Obse
 		// If refuelled button is clicked
 		if (e.getSource() == refuelledButton) {
 			aircraftManagementDatabase.setStatus(MRIndex, 14); // Change status
-			aircraftListUpdate();
+			aircraftListUpdate(); // Update list
 			aircraftSelected();
 		}
 

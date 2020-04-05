@@ -68,6 +68,8 @@ public class GOC extends JFrame implements ActionListener, Observer {
 	private JButton allowTaxiAcrossTarmacButton;
 	private JButton allocateGateButton;
 
+	private JLabel allocateFlightDesc;
+	
 	private JPanel panel_Aircrafts;
 	private JList<String> outputList_Aircrafts;
 	private DefaultListModel<String> list_Aircrafts;
@@ -87,7 +89,7 @@ public class GOC extends JFrame implements ActionListener, Observer {
 		setTitle("GOC"); // Sets title
 		setLocation(500, 0); // Sets location of window
 		setSize(600, 430); // Sets size of window
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);// Ensures the user cannot close the program with the close button top corner
 
 		Container window = getContentPane(); // Creates window
 		window.setLayout(new FlowLayout()); // Sets layout
@@ -97,47 +99,50 @@ public class GOC extends JFrame implements ActionListener, Observer {
 		outputList_Aircrafts = new JList<>(list_Aircrafts); // Adds list to output
 		outputList_Aircrafts.addListSelectionListener(e -> aircraftSelected()); // Adds action listener to list, i.e detects when something is selected
 
-		JScrollPane scroll_Aircrafts = new JScrollPane(outputList_Aircrafts); 
-		scroll_Aircrafts.setPreferredSize(new Dimension(500, 150));
-		panel_Aircrafts.add(scroll_Aircrafts);
-		list_Aircrafts.setSize(aircraftManagementDatabase.maxMRs);
+		JScrollPane scroll_Aircrafts = new JScrollPane(outputList_Aircrafts); // Create new scroll pane to display the list of aircrafts
+		scroll_Aircrafts.setPreferredSize(new Dimension(500, 150)); // Set size of scroll pane
+		panel_Aircrafts.add(scroll_Aircrafts); // Add scroll pane to aircraft panel
+		list_Aircrafts.setSize(aircraftManagementDatabase.maxMRs); // Set size of list to be max number of records allowed
 
 		panel_Gates = new JPanel();// Creates new panel to display information
 		list_Gates = new DefaultListModel<String>();// Creates new list
 		outputList_Gates = new JList<>(list_Gates);// Adds list to output
 		outputList_Gates.addListSelectionListener(e -> gateSelected());// Adds action listener to list, i.e detects when something is selected
 
-		JScrollPane scroll_Gates = new JScrollPane(outputList_Gates);
-		scroll_Gates.setPreferredSize(new Dimension(500, 150));
-		panel_Gates.add(scroll_Gates);
-		list_Gates.setSize(gateInfoDatabase.maxGateNumber);
+		JScrollPane scroll_Gates = new JScrollPane(outputList_Gates);// Create new scroll pane to display the list of gates
+		scroll_Gates.setPreferredSize(new Dimension(500, 150));// Set size of scroll pane
+		panel_Gates.add(scroll_Gates);// Add scroll pane to gates panel
+		list_Gates.setSize(gateInfoDatabase.maxGateNumber);// Set size of list to be max number of records allowed
 
-		aircraftListUpdate();
-		gateListUpdate();
+		aircraftListUpdate(); // Method call to update list of aircrafts
+		gateListUpdate(); // Method call to update list of gates
 
-		window.add(panel_Aircrafts);
+		window.add(panel_Aircrafts); // Adds aircraft panel to window container
 
-		permissionToLandButton = new JButton("Grant Ground Clearance");
-		permissionToLandButton.setEnabled(false);
-		window.add(permissionToLandButton);
-		permissionToLandButton.addActionListener(this);
+		permissionToLandButton = new JButton("Grant Ground Clearance"); // Assign button title
+		permissionToLandButton.setEnabled(false); // Button not available to click yet
+		window.add(permissionToLandButton);// Add button to window container
+		permissionToLandButton.addActionListener(this);// Add action listener to button to start chain of events if clicked
 		
-		allowTaxiAcrossTarmacButton = new JButton("Grant Taxiing Permission");
-		allowTaxiAcrossTarmacButton.setEnabled(false);
-		window.add(allowTaxiAcrossTarmacButton);
-		allowTaxiAcrossTarmacButton.addActionListener(this);
+		allowTaxiAcrossTarmacButton = new JButton("Grant Taxiing Permission"); // Assign button title
+		allowTaxiAcrossTarmacButton.setEnabled(false);// Button not available to click yet
+		window.add(allowTaxiAcrossTarmacButton);// Add button to window container
+		allowTaxiAcrossTarmacButton.addActionListener(this);// Add action listener to button to start chain of events if clicked
 
-		window.add(panel_Gates);
+		window.add(panel_Gates); // Add gates panel to window container 
 
-		allocateGateButton = new JButton("Allocate Gate");
-		allocateGateButton.setEnabled(false);
-		window.add(allocateGateButton);
-		allocateGateButton.addActionListener(this);
+		allocateFlightDesc = new JLabel("Select an aircraft and a free gate to allocate");
+		window.add(allocateFlightDesc);
+		
+		allocateGateButton = new JButton("Allocate Gate");// Assign button title
+		allocateGateButton.setEnabled(false);// Button not available to click yet
+		window.add(allocateGateButton);// Add button to window container
+		allocateGateButton.addActionListener(this);// Add action listener to button to start chain of events if clicked
 
-		aircraftSelected();
-		gateSelected();
+		aircraftSelected(); // Method call
+		gateSelected(); // Method call
 
-		setVisible(true);
+		setVisible(true);// Set the window to be visible
 
 	}
 
@@ -146,185 +151,181 @@ public class GOC extends JFrame implements ActionListener, Observer {
 	 */
 	private void aircraftListUpdate() {
 		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) { // For each record in database
-			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i); // Create local
-																									// instance of that
-																									// MR
+			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i); // Create local instance of that MR
 
-			if (managementRecord == null) {
-				list_Aircrafts.set(i, null);
-			} else {
-				list_Aircrafts.set(i, null);
+			if (managementRecord == null) {// If record is empty
+				list_Aircrafts.set(i, null); // Set the same position (i) in list to be empty
+			} else {// If record is not empty
+				list_Aircrafts.set(i, null);// Set the same position (i) in list to be empty
+				// If the status of the management record matches any of the following: 1, 2, 3, 4, 5, 16, 18
 				if (managementRecord.getStatus() == 1 || managementRecord.getStatus() == 2
 						|| managementRecord.getStatus() == 3 || managementRecord.getStatus() == 4
 						|| managementRecord.getStatus() == 5 || managementRecord.getStatus() == 16
-						|| managementRecord.getStatus() == 18) { // If status
-																	// equals one of
-																	// the statuses here
-
+						|| managementRecord.getStatus() == 18) { 
+					// Create String record and assign it with the flight code and flight status from the current record
 					String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
 							+ managementRecord.getStatusString();
 
-					list_Aircrafts.set(i, record);
+					list_Aircrafts.set(i, record); // Add the string record (created above) to the list of aircrafts to appear on screen
 				}
 			}
 		}
-	}
+	} // End aircraftListUpdate()
 
 	/*
-	 * Method to update the list of aircrafts
+	 * Method to update the list of gates
 	 */
 	private void gateListUpdate() {
 		for (int i = 0; i < gateInfoDatabase.maxGateNumber; i++) { // For each record in database
-
+			// Create String record and assign it with the gate number and gate status from the current record
 			String record = "Gate Number: " + (i + 1) + "     " + "Gate Status: " + gateInfoDatabase.getStatusString(i);
 
-			list_Gates.set(i, record);
+			list_Gates.set(i, record);// Add the string record (created above) to the list of gates to appear on screen
 
 		}
-	}
+	} // End gateListUpdate
 
 	/*
 	 * Method to change view depending if an aircraft has been selected
 	 */
 	private void aircraftSelected() {
-		if (!outputList_Aircrafts.getValueIsAdjusting()) {
+		if (!outputList_Aircrafts.getValueIsAdjusting()) { // Checks whether a specific event (a change) is part of a chain
 			if (outputList_Aircrafts.getSelectedValue() == null) { // If no aircraft is selected from list
-				MRIndex = -1;
-				if (isButtonAvailable) { // If buttons are available, set them to not be
+				MRIndex = -1; // MRIndex (ManagementRecordIndex) becomes -1 i.e not one of the records
+				if (isButtonAvailable) { // If buttons are available, set them to NOT be
 					isButtonAvailable = false;
 				}
-				buttonUpdates();
-			} else {
-				if (!outputList_Aircrafts.getSelectedValue().contains("LANDED")) {
-					outputList_Gates.clearSelection();
-					MRIndex = outputList_Aircrafts.getSelectedIndex();
-					if (!isButtonAvailable) {
-						isButtonAvailable = true;
+				buttonAvailability(); // Method call
+			} else { // If an aircraft has been selected
+				if (!outputList_Aircrafts.getSelectedValue().contains("LANDED")) { //If the selected aircraft does NOT contain "LANDED"
+					outputList_Gates.clearSelection(); // Clear selection in gate list
+					MRIndex = outputList_Aircrafts.getSelectedIndex(); // MRIndex becomes the same index of the selected aircraft in the list
+					if (!isButtonAvailable) { // If buttons not available
+						isButtonAvailable = true; // Set buttons to be available
 					}
-					buttonUpdates();
-				} else {
-				MRIndex = outputList_Aircrafts.getSelectedIndex();
-				if (!isButtonAvailable) {
-					isButtonAvailable = true;
+					buttonAvailability(); // Method call
+				} else { // If the selected aircraft does contain "LANDED"
+				MRIndex = outputList_Aircrafts.getSelectedIndex(); // MRIndex becomes the same index of the selected aircraft in the list
+				if (!isButtonAvailable) {// If buttons not available
+					isButtonAvailable = true; // Set buttons to be available
 				}
-				buttonUpdates();
+				buttonAvailability();// Method call
 				}
 			}
 		}
-	}
+	} // End aircraftSelected
 
 	/*
 	 * Method to change view depending if a gate has been selected
 	 */
 	private void gateSelected() {
-		if (!outputList_Gates.getValueIsAdjusting()) {
+		if (!outputList_Gates.getValueIsAdjusting()) {// Checks whether a specific event (a change) is part of a chain
 			if (outputList_Gates.getSelectedValue() == null) { // If no gate is selected from list
-				GIndex = -1;
-				if (isButtonAvailable) { // If buttons are available, set them to not be
+				GIndex = -1;// GIndex (GateIndex) becomes -1 i.e not one of the records
+				if (isButtonAvailable) { // If buttons are available, set them to NOT be 
 					isButtonAvailable = false;
 				}
-				buttonUpdates();
-			} else {
-				GIndex = outputList_Gates.getSelectedIndex();
-				if (!isButtonAvailable) {
-					isButtonAvailable = true;
+				buttonAvailability(); // Method call
+			} else { // If a gate has been selected from list 
+				GIndex = outputList_Gates.getSelectedIndex(); // GIndex becomes the same index of the selected gate in the list
+				if (!isButtonAvailable) { // If buttons not available
+					isButtonAvailable = true; // Set buttons to be available
 				}
-				buttonUpdates();
+				buttonAvailability(); // Method call
 			}
 		}
-	}
+	} // End gateSelected()
 
 	/*
 	 * Method to update the buttons availability
 	 */
-	private void buttonUpdates() {
-		// If buttons should not be available then all set to false
-		if (!isButtonAvailable) {
-			permissionToLandButton.setEnabled(false); // Disables button
-			allocateGateButton.setEnabled(false);
-			allowTaxiAcrossTarmacButton.setEnabled(false);
+	private void buttonAvailability() {
+		if (!isButtonAvailable) {// If isButtonAvailable is false
+			permissionToLandButton.setEnabled(false); // Set button availability to false
+			allocateGateButton.setEnabled(false); // Set button availability to false
+			allowTaxiAcrossTarmacButton.setEnabled(false); // Set button availability to false
 		} else {
-			if (MRIndex >= 0 && GIndex < 0) { //Only selecting an aircraft
-				MRIndex = outputList_Aircrafts.getSelectedIndex();
-				String statusAircraft = aircraftManagementDatabase.getStatusString(MRIndex);
-				if (statusAircraft.equalsIgnoreCase("WANTING_TO_LAND")) {
-					for (int i = 0; i < gateInfoDatabase.maxGateNumber; i++) {
-						if (gateInfoDatabase.getStatus(i) == 0) {
-							permissionToLandButton.setEnabled(true);
-						} else {
-							permissionToLandButton.setEnabled(false);
+			if (MRIndex >= 0 && GIndex < 0) { //If only selecting an aircraft
+				MRIndex = outputList_Aircrafts.getSelectedIndex(); // MRIndex becomes the same index of the selected aircraft in the list
+				String statusAircraft = aircraftManagementDatabase.getStatusString(MRIndex); // New string 'statusAircraft' becomes the status of the aircraft currently selected
+				if (statusAircraft.equalsIgnoreCase("WANTING_TO_LAND")) { // If statusAircraft matches WANTING_TO_LAND
+					for (int i = 0; i < gateInfoDatabase.maxGateNumber; i++) { // For every gate
+						if (gateInfoDatabase.getStatus(i) == 0) { // If gate status is "FREE"
+							permissionToLandButton.setEnabled(true); // Set button to be available
+						} else { // If gate status is NOT "FREE"
+							permissionToLandButton.setEnabled(false); // Set button to be unavailable
 						}
 					}
 
-				} else {
-					permissionToLandButton.setEnabled(false);
+				} else {// If statusAircraft does NOT match WANTING_TO_LAND
+					permissionToLandButton.setEnabled(false); // Set button to be unavailable
 				}
-				if (statusAircraft.equalsIgnoreCase("AWAITING_TAXI")) {
-					allowTaxiAcrossTarmacButton.setEnabled(true);
-				} else {
-					allowTaxiAcrossTarmacButton.setEnabled(false);
+				if (statusAircraft.equalsIgnoreCase("AWAITING_TAXI")) { // If aircraft status matches AWAITING_TAXI
+					allowTaxiAcrossTarmacButton.setEnabled(true); // Set button to be available
+				} else { // If aircraft status does NOT match AWAITING_TAXI
+					allowTaxiAcrossTarmacButton.setEnabled(false); // Set button to be unavailable
 				}
 				
-			} else if (MRIndex >= 0 && GIndex >= 0) { // Selecting both an aircraft and gate
-				MRIndex = outputList_Aircrafts.getSelectedIndex();
-				GIndex = outputList_Gates.getSelectedIndex();
-				String statusAircraft = aircraftManagementDatabase.getStatusString(MRIndex);
-				String statusGate = gateInfoDatabase.getStatusString(GIndex);
-				if (statusAircraft.equalsIgnoreCase("LANDED") && statusGate.contains("FREE")) {
-					allocateGateButton.setEnabled(true);
-				} else {
-					allocateGateButton.setEnabled(false);
+			} else if (MRIndex >= 0 && GIndex >= 0) { // If selecting both an aircraft and gate
+				MRIndex = outputList_Aircrafts.getSelectedIndex();// MRIndex becomes the same index of the selected aircraft in the list
+				GIndex = outputList_Gates.getSelectedIndex();// GIndex becomes the same index of the selected gate in the list
+				String statusAircraft = aircraftManagementDatabase.getStatusString(MRIndex); // New string 'statusAircraft' becomes the status of the aircraft currently selected
+				String statusGate = gateInfoDatabase.getStatusString(GIndex);// New string 'statusGate' becomes the status of the gate currently selected
+				if (statusAircraft.equalsIgnoreCase("LANDED") && statusGate.contains("FREE")) { // If aircraft status is "LANDED" AND gate status is "FREE"
+					allocateGateButton.setEnabled(true); // Set button to be available
+				} else { 
+					allocateGateButton.setEnabled(false); // Set button to be unavailable
 				}
 
 			}
 		}
-	}
+	} // End buttonAvailability()
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == permissionToLandButton) {
-			MRIndex = outputList_Aircrafts.getSelectedIndex();
-			aircraftManagementDatabase.setStatus(MRIndex, 3); // Change status
-			aircraftListUpdate();
-			gateListUpdate();
-			aircraftSelected();
-			gateSelected();
+		if (e.getSource() == permissionToLandButton) { // If permission to land button is clicked
+			MRIndex = outputList_Aircrafts.getSelectedIndex();// MRIndex becomes the same index of the selected aircraft in the list
+			aircraftManagementDatabase.setStatus(MRIndex, 3); // Change status of aircraft
+			aircraftListUpdate(); // Method call
+			gateListUpdate(); // Method call
+			aircraftSelected(); // Method call
+			gateSelected(); // Method call
 
 		}
 
-		if (e.getSource() == allocateGateButton) {
-			int newMRIndex = outputList_Aircrafts.getSelectedIndex();
-			int newGIndex = outputList_Gates.getSelectedIndex();
-			gateInfoDatabase.allocate(newGIndex, newMRIndex);
-			aircraftManagementDatabase.taxiTo(newMRIndex, newGIndex);
-			aircraftManagementDatabase.setStatus(newMRIndex, 6); // Change status
-			aircraftListUpdate();
-			gateListUpdate();
-			aircraftSelected();
-			gateSelected();
+		if (e.getSource() == allocateGateButton) { // If allocate gate button is clicked
+			int newMRIndex = outputList_Aircrafts.getSelectedIndex(); // newMRIndex becomes the same index of the selected aircraft in the list
+			int newGIndex = outputList_Gates.getSelectedIndex(); // newGIndex becomes the same index of the selected gate in the list
+			gateInfoDatabase.allocate(newGIndex, newMRIndex); // Allocates a gate with a flight
+			aircraftManagementDatabase.taxiTo(newMRIndex, newGIndex); // Sets an aircraft record with a gate
+			aircraftManagementDatabase.setStatus(newMRIndex, 6); // Change status of aircraft
+			aircraftListUpdate(); // Method call
+			gateListUpdate(); // Method call
+			aircraftSelected(); // Method call
+			gateSelected(); // Method call
 		}
 		
 		if (e.getSource() == allowTaxiAcrossTarmacButton) {
-			int newMRIndex = outputList_Aircrafts.getSelectedIndex();
-			int gate = aircraftManagementDatabase.getGateNumber(newMRIndex);
-			gateInfoDatabase.departed(gate);
-			aircraftManagementDatabase.setStatus(newMRIndex, 17); // Change status
-			aircraftListUpdate();
-			gateListUpdate();
-			aircraftSelected();
-			gateSelected();
+			int newMRIndex = outputList_Aircrafts.getSelectedIndex(); // newMRIndex becomes the same index of the selected aircraft in the list
+			int gate = aircraftManagementDatabase.getGateNumber(newMRIndex); // newGIndex becomes the same index of the selected gate in the list
+			gateInfoDatabase.departed(gate); // Sets gate status to be free again after flight has departed
+			aircraftManagementDatabase.setStatus(newMRIndex, 17); // Change status of aircraft
+			aircraftListUpdate(); // Method call
+			gateListUpdate(); // Method call
+			aircraftSelected(); // Method call
+			gateSelected(); // Method call
 
 		}
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		outputList_Aircrafts.clearSelection();
-		outputList_Gates.clearSelection();
-		aircraftListUpdate();
-		gateListUpdate();
-		aircraftSelected();
-		gateSelected();
+		outputList_Aircrafts.clearSelection(); // Clear user selection in list
+		outputList_Gates.clearSelection(); // Clear user selection in list
+		aircraftListUpdate(); // Method call
+		gateListUpdate(); // Method call
+		aircraftSelected(); // Method call
+		gateSelected(); // Method call
 	}
 }
 	/*

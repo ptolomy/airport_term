@@ -187,7 +187,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 				if (isButtonAvailable) { // If buttons are available
 					isButtonAvailable = false;//Set a flag to highlight the buttons should not be available
 				}
-				buttonUpdates();//Call the buttonUpdates method to ensure the buttons are updated to not display
+				buttonAvailability();//Call the buttonUpdates method to ensure the buttons are updated to not display
 			} else {//Otheriwse do this
 				MRIndex = outputList.getSelectedIndex();//Set the MrIndex using the getSelectedIndex() method called against the JList
 				passengers = aircraftManagementDatabase.getPassengerList(MRIndex);//Set the passengers list in this class to be the list of passengers for the management record identified using the MRIndex
@@ -196,7 +196,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 				if (!isButtonAvailable) {//If the buttons are not available
 					isButtonAvailable = true;//Set a boolean flag to true
 				}
-				buttonUpdates();//Call the button updates method to ensure the buttons are displayed
+				buttonAvailability();//Call the button updates method to ensure the buttons are displayed
 			}
 		}
 	}
@@ -204,7 +204,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 	/*
 	 * Method to update the buttons availability
 	 */
-	private void buttonUpdates() {
+	private void buttonAvailability() {
 		if (!isButtonAvailable) {//If the boolean flag for the button availability is false then
 			leftLocalAirspace.setEnabled(false); // Do not allow the button to be clicked
 		} else {//Otherwise do this

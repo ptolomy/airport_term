@@ -55,13 +55,13 @@ public class PublicInfo extends JFrame implements Observer {
 		this.aircraftManagementDatabase = amd;
 		amd.addObserver(this);
 
-		setTitle("Public Info");
-		setLocation(1000, 300);
-		setSize(500, 600); // change to suit preferred size
+		setTitle("Public Info"); // Set window title
+		setLocation(1000, 300);//Set window location
+		setSize(500, 600); // Set window size
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
-		Container window = getContentPane();
-		window.setLayout(new FlowLayout());
+		Container window = getContentPane(); // Create a container to hold information
+		window.setLayout(new FlowLayout()); 
 
 		// Labels for flights landing
 		labelFlightsLanding = new JLabel("Flights Landing: ");
@@ -108,8 +108,9 @@ public class PublicInfo extends JFrame implements Observer {
 		listDeparting.setSize(aircraftManagementDatabase.maxMRs);
 		getContentPane().add(departing);// Add the JPanel to the window
 
-		aircraftListUpdate();
-		setVisible(true);
+		aircraftListUpdate(); // Update list of aircrafts
+
+		setVisible(true);// Set the window to be visible
 
 	}
 
@@ -120,18 +121,17 @@ public class PublicInfo extends JFrame implements Observer {
 
 		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) { // For each record in database
 
-			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i);
+			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i);// Create local instance of that MR
 
-			if (managementRecord == null) {
-				break;
+			if (managementRecord == null) { // If management record is empty
+				break; // Break out of loop and move to next element
 			}
 
-			// If the flight status is either WAITING_TO_LAND, GROUND_CLEARENCE_GRANTED or
-			// LANDING
+			// If the flight status is either WAITING_TO_LAND, GROUND_CLEARENCE_GRANTED orLANDING
 			else if (managementRecord.getStatusString().equalsIgnoreCase("WANTING_TO_LAND")
 					|| managementRecord.getStatusString().equalsIgnoreCase("GROUND_CLEARANCE_GRANTED")
 					|| managementRecord.getStatusString().equalsIgnoreCase("LANDING")) {
-
+				// Create String record and assign it with the flight code and flight status from the current record
 				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
 						+ "LANDING";
 
@@ -140,12 +140,13 @@ public class PublicInfo extends JFrame implements Observer {
 
 			// If the flight status is LANDED
 			else if (managementRecord.getStatusString().equalsIgnoreCase("LANDED")) {
-
+				// Create String record and assign it with the flight code and flight status from the current record
 				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
 						+ managementRecord.getStatusString();
 
 				listLanded.set(i, record); // Add to list of landed aircrafts
 
+				// Loop to remove unwanted records
 				for (int index = 0; index < listLanding.getSize(); index++) {
 					if (listLanding.elementAt(index) == null) {
 						listLanding.set(i, null);
@@ -155,15 +156,16 @@ public class PublicInfo extends JFrame implements Observer {
 				}
 
 			}
-
+			// If the flight status is TAXIING
 			else if (managementRecord.getStatusString().equalsIgnoreCase("TAXIING")) {
-
+				// Create String record and assign it with the flight code and flight status and gate number from the current record
 				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
 						+ managementRecord.getStatusString() + "     " + "Gate Number: "
 						+ (managementRecord.getGateNumber() + 1);
 
 				listLanded.set(i, record); // Add to list of landed aircrafts
-
+				
+				// Loop to remove unwanted records
 				for (int index = 0; index < listLanding.getSize(); index++) {
 					if (listLanding.elementAt(index) == null) {
 						listLanding.set(i, null);
@@ -172,13 +174,15 @@ public class PublicInfo extends JFrame implements Observer {
 					}
 				}
 			}
-
+			// If flight status is UNLOADING
 			else if (managementRecord.getStatusString().equalsIgnoreCase("UNLOADING")) {
+				// Create String record and assign it with the flight code and flight status and gate number from the current record 
 				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
 						+ "DOCKED" + "     " + "Gate Number: " + (managementRecord.getGateNumber() + 1);
 
 				listLanded.set(i, record); // Add to list of landed aircrafts
 
+				// Loop to remove unwanted records
 				for (int index = 0; index < listLanding.getSize(); index++) {
 					if (listLanding.elementAt(index) == null) {
 						listLanding.set(i, null);
@@ -187,8 +191,9 @@ public class PublicInfo extends JFrame implements Observer {
 					}
 				}
 			}
-			
+			// If flight status is READY_FOR_CLEAN_MAINT
 			else if (managementRecord.getStatusString().equalsIgnoreCase("READY_FOR_CLEAN_MAINT")) {
+				// Loop to remove unwanted records
 				for (int index = 0; index < listLanded.getSize(); index++) {
 					if (listLanded.elementAt(index) == null) {
 						listLanded.set(i, null);
@@ -197,13 +202,15 @@ public class PublicInfo extends JFrame implements Observer {
 					}
 				}
 			}
-
+			// If flight status is READY_PASSENGERS
 			else if (managementRecord.getStatusString().equalsIgnoreCase("READY_PASSENGERS")) {
+				// Create String record and assign it with the flight code and flight status from the current record
 				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
 						+ "NOW BOARDING";
 
 				listDeparting.set(i, record); // Add to list of departing aircrafts
 
+				// Loop to remove unwanted records
 				for (int index = 0; index < listLanded.getSize(); index++) {
 					if (listLanded.elementAt(index) == null) {
 						listLanded.set(i, null);
@@ -212,13 +219,15 @@ public class PublicInfo extends JFrame implements Observer {
 					}
 				}
 			}
-
+			// If flight status is READY_DEPART
 			else if (managementRecord.getStatusString().equalsIgnoreCase("READY_DEPART")) {
+				// Create String record and assign it with the flight code and flight status from the current record
 				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
 						+ "BOARDING COMPLETE";
 
 				listDeparting.set(i, record); // Add to list of departing aircrafts
 
+				// Loop to remove unwanted records
 				for (int index = 0; index < listLanded.getSize(); index++) {
 					if (listLanded.elementAt(index) == null) {
 						listLanded.set(i, null);
@@ -227,15 +236,16 @@ public class PublicInfo extends JFrame implements Observer {
 					}
 				}
 			}
-			// If the flight status is
+			// If the flight status is AWAITING_TAXI OR AWAITING_TAKEOFF
 			else if (managementRecord.getStatusString().equalsIgnoreCase("AWAITING_TAXI")
 					|| managementRecord.getStatusString().equalsIgnoreCase("AWAITING_TAKEOFF")) {
-
+				// Create String record and assign it with the flight code and flight status from the current record
 				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
 						+ "DEPARTED";
 
 				listDeparting.set(i, record); // Add to list of departing aircrafts
 
+				// Loop to remove unwanted records
 				for (int index = 0; index < listLanded.getSize(); index++) {
 					if (listLanded.elementAt(index) == null) {
 						listLanded.set(i, null);
@@ -244,8 +254,9 @@ public class PublicInfo extends JFrame implements Observer {
 					}
 				}
 			}
-			
+			// If the flight status is DEPARTING_THROUGH_LOCAL_AIRSPACE OR FREE
 			else if (managementRecord.getStatusString().equalsIgnoreCase("DEPARTING_THROUGH_LOCAL_AIRSPACE") || managementRecord.getStatusString().equalsIgnoreCase("FREE")) {
+				// Loop to remove unwanted records
 				for (int index = 0; index < listDeparting.getSize(); index++) {
 					if (listDeparting.elementAt(index) == null) {
 						listDeparting.set(i, null);
@@ -261,6 +272,6 @@ public class PublicInfo extends JFrame implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 
-		aircraftListUpdate();
+		aircraftListUpdate(); // Method call
 	}
 }

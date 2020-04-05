@@ -92,14 +92,15 @@ public class CleaningSupervisor extends JFrame implements ActionListener, Observ
 	 */
 	private void aircraftListUpdate() {
 		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) { // For each record in database
-			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i);
+			ManagementRecord managementRecord = aircraftManagementDatabase.getManagementRecord(i);// Create local instance of that MR
 
-			if (managementRecord == null) {
-				list.set(i, null);
-			} else {
-				list.set(i, null);
+			if (managementRecord == null) {// If record is empty
+				list.set(i, null);// Set the same position (i) in list to be empty
+			} else {// If record is not empty
+				list.set(i, null);// Set the same position (i) in list to be empty
+				// If the status of the management record matches any of the following: 11, 9, 8
 				if (managementRecord.getStatus() == 11 || managementRecord.getStatus() == 9 || managementRecord.getStatus() == 8) {
-
+					// Create String record and assign it with the flight code and flight status from the current record
 					String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
 							+ managementRecord.getStatusString();
 
@@ -113,19 +114,19 @@ public class CleaningSupervisor extends JFrame implements ActionListener, Observ
 	 * Method to change view depending if an aircraft has been selected
 	 */
 	private void aircraftSelected() {
-		if (!outputList.getValueIsAdjusting()) {
+		if (!outputList.getValueIsAdjusting()) {// Checks whether a specific event (a change) is part of a chain
 			if (outputList.getSelectedValue() == null) { // If no aircraft is selected from list
-				MRIndex = -1;
+				MRIndex = -1;// MRIndex (ManagementRecordIndex) becomes -1 i.e not one of the records
 				if (isButtonAvailable) { // If buttons are available, set them to not be
 					isButtonAvailable = false;
 				}
-				buttonUpdates();
+				buttonAvailability(); // Method call
 			} else {
-				MRIndex = outputList.getSelectedIndex();
-				if (!isButtonAvailable) {
-					isButtonAvailable = true;
+				MRIndex = outputList.getSelectedIndex();// MRIndex becomes the same index of the selected aircraft in the list
+				if (!isButtonAvailable) {// If buttons not available
+					isButtonAvailable = true;// Set buttons to be available
 				}
-				buttonUpdates();
+				buttonAvailability(); // Method call
 			}
 		}
 	}
@@ -133,33 +134,35 @@ public class CleaningSupervisor extends JFrame implements ActionListener, Observ
 	/*
 	 * Method to update the buttons availability
 	 */
-	private void buttonUpdates() {
+	private void buttonAvailability() {
 		// If buttons should not be available then all set to false
 		if (!isButtonAvailable) {
-			cleaningComplete.setEnabled(false);
+			cleaningComplete.setEnabled(false); // Disable button
 
 		} else {
-			cleaningComplete.setEnabled(true);
-		}
+			cleaningComplete.setEnabled(true); // Enable button
+		} 
 	}
 
-	// Button click handling:
+	/*
+	 * 
+	 */
 	public void actionPerformed(ActionEvent e) {
 
 		int selectedFlight = outputList.getSelectedIndex();
 
 		if (e.getSource() == cleaningComplete) {
 
-			if (list.elementAt(selectedFlight).contains("OK_AWAIT_CLEAN")) {
+			if (list.elementAt(selectedFlight).contains("OK_AWAIT_CLEAN")) { // If status is OK_AWAIT_CLEAN
 				aircraftManagementDatabase.setStatus(MRIndex, 13); // Change status
 				aircraftListUpdate();
 				aircraftSelected();
 			}
-			else if (list.elementAt(selectedFlight).contains("FAULTY_AWAIT_CLEAN")) {
+			else if (list.elementAt(selectedFlight).contains("FAULTY_AWAIT_CLEAN")) { // If status is FAULTY_AWAIT_CLEAN
 				aircraftManagementDatabase.setStatus(MRIndex, 12); // Change status
 				aircraftListUpdate();
 				aircraftSelected();
-			} else if (list.elementAt(selectedFlight).contains("READY_FOR_CLEAN_MAINT")) {
+			} else if (list.elementAt(selectedFlight).contains("READY_FOR_CLEAN_MAINT")) { // If status is READY_FOR_CLEAN_MAINT
 				aircraftManagementDatabase.setStatus(MRIndex, 10); // Change status
 				aircraftListUpdate();
 				aircraftSelected();
