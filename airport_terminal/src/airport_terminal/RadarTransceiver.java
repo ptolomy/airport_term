@@ -253,6 +253,8 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 
 			JOptionPane.showMessageDialog(this, "Flight " + flightCode + " Detected");//Print a message to say the flight has been detected
 
+			passengers = new PassengerList();//Set the passengers to become a new passenger list - same effect as clearing list
+			
 			flightCodeText.setText("");//Clear the contents of all of the text fields on the screen - allows new flight info to be entered
 			toText.setText("");
 			fromText.setText("");
