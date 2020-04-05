@@ -273,10 +273,10 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 		if (outputList.getSelectedValue() == null) { // If no aircraft is selected from list
 			MRIndex = -1;//Set the MRIndex to be -1 (highlighting nothing selected)
 		} else {//Otherwise
-			MRIndex = outputList.getSelectedIndex();//Set the MRIndex to become equal to the selected index in the JList
+			int newMRIndex = outputList.getSelectedIndex();//Set the MRIndex to become equal to the selected index in the JList
 
-			aircraftManagementDatabase.radarLostContact(MRIndex);//Call the radarLostContact() method in the aircraft database, passing in the index of the management record 
-			list.set(MRIndex, null);//remove the selected index from the JList
+			aircraftManagementDatabase.radarLostContact(newMRIndex);//Call the radarLostContact() method in the aircraft database, passing in the index of the management record 
+			list.set(newMRIndex, null);//remove the selected index from the JList
 			clearPassengerDisplay();//Clear the list of passengers because the flight has been removed
 		}
 	}
