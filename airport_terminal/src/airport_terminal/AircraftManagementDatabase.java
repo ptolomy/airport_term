@@ -18,6 +18,12 @@ public class AircraftManagementDatabase extends Observable {
 
 	public AircraftManagementDatabase() {
         MRs = new ManagementRecord[maxMRs];
+        
+        for (int i = 0; i < maxMRs; i++) {
+			MRs[i] = new ManagementRecord();
+			MRs[i].setStatus(0);
+		}
+		
     }
 	
 	/**
@@ -112,28 +118,55 @@ public class AircraftManagementDatabase extends Observable {
 	 */
 	public void radarDetect(FlightDescriptor fd) {
 
-		int nextAvailableMR = 0;
-
-		if (MRs.length == 0) {
-			MRs[nextAvailableMR] = new ManagementRecord();
-			MRs[nextAvailableMR].setStatus(0);
-			MRs[nextAvailableMR].radarDetect(fd);
-		} else if (MRs.length >= 1) {
-			for (int i = 0; i < MRs.length; i++) {
-				if (MRs[i] != null) {
-					if (MRs[i].getStatus() == 0) {
-					nextAvailableMR = i;
-					break;
-					}
-				}
+		for (int i = 0; i< maxMRs; i++) {
+			if (MRs[i].getStatus() == 0) {
+				MRs[i].radarDetect(fd);
+				setChanged();
+				notifyObservers();
+				return;
 			}
-			MRs[nextAvailableMR] = new ManagementRecord();
-			MRs[nextAvailableMR].setStatus(0);
-			MRs[nextAvailableMR].radarDetect(fd);
 		}
 		
-		setChanged();
-		notifyObservers();
+		
+//		int nextAvailableMR = 0;
+//		
+//
+//
+//		if (MRs.length == 0) {
+//			
+//			
+//			for (int i = 0; i < maxMRs-1; i++) {
+//				MRs[i] = new ManagementRecord();
+//				MRs[i].setFlightCode("");
+//			}
+//			
+//			
+//			MRs[nextAvailableMR].setStatus(0);
+//			MRs[nextAvailableMR].radarDetect(fd);
+//		} else if (MRs.length >= 1) {
+//			for (int i = 0; i < MRs.length; i++) {
+//				if (MRs[i].getFlightCode().equals("")) {
+//					nextAvailableMR = i;
+//					break;
+//				}
+//			}
+//			MRs[nextAvailableMR] = new ManagementRecord();
+//			MRs[nextAvailableMR].setStatus(0);
+//			MRs[nextAvailableMR].radarDetect(fd);
+//		}
+//		
+//		setChanged();
+//		notifyObservers();
+
+//		try {
+//			for (int i = 0; i < MRs.length; i++) {
+//				if (MRs[i].getStatus() == 0) {
+//					MRs[i].radarDetect(fd); // Check
+//				}
+//			}
+//		} catch (IndexOutOfBoundsException ex) {
+//			ex.printStackTrace();
+//		}
 	}
 
 	/**
