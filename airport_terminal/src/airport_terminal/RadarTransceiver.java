@@ -190,11 +190,12 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 					isButtonAvailable = false;//Set a flag to highlight the buttons should not be available
 				}
 				buttonAvailability();//Call the buttonUpdates method to ensure the buttons are updated to not display
-			} else {//Otheriwse do this
+			} else {//Otherwise do this
 				MRIndex = outputList.getSelectedIndex();//Set the MrIndex using the getSelectedIndex() method called against the JList
 				passengers = aircraftManagementDatabase.getPassengerList(MRIndex);//Set the passengers list in this class to be the list of passengers for the management record identified using the MRIndex
 				Vector<PassengerDetails> detailsToDisplay = passengers.getPassengerList();//Create a new vector so that the passenger details can be displayed and get the passenger list as above
 				passengerList.setListData(detailsToDisplay);//Set the Jlist to display the vector
+				passengers = new PassengerList();
 				if (!isButtonAvailable) {//If the buttons are not available
 					isButtonAvailable = true;//Set a boolean flag to true
 				}
