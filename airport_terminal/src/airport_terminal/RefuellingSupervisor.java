@@ -3,22 +3,14 @@ package airport_terminal;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-//import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.List;
+
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 
 /**
  * An interface to SAAMS: Refuelling Supervisor Screen: Inputs events from the
@@ -167,12 +159,12 @@ public class RefuellingSupervisor extends JFrame implements ActionListener, Obse
 		}
 
 	}
-
+	//Method called by notify observers to update the display
 	@Override
 	public void update(Observable arg0, Object arg1) {
 
-		aircraftSelected();
-		aircraftListUpdate();
+		aircraftSelected();//Call the aircraftSelected method
+		aircraftListUpdate();//Call the aircraftListUpdate to update the displayed list
 	}
 
 }
