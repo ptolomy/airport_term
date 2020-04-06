@@ -89,6 +89,9 @@ public class CleaningSupervisor extends JFrame implements ActionListener, Observ
 
 	/*
 	 * Method to update the list of aircrafts
+	 * 
+	 * Setting a list item as null if the corresponding aircraft index is empty, this keeps indexing the same for 
+	 * both an aircraft list and the management record database
 	 */
 	private void aircraftListUpdate() {
 		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) { // For each record in database
@@ -145,13 +148,13 @@ public class CleaningSupervisor extends JFrame implements ActionListener, Observ
 	}
 
 	/*
-	 * 
+	 * Method called when an action is performed i.e. a button is clicked
 	 */
 	public void actionPerformed(ActionEvent e) {
 
-		int selectedFlight = outputList.getSelectedIndex();
+		int selectedFlight = outputList.getSelectedIndex(); // Variable selectedFlight becomes the index of the selected item in the list
 
-		if (e.getSource() == cleaningComplete) {
+		if (e.getSource() == cleaningComplete) { // If cleaning complete button is clicked
 
 			if (list.elementAt(selectedFlight).contains("OK_AWAIT_CLEAN")) { // If status is OK_AWAIT_CLEAN
 				aircraftManagementDatabase.setStatus(MRIndex, 13); // Change status

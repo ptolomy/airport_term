@@ -93,6 +93,9 @@ public class RefuellingSupervisor extends JFrame implements ActionListener, Obse
 
 	/*
 	 * Method to update the list of aircrafts
+	 * 
+	 * Setting a list item as null if the corresponding aircraft index is empty, this keeps indexing the same for 
+	 * both an aircraft list and the management record database
 	 */
 	private void aircraftListUpdate() {
 		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) { // For each record in database
