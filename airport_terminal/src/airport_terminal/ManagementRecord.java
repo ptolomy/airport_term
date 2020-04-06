@@ -437,5 +437,4 @@ public class ManagementRecord {
 	public Itinerary getItinerary() {
 		return itinerary;
 	}
-
 }
