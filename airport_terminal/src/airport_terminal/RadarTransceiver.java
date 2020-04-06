@@ -303,6 +303,5 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 	 */
 	public void update(Observable o, Object arg) {
 		aircraftListUpdate();//Call the aircraftListUpdate() method
-		clearFlightInfo();//Call the clearFlightInfo() method
 	}
 }
