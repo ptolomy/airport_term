@@ -9,10 +9,13 @@ package airport_terminal;
  *  (Since this will probably/possibly be local to an event handler method in RadarTransceiver, there is no attribute association from RadarTransceiver to FlightDescriptor.)
  */
 public class FlightDescriptor {
-  /**
-   * Constructor: A new FlightDescriptor must be given a flightCode (String), an Itinerary,
-   * and the current PassengerList.
-   */
+	/**
+	 * Constructor: A new FlightDescriptor must be given a flightCode (String), an Itinerary,
+	 * and the current PassengerList.
+	 * @param flightCode The flight code that the flight descriptor will have
+	 * @param itinerary The itinerary object that will be assigned to the flight descriptor
+	 * @param list The list of passengers that will be assigned to the flight descriptor
+	 */
   public FlightDescriptor(String flightCode, Itinerary itinerary, PassengerList list){
 	  
 	 this.flightCode = flightCode; //Sets the flight code of the current instance of the class to become equal to the one being passed into the constructor
@@ -21,14 +24,26 @@ public class FlightDescriptor {
   
   }
   
+  /**
+   * Returns the passenger list to the caller
+   * @return The passenger list in this object
+   */
   public PassengerList getPassengerList() {
 	  return passengerList;
   }
   
+  /**
+   * Returns the itinerary to the caller
+   * @return The itinerary object for the flight descriptor
+   */
   public Itinerary getItinerary() {
 	  return itinerary;
   }
   
+  /**
+   * Returns the flight code to the caller
+   * @return The flight code for the flight descriptor
+   */
   public String getFlightCode() {
 	  return flightCode;
   }

@@ -86,9 +86,9 @@ public class Gate {
 	 * @preconditions Status must be Free
 	 */
 	public void allocate(int mCode) {
-		if (status == FREE) {
-			status = RESERVED;
-			this.mCode = mCode;
+		if (status == FREE) {//If the status of the gate is free THEN
+			status = RESERVED;//Change the status of the gate to reserved
+			this.mCode = mCode;//Set the mCode of in this class to the mCode passed in to mark thatmanagement record as being at the gate
 		}
 	}
 
@@ -99,8 +99,8 @@ public class Gate {
 	 * @preconditions Status must be Reserved
 	 */
 	public void docked() {
-		if (status == RESERVED) {
-			status = OCCUPIED;
+		if (status == RESERVED) {//If the status of the gate is reserved THEN
+			status = OCCUPIED;//Set the status of the gate to become occupied
 		}
 	}
 
@@ -110,9 +110,9 @@ public class Gate {
 	 * @preconditions Status must be Occupied
 	 */
 	public void departed() {
-		if (status == OCCUPIED) {
-		status = FREE;
-		mCode = -1;
+		if (status == OCCUPIED) {//If the status of the gate is occupied THEN
+		status = FREE;//Set the status of the gate to free
+		mCode = -1;//Set the mCode in this class to -1 to represent nothing being selected.
 		}
 	}
 }
