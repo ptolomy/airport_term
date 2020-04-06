@@ -147,7 +147,7 @@ public class CleaningSupervisor extends JFrame implements ActionListener, Observ
 		} 
 	}
 
-	/*
+	/* 
 	 * Method called when an action is performed i.e. a button is clicked
 	 */
 	public void actionPerformed(ActionEvent e) {
