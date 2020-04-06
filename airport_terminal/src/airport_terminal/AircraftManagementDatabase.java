@@ -124,7 +124,7 @@ public class AircraftManagementDatabase extends Observable {
 				setChanged();
 				notifyObservers();
 				return;
-			}
+			} 
 		}
 		setChanged();
 		notifyObservers();
