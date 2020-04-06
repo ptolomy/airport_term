@@ -242,6 +242,7 @@ public class GOC extends JFrame implements ActionListener, Observer {
 					for (int i = 0; i < gateInfoDatabase.maxGateNumber; i++) { // For every gate
 						if (gateInfoDatabase.getStatus(i) == 0) { // If gate status is "FREE"
 							permissionToLandButton.setEnabled(true); // Set button to be available
+							break;
 						} else { // If gate status is NOT "FREE"
 							permissionToLandButton.setEnabled(false); // Set button to be unavailable
 						}
