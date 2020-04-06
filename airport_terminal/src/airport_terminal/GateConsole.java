@@ -414,8 +414,6 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 			numberOfPassengers++;//Increment the number of passengers that have been checked in (add 1)
 			noOfPassengersDepartinglbl.setText("Number of Passengers Checked In: " + numberOfPassengers + "/" + aircraftCapacity);//Update the display to show how many passengers have checked in
 
-			Vector<PassengerDetails> detailsToDisplay = passengers.getPassengerList();//Get the passenger list in a vector to allow it to be displayed
-			passengerList.setListData(detailsToDisplay);//Display the last of passengers in the JList
 		} else {//Otherwise do this (if the aircraft capacity has been reached)
 			//Print a message saying the aircraft capacity has been reached
 			JOptionPane.showMessageDialog(this, "Aircraft capacity reached. The passenger could not be added.");
