@@ -59,6 +59,7 @@ public class GOC extends JFrame implements ActionListener, Observer {
 
 	// Labels
 	private JLabel allocateFlightDesc;
+	private JLabel gateAllocationDesc;
 	
 	// Lists
 	private JPanel panel_Aircrafts;
@@ -78,7 +79,7 @@ public class GOC extends JFrame implements ActionListener, Observer {
 
 		setTitle("GOC"); // Sets title
 		setLocation(500, 0); // Sets location of window
-		setSize(600, 430); // Sets size of window
+		setSize(600, 450); // Sets size of window
 		setDefaultCloseOperation(EXIT_ON_CLOSE);// Ensures the user cannot close the program with the close button top corner
 
 		Container window = getContentPane(); // Creates window
@@ -108,7 +109,10 @@ public class GOC extends JFrame implements ActionListener, Observer {
 		gateListUpdate(); // Method call to update list of gates
 
 		window.add(panel_Aircrafts); // Adds aircraft panel to window container
-
+		
+		gateAllocationDesc = new JLabel("If there is NOT a 'FREE' gate then you cannot grant ground cleanance.");
+		window.add(gateAllocationDesc);
+		
 		permissionToLandButton = new JButton("Grant Ground Clearance"); // Assign button title
 		permissionToLandButton.setEnabled(false); // Button not available to click yet
 		window.add(permissionToLandButton);// Add button to window container
