@@ -48,6 +48,7 @@ public class LATC extends JFrame implements ActionListener, Observer {
 	private JButton waitingForTaxi;
 	private JButton flightInfo;
 
+	// Lists
 	private JPanel panel;
 	private JList<String> outputList;
 	private DefaultListModel<String> list;
