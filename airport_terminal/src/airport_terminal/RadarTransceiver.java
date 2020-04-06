@@ -264,6 +264,13 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 			nextText.setText("");
 			namesText.setText("");
 		}
+		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) {
+			if (aircraftManagementDatabase.getStatus(i) != 0) {
+				detectFlightButton.setEnabled(false);
+			} else {
+				detectFlightButton.setEnabled(true);
+			}
+		}
 	}
 
 	/**
@@ -279,6 +286,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 			list.set(newMRIndex, null);//remove the selected index from the JList
 			clearPassengerDisplay();//Clear the list of passengers because the flight has been removed
 		}
+		detectFlightButton.setEnabled(true);
 	}
 
 	/**
