@@ -43,9 +43,11 @@ public class GOC extends JFrame implements ActionListener, Observer {
 	 * @directed
 	 */
 
+	// Databases
 	private AircraftManagementDatabase aircraftManagementDatabase;
 	private GateInfoDatabase gateInfoDatabase;
 
+	// Useful states
 	private int MRIndex; // Used to index aircraft database
 	private int GIndex; // Used to index gate database
 	private boolean isButtonAvailable; // Used to determine if button should be used
@@ -55,12 +57,13 @@ public class GOC extends JFrame implements ActionListener, Observer {
 	private JButton allowTaxiAcrossTarmacButton;
 	private JButton allocateGateButton;
 
+	// Labels
 	private JLabel allocateFlightDesc;
 	
+	// Lists
 	private JPanel panel_Aircrafts;
 	private JList<String> outputList_Aircrafts;
 	private DefaultListModel<String> list_Aircrafts;
-
 	private JPanel panel_Gates;
 	private JList<String> outputList_Gates;
 	private DefaultListModel<String> list_Gates;

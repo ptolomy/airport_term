@@ -89,7 +89,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		passengers = new PassengerList(); //Set passengers to become a new PassengerList
 
 		setTitle("Gate " + (gateNumber+1));//Set the title of the window - add 1 to avoid 'Gate 0' being displayed
-		setLocation(1000, 0);//Chose where the window will appear
+		setLocation(1000 + (gateNumber * 20) , 0);//Chose where the window will appear
 		setSize(400, 760);//Set the dimensions of the window
 		setDefaultCloseOperation(EXIT_ON_CLOSE);//Terminate if the window is closed
 
