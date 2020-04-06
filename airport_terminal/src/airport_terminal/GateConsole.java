@@ -299,6 +299,13 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 			tabbedPane.setSelectedIndex(0);//Force the tabbed pane to open the arrivals tab
 			tabbedPane.setEnabledAt(0, true);//Allow the 0th tab to be opened - in this case the arrivals tab
 			tabbedPane.setEnabledAt(1, false);//Do not allow the 1st tab to be opened (the departures tab)
+			
+			confirmFlightDetailsButton.setEnabled(true);//Allow the confirm flight details button to be clicked
+			noOfPassengersDepartinglbl.setText("Number of Passengers Check In:");//Rest the label for the passengers
+			
+			addPassengerButton.setEnabled(true);//Allow the add passenger button to be clicked
+			
+			numberOfPassengers = 0;
 
 			//If above statement not true then if the gate status is reserved
 		} else if (gateStatus == Gate.RESERVED) {
@@ -430,6 +437,10 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 			//Print a method saying the flight could not be closed
 			JOptionPane.showMessageDialog(this, "Flight " + aircraftManagementDatabase.getFlightCode(mCode) + " could not be closed.");
 		}
+		
+		toText.setText("");//Set the contents of the to text field to be empty - allows the gate to be reused without previous flight information showing
+		nextText.setText("");//Do the same as above for the next text field
+		aircraftCapacityText.setText("");//Same as above for the aircraft capacity text field
 	}
 
 	/**
@@ -449,10 +460,6 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		//Set the itinerary using the from, to, next variables that have been set, using the mCode to identify the aircraft
 		aircraftManagementDatabase.setItinerary(mCode, from, to, next);
 		JOptionPane.showMessageDialog(this, "Flight details sucessfully updated.");//Show a message to say the flight details were updated
-	
-		toText.setText("");//Set the contents of the to text field to be empty - allows the gate to be reused without previous flight information showing
-		nextText.setText("");//Do the same as above for the next text field
-		aircraftCapacityText.setText("");//Same as above for the aircraft capacity text field
 	}
 
 	/**
