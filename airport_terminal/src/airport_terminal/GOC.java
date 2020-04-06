@@ -79,7 +79,7 @@ public class GOC extends JFrame implements ActionListener, Observer {
 
 		setTitle("GOC"); // Sets title
 		setLocation(500, 0); // Sets location of window
-		setSize(600, 450); // Sets size of window
+		setSize(600, 475); // Sets size of window
 		setDefaultCloseOperation(EXIT_ON_CLOSE);// Ensures the user cannot close the program with the close button top corner
 
 		Container window = getContentPane(); // Creates window
