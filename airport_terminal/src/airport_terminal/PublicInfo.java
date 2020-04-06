@@ -155,7 +155,7 @@ public class PublicInfo extends JFrame implements Observer {
 					if (listLanding.elementAt(index) == null) {
 						listLanding.set(i, null);
 					} else if (listLanding.elementAt(index).contains(managementRecord.getFlightCode())) {
-						listLanding.remove(index);
+						listLanding.set(index, null);
 					}
 				}
 
@@ -174,7 +174,7 @@ public class PublicInfo extends JFrame implements Observer {
 					if (listLanding.elementAt(index) == null) {
 						listLanding.set(i, null);
 					} else if (listLanding.elementAt(index).contains(managementRecord.getFlightCode())) {
-						listLanding.remove(index);
+						listLanding.set(index, null);
 					}
 				}
 			}
@@ -191,7 +191,7 @@ public class PublicInfo extends JFrame implements Observer {
 					if (listLanding.elementAt(index) == null) {
 						listLanding.set(i, null);
 					} else if (listLanding.elementAt(index).contains(managementRecord.getFlightCode())) {
-						listLanding.remove(index);
+						listLanding.set(index, null);
 					}
 				}
 			}
@@ -202,7 +202,7 @@ public class PublicInfo extends JFrame implements Observer {
 					if (listLanded.elementAt(index) == null) {
 						listLanded.set(i, null);
 					} else {
-						listLanded.remove(index);
+						listLanded.set(index, null);
 					}
 				}
 			}
@@ -219,7 +219,7 @@ public class PublicInfo extends JFrame implements Observer {
 					if (listLanded.elementAt(index) == null) {
 						listLanded.set(i, null);
 					} else if (listLanded.elementAt(index).contains(managementRecord.getFlightCode())) {
-						listLanded.remove(index);
+						listLanded.set(index, null);
 					}
 				}
 			}
@@ -236,7 +236,7 @@ public class PublicInfo extends JFrame implements Observer {
 					if (listLanded.elementAt(index) == null) {
 						listLanded.set(i, null);
 					} else if (listLanded.elementAt(index).contains(managementRecord.getFlightCode())) {
-						listLanded.remove(index);
+						listLanded.set(index, null);
 					}
 				}
 			}
@@ -254,7 +254,7 @@ public class PublicInfo extends JFrame implements Observer {
 					if (listLanded.elementAt(index) == null) {
 						listLanded.set(i, null);
 					} else if (listLanded.elementAt(index).contains(managementRecord.getFlightCode())) {
-						listLanded.remove(index);
+						listLanded.set(index, null);
 					}
 				}
 			}
@@ -265,7 +265,7 @@ public class PublicInfo extends JFrame implements Observer {
 					if (listDeparting.elementAt(index) == null) {
 						listDeparting.set(i, null);
 					} else {
-						listDeparting.remove(index);
+						listDeparting.set(index, null);
 					}
 				}
 			}
