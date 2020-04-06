@@ -31,7 +31,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	 * @label accesses/observes
 	 * @directed
 	 */
-	GateInfoDatabase gateDB;
+	GateInfoDatabase gateDB;//The gate database that will be assigned to hold the one set up in main
 
 	/**
 	 * The GateConsole interface has access to the AircraftManagementDatabase.
@@ -41,7 +41,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	 * @directed
 	 * @label accesses/observes
 	 */
-	private AircraftManagementDatabase aircraftManagementDatabase;
+	private AircraftManagementDatabase aircraftManagementDatabase;//The management record database that will be assigned to hold the one set up in main
 
 	private ManagementRecord MR; // assigned management record
 
@@ -49,7 +49,6 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	 * This gate's gateNumber - for identifying this gate's information in the
 	 * GateInfoDatabase.
 	 */
-	
 	private int gateNumber;//Declare an integer variable to hold the gate number currently being displayed in the console
 	private int mCode = -1; //Declare an integer variable to store the index of the management record that is being displayed
 
@@ -64,7 +63,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 	private JLabel gateNumberArrivinglbl, gateStatusArrivinglbl, flightCodeArrivinglbl, flightStatusArrivinglbl, passengerListArrivinglbl;
 	private JButton dockedButton, unloadedButton;
 
-	// For the departing pane - labels, buttons and textfields
+	// For the departing pane - labels, buttons and text fields
 	private JLabel gateNumberDepartinglbl, gateStatusDepartinglbl, flightCodeDepartinglbl, flightStatusDepartinglbl,
 			tolbl, nextlbl, fromlbl, aircraftCapacitylbl, noOfPassengersDepartinglbl, passengerNamelbl, passengerDescriptionlbl, closeFlightDescriptionlbl;
 	private JTextField toText, nextText, fromText, aircraftCapacityText, passengerNameText;
@@ -195,7 +194,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 
 		JPanel flightInformation = new JPanel();//Create a new panel called flightInformation
 
-		//Create labels add them to the flightInformation panel		
+		//Create labels and text fields and add them to the flightInformation panel		
 		flightCodeDepartinglbl = new JLabel("Flight Code:");
 		flightInformation.add(flightCodeDepartinglbl);
 
@@ -218,7 +217,7 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		flightInformation.add(fromlbl);
 
 		fromText = new JTextField(5);
-		fromText.setText("Stirling");
+		fromText.setText("Stirling");//Set the text in the text field to be 'Stirling' - shouldn't be anything else
 		fromText.setEditable(false);//Do not allow the text to edited - the aircraft will always be departing Stirling
 		flightInformation.add(fromText);
 
