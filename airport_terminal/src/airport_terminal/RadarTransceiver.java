@@ -264,21 +264,21 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 			nextText.setText("");
 			namesText.setText("");
 			
+			//Create a new boolean flag to determine whether the management record array is now full and initialise as false
 			boolean full = false;
-			
-			for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) {
-				if (aircraftManagementDatabase.getStatus(i) == 0) {
-					full = false;
-					break;
+		
+			for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) {//For every management record in the database
+				if (aircraftManagementDatabase.getStatus(i) == 0) {//If the status of the management record is 0 THEN
+					full = false;//Set full to false
+					break;//Break from the loop - because we have found an empty position
 				}
-				else {
-					full = true;
+				else {//Otherwise
+					full = true;//Set full to true - no empty positions were found
 				}
 			}
-			if (full) {
-				detectFlightButton.setEnabled(false);
+			if (full) {//If the list is full and has no empty management records THEN
+				detectFlightButton.setEnabled(false);//Do not allow the detect flight button to be clicked
 			}
-			
 		}
 	}
 
@@ -286,7 +286,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 	 * This method is called to replicate the aircraft leaving local airspace
 	 */
 	private void clearFlightInfo() {
-		detectFlightButton.setEnabled(true);
+		detectFlightButton.setEnabled(true);//Allow the detect flight button to be clicked again now that there will be an empty management record
 		if (outputList.getSelectedValue() == null) { // If no aircraft is selected from list
 			MRIndex = -1;//Set the MRIndex to be -1 (highlighting nothing selected)
 		} else {//Otherwise
