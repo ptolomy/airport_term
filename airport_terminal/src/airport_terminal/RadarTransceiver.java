@@ -263,13 +263,22 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 			fromText.setText("");
 			nextText.setText("");
 			namesText.setText("");
-		}
-		for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) {
-			if (aircraftManagementDatabase.getStatus(i) != 0) {
-				detectFlightButton.setEnabled(false);
-			} else {
-				detectFlightButton.setEnabled(true);
+			
+			boolean full = false;
+			
+			for (int i = 0; i < aircraftManagementDatabase.maxMRs; i++) {
+				if (aircraftManagementDatabase.getStatus(i) == 0) {
+					full = false;
+					break;
+				}
+				else {
+					full = true;
+				}
 			}
+			if (full) {
+				detectFlightButton.setEnabled(false);
+			}
+			
 		}
 	}
 
@@ -277,6 +286,7 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 	 * This method is called to replicate the aircraft leaving local airspace
 	 */
 	private void clearFlightInfo() {
+		detectFlightButton.setEnabled(true);
 		if (outputList.getSelectedValue() == null) { // If no aircraft is selected from list
 			MRIndex = -1;//Set the MRIndex to be -1 (highlighting nothing selected)
 		} else {//Otherwise
@@ -286,7 +296,6 @@ public class RadarTransceiver extends JFrame implements ActionListener, Observer
 			list.set(newMRIndex, null);//remove the selected index from the JList
 			clearPassengerDisplay();//Clear the list of passengers because the flight has been removed
 		}
-		detectFlightButton.setEnabled(true);
 	}
 
 	/**
