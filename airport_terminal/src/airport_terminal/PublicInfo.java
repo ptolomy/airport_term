@@ -130,6 +130,13 @@ public class PublicInfo extends JFrame implements Observer {
 			if (managementRecord == null) { // If management record is empty
 				break; // Break out of loop and move to next element
 			}
+			
+			// If the flight status is DEPARTING_THROUGH_LOCAL_AIRSPACE OR FREE
+			else if (managementRecord.getStatusString().equalsIgnoreCase("FREE")) {
+				
+				listDeparting.set(i, null);
+	
+			}
 
 			// If the flight status is either WAITING_TO_LAND, GROUND_CLEARENCE_GRANTED orLANDING
 			else if (managementRecord.getStatusString().equalsIgnoreCase("WANTING_TO_LAND")
@@ -210,7 +217,7 @@ public class PublicInfo extends JFrame implements Observer {
 			else if (managementRecord.getStatusString().equalsIgnoreCase("READY_PASSENGERS")) {
 				// Create String record and assign it with the flight code and flight status from the current record
 				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
-						+ "NOW BOARDING";
+						+ "NOW BOARDING" + "     " + "Gate Number: " + (managementRecord.getGateNumber() + 1);
 
 				listDeparting.set(i, record); // Add to list of departing aircrafts
 
@@ -227,7 +234,7 @@ public class PublicInfo extends JFrame implements Observer {
 			else if (managementRecord.getStatusString().equalsIgnoreCase("READY_DEPART")) {
 				// Create String record and assign it with the flight code and flight status from the current record
 				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
-						+ "BOARDING COMPLETE";
+						+ "BOARDING COMPLETE" + "     " + "Gate Number: " + (managementRecord.getGateNumber() + 1);
 
 				listDeparting.set(i, record); // Add to list of departing aircrafts
 
@@ -245,7 +252,7 @@ public class PublicInfo extends JFrame implements Observer {
 					|| managementRecord.getStatusString().equalsIgnoreCase("AWAITING_TAKEOFF")) {
 				// Create String record and assign it with the flight code and flight status from the current record
 				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
-						+ "DEPARTED";
+						+ "DEPARTED" + "     " + "Gate Number: " + (managementRecord.getGateNumber() + 1);
 
 				listDeparting.set(i, record); // Add to list of departing aircrafts
 
@@ -258,17 +265,7 @@ public class PublicInfo extends JFrame implements Observer {
 					}
 				}
 			}
-			// If the flight status is DEPARTING_THROUGH_LOCAL_AIRSPACE OR FREE
-			else if (managementRecord.getStatusString().equalsIgnoreCase("DEPARTING_THROUGH_LOCAL_AIRSPACE") || managementRecord.getStatusString().equalsIgnoreCase("FREE")) {
-				// Loop to remove unwanted records
-				for (int index = 0; index < listDeparting.getSize(); index++) {
-					if (listDeparting.elementAt(index) == null) {
-						listDeparting.set(i, null);
-					} else {
-						listDeparting.set(index, null);
-					}
-				}
-			}
+			
 		}
 
 	}
