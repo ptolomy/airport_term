@@ -449,6 +449,10 @@ public class GateConsole extends JFrame implements ActionListener, Observer {
 		//Set the itinerary using the from, to, next variables that have been set, using the mCode to identify the aircraft
 		aircraftManagementDatabase.setItinerary(mCode, from, to, next);
 		JOptionPane.showMessageDialog(this, "Flight details sucessfully updated.");//Show a message to say the flight details were updated
+	
+		toText.setText("");//Set the contents of the to text field to be empty - allows the gate to be reused without previous flight information showing
+		nextText.setText("");//Do the same as above for the next text field
+		aircraftCapacityText.setText("");//Same as above for the aircraft capacity text field
 	}
 
 	/**
