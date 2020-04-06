@@ -230,7 +230,7 @@ public class PublicInfo extends JFrame implements Observer {
 					}
 				}
 			}
-			// If flight status is READY_DEPART
+			// If flight status is READY_DEPART 
 			else if (managementRecord.getStatusString().equalsIgnoreCase("READY_DEPART")) {
 				// Create String record and assign it with the flight code and flight status from the current record
 				String record = "Flight Code: " + managementRecord.getFlightCode() + "     " + "Flight Status: "
